@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E534F501CA8D15500E27223 /* Levels.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0E534F4F1CA8D15500E27223 /* Levels.plist */; };
 		0E63D6FD1CA75CA30072A37D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E63D6FC1CA75CA30072A37D /* AppDelegate.swift */; };
-		0E63D6FF1CA75CA30072A37D /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0E63D6FE1CA75CA30072A37D /* GameScene.sks */; };
 		0E63D7011CA75CA30072A37D /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E63D7001CA75CA30072A37D /* GameScene.swift */; };
 		0E63D7031CA75CA30072A37D /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E63D7021CA75CA30072A37D /* GameViewController.swift */; };
 		0E63D7061CA75CA30072A37D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E63D7041CA75CA30072A37D /* Main.storyboard */; };
@@ -16,6 +16,9 @@
 		0E63D70B1CA75CA30072A37D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E63D7091CA75CA30072A37D /* LaunchScreen.storyboard */; };
 		0E63D7161CA75CA40072A37D /* Ball_GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E63D7151CA75CA40072A37D /* Ball_GameTests.swift */; };
 		0E63D7211CA75CA40072A37D /* Ball_GameUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E63D7201CA75CA40072A37D /* Ball_GameUITests.swift */; };
+		0E6CA8431CA7B3D8008D0E9F /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6CA8421CA7B3D8008D0E9F /* MenuScene.swift */; };
+		0E6CA8471CA86821008D0E9F /* ScoresScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6CA8461CA86821008D0E9F /* ScoresScene.swift */; };
+		0EBEA5701CA9C635008E1095 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBEA56F1CA9C635008E1095 /* Level.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,9 +39,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0E63D6F91CA75CA30072A37D /* Ball Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ball Game.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E534F4F1CA8D15500E27223 /* Levels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Levels.plist; sourceTree = "<group>"; };
+		0E63D6F91CA75CA30072A37D /* Ricochet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ricochet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E63D6FC1CA75CA30072A37D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0E63D6FE1CA75CA30072A37D /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		0E63D7001CA75CA30072A37D /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		0E63D7021CA75CA30072A37D /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		0E63D7051CA75CA30072A37D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -51,6 +54,9 @@
 		0E63D71C1CA75CA40072A37D /* Ball GameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ball GameUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E63D7201CA75CA40072A37D /* Ball_GameUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ball_GameUITests.swift; sourceTree = "<group>"; };
 		0E63D7221CA75CA40072A37D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0E6CA8421CA7B3D8008D0E9F /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
+		0E6CA8461CA86821008D0E9F /* ScoresScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoresScene.swift; sourceTree = "<group>"; };
+		0EBEA56F1CA9C635008E1095 /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,7 +97,7 @@
 		0E63D6FA1CA75CA30072A37D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0E63D6F91CA75CA30072A37D /* Ball Game.app */,
+				0E63D6F91CA75CA30072A37D /* Ricochet.app */,
 				0E63D7111CA75CA40072A37D /* Ball GameTests.xctest */,
 				0E63D71C1CA75CA40072A37D /* Ball GameUITests.xctest */,
 			);
@@ -102,8 +108,11 @@
 			isa = PBXGroup;
 			children = (
 				0E63D6FC1CA75CA30072A37D /* AppDelegate.swift */,
-				0E63D6FE1CA75CA30072A37D /* GameScene.sks */,
 				0E63D7001CA75CA30072A37D /* GameScene.swift */,
+				0E6CA8461CA86821008D0E9F /* ScoresScene.swift */,
+				0EBEA56F1CA9C635008E1095 /* Level.swift */,
+				0E6CA8421CA7B3D8008D0E9F /* MenuScene.swift */,
+				0E534F4F1CA8D15500E27223 /* Levels.plist */,
 				0E63D7021CA75CA30072A37D /* GameViewController.swift */,
 				0E63D7041CA75CA30072A37D /* Main.storyboard */,
 				0E63D7071CA75CA30072A37D /* Assets.xcassets */,
@@ -148,7 +157,7 @@
 			);
 			name = "Ball Game";
 			productName = "Ball Game";
-			productReference = 0E63D6F91CA75CA30072A37D /* Ball Game.app */;
+			productReference = 0E63D6F91CA75CA30072A37D /* Ricochet.app */;
 			productType = "com.apple.product-type.application";
 		};
 		0E63D7101CA75CA40072A37D /* Ball GameTests */ = {
@@ -237,7 +246,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E63D6FF1CA75CA30072A37D /* GameScene.sks in Resources */,
+				0E534F501CA8D15500E27223 /* Levels.plist in Resources */,
 				0E63D70B1CA75CA30072A37D /* LaunchScreen.storyboard in Resources */,
 				0E63D7081CA75CA30072A37D /* Assets.xcassets in Resources */,
 				0E63D7061CA75CA30072A37D /* Main.storyboard in Resources */,
@@ -265,9 +274,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EBEA5701CA9C635008E1095 /* Level.swift in Sources */,
 				0E63D7011CA75CA30072A37D /* GameScene.swift in Sources */,
+				0E6CA8431CA7B3D8008D0E9F /* MenuScene.swift in Sources */,
 				0E63D7031CA75CA30072A37D /* GameViewController.swift in Sources */,
 				0E63D6FD1CA75CA30072A37D /* AppDelegate.swift in Sources */,
+				0E6CA8471CA86821008D0E9F /* ScoresScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,10 +421,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Ball Game/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "leoadberg.Ball-Game";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "leoadberg.Ball-Game2";
+				PRODUCT_NAME = Ricochet;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -420,10 +436,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Ball Game/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "leoadberg.Ball-Game";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "leoadberg.Ball-Game2";
+				PRODUCT_NAME = Ricochet;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -496,6 +516,7 @@
 				0E63D7271CA75CA40072A37D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0E63D7281CA75CA40072A37D /* Build configuration list for PBXNativeTarget "Ball GameTests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +525,7 @@
 				0E63D72A1CA75CA40072A37D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0E63D72B1CA75CA40072A37D /* Build configuration list for PBXNativeTarget "Ball GameUITests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +534,7 @@
 				0E63D72D1CA75CA40072A37D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

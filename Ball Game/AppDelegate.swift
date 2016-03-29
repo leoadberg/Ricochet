@@ -8,6 +8,10 @@
 
 import UIKit
 
+var GAME_LEVELS: [Level] = []
+let DEFAULTS = NSUserDefaults.standardUserDefaults()
+var UNLOCKED_LEVELS = 0
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -15,7 +19,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        UNLOCKED_LEVELS = max(DEFAULTS.integerForKey("Unlocked Levels"), 0)
+        
+        let path = NSBundle.mainBundle().pathForResource("Levels", ofType: "plist")
+        //let dict = NSDictionary(contentsOfFile: path!) as? [String: AnyObject]
+        let array = NSMutableArray(contentsOfFile: path!)
+        
+        for (i, item) in (array?.enumerate())!{
+            let tempLevel = Level(level: i)
+            if (i > UNLOCKED_LEVELS){
+                tempLevel.lock()
+            }
+            tempLevel.scoreRequired = item["Score Required"] as! Int
+            tempLevel.ballMaxSpeedModifier = item["Max Speed Multiplier"] as! CGFloat
+            tempLevel.ballRadiusModifier = item["Ball Radius Multiplier"] as! CGFloat
+            tempLevel.ballSpeedMultModifier = item["Speed Increase Multiplier"] as! CGFloat
+            tempLevel.obsLengthModifier = item["Obstacle Size Multiplier"] as! CGFloat
+            tempLevel.ballStartSpeedModifier = item["Start Speed Multiplier"] as! CGFloat
+            //print(item["Score Required"])
+            
+            //print(item.0[item.0.endIndex.predecessor()])
+            
+            GAME_LEVELS.append(tempLevel)
+        }
+        
+        //print(GAME_LEVELS)
+
         return true
     }
 
