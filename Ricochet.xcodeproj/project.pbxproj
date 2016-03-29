@@ -48,10 +48,10 @@
 		0E63D7071CA75CA30072A37D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0E63D70A1CA75CA30072A37D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0E63D70C1CA75CA30072A37D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0E63D7111CA75CA40072A37D /* Ball GameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ball GameTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E63D7111CA75CA40072A37D /* RicochetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RicochetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E63D7151CA75CA40072A37D /* Ball_GameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ball_GameTests.swift; sourceTree = "<group>"; };
 		0E63D7171CA75CA40072A37D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0E63D71C1CA75CA40072A37D /* Ball GameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ball GameUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E63D71C1CA75CA40072A37D /* RicochetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RicochetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E63D7201CA75CA40072A37D /* Ball_GameUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ball_GameUITests.swift; sourceTree = "<group>"; };
 		0E63D7221CA75CA40072A37D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E6CA8421CA7B3D8008D0E9F /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
@@ -87,9 +87,9 @@
 		0E63D6F01CA75CA30072A37D = {
 			isa = PBXGroup;
 			children = (
-				0E63D6FB1CA75CA30072A37D /* Ball Game */,
-				0E63D7141CA75CA40072A37D /* Ball GameTests */,
-				0E63D71F1CA75CA40072A37D /* Ball GameUITests */,
+				0E63D6FB1CA75CA30072A37D /* Ricochet */,
+				0E63D7141CA75CA40072A37D /* RicochetTests */,
+				0E63D71F1CA75CA40072A37D /* RicochetUITests */,
 				0E63D6FA1CA75CA30072A37D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -98,13 +98,13 @@
 			isa = PBXGroup;
 			children = (
 				0E63D6F91CA75CA30072A37D /* Ricochet.app */,
-				0E63D7111CA75CA40072A37D /* Ball GameTests.xctest */,
-				0E63D71C1CA75CA40072A37D /* Ball GameUITests.xctest */,
+				0E63D7111CA75CA40072A37D /* RicochetTests.xctest */,
+				0E63D71C1CA75CA40072A37D /* RicochetTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0E63D6FB1CA75CA30072A37D /* Ball Game */ = {
+		0E63D6FB1CA75CA30072A37D /* Ricochet */ = {
 			isa = PBXGroup;
 			children = (
 				0E63D6FC1CA75CA30072A37D /* AppDelegate.swift */,
@@ -119,33 +119,36 @@
 				0E63D7091CA75CA30072A37D /* LaunchScreen.storyboard */,
 				0E63D70C1CA75CA30072A37D /* Info.plist */,
 			);
+			name = Ricochet;
 			path = "Ball Game";
 			sourceTree = "<group>";
 		};
-		0E63D7141CA75CA40072A37D /* Ball GameTests */ = {
+		0E63D7141CA75CA40072A37D /* RicochetTests */ = {
 			isa = PBXGroup;
 			children = (
 				0E63D7151CA75CA40072A37D /* Ball_GameTests.swift */,
 				0E63D7171CA75CA40072A37D /* Info.plist */,
 			);
+			name = RicochetTests;
 			path = "Ball GameTests";
 			sourceTree = "<group>";
 		};
-		0E63D71F1CA75CA40072A37D /* Ball GameUITests */ = {
+		0E63D71F1CA75CA40072A37D /* RicochetUITests */ = {
 			isa = PBXGroup;
 			children = (
 				0E63D7201CA75CA40072A37D /* Ball_GameUITests.swift */,
 				0E63D7221CA75CA40072A37D /* Info.plist */,
 			);
+			name = RicochetUITests;
 			path = "Ball GameUITests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0E63D6F81CA75CA30072A37D /* Ball Game */ = {
+		0E63D6F81CA75CA30072A37D /* Ricochet */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0E63D7251CA75CA40072A37D /* Build configuration list for PBXNativeTarget "Ball Game" */;
+			buildConfigurationList = 0E63D7251CA75CA40072A37D /* Build configuration list for PBXNativeTarget "Ricochet" */;
 			buildPhases = (
 				0E63D6F51CA75CA30072A37D /* Sources */,
 				0E63D6F61CA75CA30072A37D /* Frameworks */,
@@ -155,14 +158,14 @@
 			);
 			dependencies = (
 			);
-			name = "Ball Game";
+			name = Ricochet;
 			productName = "Ball Game";
 			productReference = 0E63D6F91CA75CA30072A37D /* Ricochet.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0E63D7101CA75CA40072A37D /* Ball GameTests */ = {
+		0E63D7101CA75CA40072A37D /* RicochetTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0E63D7281CA75CA40072A37D /* Build configuration list for PBXNativeTarget "Ball GameTests" */;
+			buildConfigurationList = 0E63D7281CA75CA40072A37D /* Build configuration list for PBXNativeTarget "RicochetTests" */;
 			buildPhases = (
 				0E63D70D1CA75CA40072A37D /* Sources */,
 				0E63D70E1CA75CA40072A37D /* Frameworks */,
@@ -173,14 +176,14 @@
 			dependencies = (
 				0E63D7131CA75CA40072A37D /* PBXTargetDependency */,
 			);
-			name = "Ball GameTests";
+			name = RicochetTests;
 			productName = "Ball GameTests";
-			productReference = 0E63D7111CA75CA40072A37D /* Ball GameTests.xctest */;
+			productReference = 0E63D7111CA75CA40072A37D /* RicochetTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		0E63D71B1CA75CA40072A37D /* Ball GameUITests */ = {
+		0E63D71B1CA75CA40072A37D /* RicochetUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0E63D72B1CA75CA40072A37D /* Build configuration list for PBXNativeTarget "Ball GameUITests" */;
+			buildConfigurationList = 0E63D72B1CA75CA40072A37D /* Build configuration list for PBXNativeTarget "RicochetUITests" */;
 			buildPhases = (
 				0E63D7181CA75CA40072A37D /* Sources */,
 				0E63D7191CA75CA40072A37D /* Frameworks */,
@@ -191,9 +194,9 @@
 			dependencies = (
 				0E63D71E1CA75CA40072A37D /* PBXTargetDependency */,
 			);
-			name = "Ball GameUITests";
+			name = RicochetUITests;
 			productName = "Ball GameUITests";
-			productReference = 0E63D71C1CA75CA40072A37D /* Ball GameUITests.xctest */;
+			productReference = 0E63D71C1CA75CA40072A37D /* RicochetTests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -203,7 +206,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0700;
-				ORGANIZATIONNAME = "Brandon Tai";
+				ORGANIZATIONNAME = Tigersushi;
 				TargetAttributes = {
 					0E63D6F81CA75CA30072A37D = {
 						CreatedOnToolsVersion = 7.0;
@@ -221,7 +224,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0E63D6F41CA75CA30072A37D /* Build configuration list for PBXProject "Ball Game" */;
+			buildConfigurationList = 0E63D6F41CA75CA30072A37D /* Build configuration list for PBXProject "Ricochet" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -234,9 +237,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0E63D6F81CA75CA30072A37D /* Ball Game */,
-				0E63D7101CA75CA40072A37D /* Ball GameTests */,
-				0E63D71B1CA75CA40072A37D /* Ball GameUITests */,
+				0E63D6F81CA75CA30072A37D /* Ricochet */,
+				0E63D7101CA75CA40072A37D /* RicochetTests */,
+				0E63D71B1CA75CA40072A37D /* RicochetUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -304,12 +307,12 @@
 /* Begin PBXTargetDependency section */
 		0E63D7131CA75CA40072A37D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0E63D6F81CA75CA30072A37D /* Ball Game */;
+			target = 0E63D6F81CA75CA30072A37D /* Ricochet */;
 			targetProxy = 0E63D7121CA75CA40072A37D /* PBXContainerItemProxy */;
 		};
 		0E63D71E1CA75CA40072A37D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0E63D6F81CA75CA30072A37D /* Ball Game */;
+			target = 0E63D6F81CA75CA30072A37D /* Ricochet */;
 			targetProxy = 0E63D71D1CA75CA40072A37D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -455,8 +458,8 @@
 				INFOPLIST_FILE = "Ball GameTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "leoadberg.Ball-GameTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ball Game.app/Ball Game";
+				PRODUCT_NAME = RicochetTests;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ricochet.app/Ricochet";
 			};
 			name = Debug;
 		};
@@ -467,8 +470,8 @@
 				INFOPLIST_FILE = "Ball GameTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "leoadberg.Ball-GameTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ball Game.app/Ball Game";
+				PRODUCT_NAME = RicochetTests;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ricochet.app/Ricochet";
 			};
 			name = Release;
 		};
@@ -479,7 +482,7 @@
 				INFOPLIST_FILE = "Ball GameUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "leoadberg.Ball-GameUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = RicochetTests;
 				TEST_TARGET_NAME = "Ball Game";
 				USES_XCTRUNNER = YES;
 			};
@@ -491,7 +494,7 @@
 				INFOPLIST_FILE = "Ball GameUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "leoadberg.Ball-GameUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = RicochetTests;
 				TEST_TARGET_NAME = "Ball Game";
 				USES_XCTRUNNER = YES;
 			};
@@ -500,7 +503,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0E63D6F41CA75CA30072A37D /* Build configuration list for PBXProject "Ball Game" */ = {
+		0E63D6F41CA75CA30072A37D /* Build configuration list for PBXProject "Ricochet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0E63D7231CA75CA40072A37D /* Debug */,
@@ -509,7 +512,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0E63D7251CA75CA40072A37D /* Build configuration list for PBXNativeTarget "Ball Game" */ = {
+		0E63D7251CA75CA40072A37D /* Build configuration list for PBXNativeTarget "Ricochet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0E63D7261CA75CA40072A37D /* Debug */,
@@ -518,7 +521,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0E63D7281CA75CA40072A37D /* Build configuration list for PBXNativeTarget "Ball GameTests" */ = {
+		0E63D7281CA75CA40072A37D /* Build configuration list for PBXNativeTarget "RicochetTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0E63D7291CA75CA40072A37D /* Debug */,
@@ -527,7 +530,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0E63D72B1CA75CA40072A37D /* Build configuration list for PBXNativeTarget "Ball GameUITests" */ = {
+		0E63D72B1CA75CA40072A37D /* Build configuration list for PBXNativeTarget "RicochetUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0E63D72C1CA75CA40072A37D /* Debug */,
