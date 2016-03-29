@@ -10,18 +10,18 @@ import Foundation
 import SpriteKit
 
 class Level: SKShapeNode {
-    init(level: Int){
+    init(level: Int) {
         super.init()
-        self.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -SCREEN_WIDTH / 9, y: -SCREEN_WIDTH / 9), size: CGSize(width: SCREEN_WIDTH * 2 / 9, height: SCREEN_WIDTH * 2 / 9)), nil)
-        self.fillColor = COLOR_FADED_RED
-        self.lineWidth = 4
+        super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -SCREEN_WIDTH / 9, y: -SCREEN_WIDTH / 9), size: CGSize(width: SCREEN_WIDTH * 2 / 9, height: SCREEN_WIDTH * 2 / 9)), nil)
+        super.fillColor = COLOR_FADED_RED
+        super.lineWidth = 4
         let label = SKLabelNode(fontNamed:"DINAlternate-Bold")
         label.fontSize = SCREEN_WIDTH / 6;
         label.text = String(level)
         label.position.x = super.position.x
         label.position.y = super.position.y - SCREEN_WIDTH / 16
-        self.addChild(label)
-        self.name = "Level"+String(level)
+        super.addChild(label)
+        super.name = "Level"+String(level)
         levelNumber = level
     }
     
@@ -37,23 +37,23 @@ class Level: SKShapeNode {
     
     func unlock() {
         locked = false
-        self.fillColor = COLOR_FADED_RED
+        super.fillColor = COLOR_FADED_RED
     }
     
     func lock() {
         locked = true
-        self.fillColor = COLOR_GREY
+        super.fillColor = COLOR_GREY
     }
     
     func select() {
         if !locked {
-            self.fillColor = COLOR_FADED_RED_DARKER
+            super.fillColor = COLOR_FADED_RED_DARKER
         }
     }
     
     func deselect() {
         if !locked {
-            self.fillColor = COLOR_FADED_RED
+            super.fillColor = COLOR_FADED_RED
         }
     }
     
