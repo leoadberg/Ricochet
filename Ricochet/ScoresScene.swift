@@ -1,6 +1,6 @@
 //
 //  ScoresScene.swift
-//  Ball Game
+//  Ricochet
 //
 //  Created by Leo Adberg on 3/27/16.
 //  Copyright © 2016 Leo Adberg. All rights reserved.
