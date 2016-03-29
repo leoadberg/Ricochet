@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  Ricochet
 //
-//  Created by Leo Adberg on 3/26/16.
-//  Copyright © 2016 Leo Adberg. All rights reserved.
+//  Created by Tigersushi on 3/26/16.
+//  Copyright © 2016 Tigersushi. All rights reserved.
 //
 
 import UIKit
@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if (i > UNLOCKED_LEVELS){
                 tempLevel.lock()
             }
+            tempLevel.mode = item["Game Mode"] as! Int
             tempLevel.scoreRequired = item["Score Required"] as! Int
             tempLevel.ballMaxSpeedModifier = item["Max Speed Multiplier"] as! CGFloat
             tempLevel.ballRadiusModifier = item["Ball Radius Multiplier"] as! CGFloat

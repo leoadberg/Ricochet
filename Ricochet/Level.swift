@@ -2,8 +2,8 @@
 //  Level.swift
 //  Ricochet
 //
-//  Created by Leo Adberg on 3/28/16.
-//  Copyright © 2016 Leo Adberg. All rights reserved.
+//  Created by Tigersushi on 3/28/16.
+//  Copyright © 2016 Tigersushi. All rights reserved.
 //
 
 import Foundation
@@ -33,7 +33,9 @@ class Level: SKShapeNode {
     var ballSpeedMultModifier : CGFloat = 1
     var obsLengthModifier : CGFloat = 1
     var ballStartSpeedModifier : CGFloat = 1
-    var shape = MODE_CIRCLE
+    var mode = MODE_CIRCLE
+    var activeWalls: [Bool] = [false, false, false, false] // [Top, Right, Bottom, Left]
+    var wallThicknessMultiplier = 0.025
     
     func unlock() {
         locked = false

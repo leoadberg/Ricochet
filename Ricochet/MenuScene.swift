@@ -2,8 +2,8 @@
 //  MenuScene.swift
 //  Ricochet
 //
-//  Created by Leo Adberg on 3/26/16.
-//  Copyright © 2016 Leo Adberg. All rights reserved.
+//  Created by Tigersushi on 3/26/16.
+//  Copyright © 2016 Tigersushi. All rights reserved.
 //
 
 import SpriteKit
@@ -23,8 +23,13 @@ let COLOR_TRANSPARENT_BLACK = SKColor(colorLiteralRed: 0 / 255, green: 0 / 255, 
 let COLOR_TRANSPARENT = SKColor(colorLiteralRed: 0 / 255, green: 0 / 255, blue: 0 / 255, alpha: 0)
 let COLOR_GREY = SKColor(colorLiteralRed: 190 / 255, green: 190 / 255, blue: 190 / 255, alpha: 1)
 
+let MODE_WALLS = 0
 let MODE_SQUARE = 1
 let MODE_CIRCLE = 2
+
+enum Wall: Int {
+    case Top = 0, Right = 1, Bottom = 2, Left = 3
+}
 
 //var unlockedLevels = 1
 

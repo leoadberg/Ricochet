@@ -2,8 +2,8 @@
 //  Ball_GameTests.swift
 //  Ball GameTests
 //
-//  Created by Leo Adberg on 3/26/16.
-//  Copyright © 2016 Leo Adberg. All rights reserved.
+//  Created by Tigersushi on 3/26/16.
+//  Copyright © 2016 Tigersushi. All rights reserved.
 //
 
 import XCTest

@@ -2,8 +2,8 @@
 //  GameScene.swift
 //  Ricochet
 //
-//  Created by Leo Adberg on 3/26/16.
-//  Copyright (c) 2016 Leo Adberg. All rights reserved.
+//  Created by Tigersushi on 3/26/16.
+//  Copyright (c) 2016 Tigersushi. All rights reserved.
 //
 
 import SpriteKit
@@ -22,6 +22,13 @@ let MIN_FRAMERATE: Double = 30.0
 
 var unitLength: Double = 0.0
 
+let TOP_CENTER: [CGFloat] = [SCREEN_WIDTH / 2, SCREEN_HEIGHT]
+let RIGHT_CENTER: [CGFloat] = [SCREEN_WIDTH, SCREEN_HEIGHT / 2]
+let BOTTOM_CENTER: [CGFloat] = [SCREEN_WIDTH / 2, 0]
+let LEFT_CENTER: [CGFloat] = [0, SCREEN_HEIGHT / 2]
+
+var wallThickness: CGFloat = SCREEN_WIDTH / 10
+
 //var OBS_LENGTH: CGFloat = SCREEN_WIDTH / 5
 
 class GameScene: SKScene {
@@ -33,7 +40,7 @@ class GameScene: SKScene {
     var OBS_LENGTH: CGFloat = SCREEN_WIDTH / 5
     var BALL_START_SPEED: CGFloat = 1
     
-    var currentShape: Int = 0
+    var currentMode: Int = 0
     
     var first: Bool = true
     var lost: Bool = false
@@ -61,18 +68,18 @@ class GameScene: SKScene {
     
     func updateHighscore(score: Int, mode: Int) {
         if (getHighscore(mode) < score){
-            DEFAULTS.setInteger(score, forKey: "Highscore"+String(mode))
+            DEFAULTS.setInteger(score, forKey: "Highscore\(mode)")
         }
     }
     
     func getHighscore(mode: Int) -> Int {
-        return DEFAULTS.integerForKey("Highscore"+String(mode))
+        return DEFAULTS.integerForKey("Highscore\(mode)")
     }
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         
-        currentShape = currentLevel.shape
+        currentMode = currentLevel.mode
         BALL_RADIUS = BALL_RADIUS * currentLevel.ballRadiusModifier
         BALL_SPEED_MULT = BALL_SPEED_MULT * currentLevel.ballSpeedMultModifier
         BALL_MAX_SPEED = BALL_MAX_SPEED * currentLevel.ballMaxSpeedModifier
@@ -81,6 +88,7 @@ class GameScene: SKScene {
         ball = SKShapeNode(circleOfRadius: BALL_RADIUS)
         
         unitLength = Double(SCREEN_WIDTH)
+        wallThickness = SCREEN_WIDTH * CGFloat(currentLevel.wallThicknessMultiplier)
         
         scoreLabel.text = String(score);
         scoreLabel.fontSize = SCREEN_WIDTH / 2;
@@ -89,7 +97,7 @@ class GameScene: SKScene {
         
         self.addChild(scoreLabel)
         
-        requiredScoreLabel.text = String(currentLevel.scoreRequired) + " to win";
+        requiredScoreLabel.text = "\(currentLevel.scoreRequired) to win";
         requiredScoreLabel.fontColor = SKColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 0.5)
         requiredScoreLabel.fontSize = SCREEN_WIDTH / 5;
         requiredScoreLabel.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 9 / 10);
@@ -111,18 +119,22 @@ class GameScene: SKScene {
         
         self.addChild(ball)
         
-        switch (currentShape) {
+        switch (currentMode) {
+            
+        case 0:
+            obstacle = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
+            
         case 1:
             obstacle = SKShapeNode(rectOfSize: CGSize(width: OBS_LENGTH, height: OBS_LENGTH))
-            break;
+            
         case 2:
             obstacle = SKShapeNode(circleOfRadius: OBS_LENGTH / 2)
-            break;
+            
         default:
             obstacle = SKShapeNode(rectOfSize: CGSize(width: OBS_LENGTH, height: OBS_LENGTH))
-            break;
+            
         }
-        obstacle.position = CGPoint(x: OBS_LENGTH * -2, y: OBS_LENGTH * -2)
+        obstacle.position = CGPoint(x: OBS_LENGTH * -3, y: OBS_LENGTH * -3)
         obstacle.zPosition = 1
         obstacle.fillColor = COLOR_FADED_RED
         obstacle.lineWidth = 4
@@ -143,7 +155,48 @@ class GameScene: SKScene {
         }
         
         if (!lost) {
-            obstacle.position = touches.first!.locationInNode(self)
+            
+            switch (currentMode) {
+            
+            case 0:
+                let touchLoc: [CGFloat] = [touchStart.x, touchStart.y]
+                
+                let newActiveWall = minimum(    distanceBetween(touchLoc, loc2: TOP_CENTER),
+                                            n2: distanceBetween(touchLoc, loc2: RIGHT_CENTER),
+                                            n3: distanceBetween(touchLoc, loc2: BOTTOM_CENTER),
+                                            n4: distanceBetween(touchLoc, loc2: LEFT_CENTER))
+                
+                currentLevel.activeWalls = [false, false, false, false]
+                currentLevel.activeWalls[newActiveWall] = true
+                
+                switch (newActiveWall) {
+                    
+                case Wall.Top.rawValue:
+                    obstacle.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 1.5 - wallThickness)
+                    
+                case Wall.Right.rawValue:
+                    obstacle.position = CGPoint(x: SCREEN_WIDTH * 1.5 - wallThickness, y: SCREEN_HEIGHT / 2)
+                    
+                case Wall.Bottom.rawValue:
+                    obstacle.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / -2 + wallThickness)
+                    
+                case Wall.Left.rawValue:
+                    obstacle.position = CGPoint(x: SCREEN_WIDTH / -2 + wallThickness, y: SCREEN_HEIGHT / 2)
+                    
+                default:
+                    obstacle.position = CGPoint(x: -3 * SCREEN_WIDTH, y: -3 * SCREEN_HEIGHT)
+                    
+                }
+                
+            case 1,
+                 2:
+                obstacle.position = touches.first!.locationInNode(self)
+            
+            default:
+                return
+                
+            }
+            
         }
         
         /*
@@ -211,10 +264,10 @@ class GameScene: SKScene {
         
         if (justLost) {
             
-            updateHighscore(score, mode: currentShape)
+            updateHighscore(score, mode: currentMode)
             
             let highscoreLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
-            highscoreLabel.text = "Highscore: " +  String(getHighscore(currentShape))
+            highscoreLabel.text = "Highscore: \(getHighscore(currentMode))"
             highscoreLabel.fontSize = SCREEN_WIDTH / 9;
             highscoreLabel.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 9 / 10)
             highscoreLabel.zPosition = 4
@@ -287,27 +340,69 @@ class GameScene: SKScene {
         ball.position.x += CGFloat(ball_xSpeed * timeSinceLastUpdate)
         ball.position.y += CGFloat(ball_ySpeed * timeSinceLastUpdate)
         
-        if (abs(ball.position.x - SCREEN_WIDTH) <= BALL_RADIUS || abs(ball.position.x) <= BALL_RADIUS) {
-            justLost = true
-            /*
-            ball_xSpeed = abs(ball.position.x) <= BALL_RADIUS ? abs(ball_xSpeed) : abs(ball_xSpeed) * -1
-            updatePolar()
-            speedUp()
-            addScore(1)
-            */
+        // Right Wall Collision Case
+        if (abs(ball.position.x - SCREEN_WIDTH) <= BALL_RADIUS + wallThickness) {
+            
+            if (!currentLevel.activeWalls[Wall.Right.rawValue]) {
+                justLost = true
+            }
+            else {
+                ball_xSpeed = abs(ball_xSpeed) * -1
+                updatePolar()
+                speedUp()
+                addScore(1)
+            }
+            
+        }
+    
+        // Left Wall Collision Case
+        else if (abs(ball.position.x) <= BALL_RADIUS + wallThickness) {
+            
+            if (!currentLevel.activeWalls[Wall.Left.rawValue]) {
+                justLost = true
+            }
+            else {
+                ball_xSpeed = abs(ball_xSpeed)
+                updatePolar()
+                speedUp()
+                addScore(1)
+            }
+            
         }
         
-        if (abs(ball.position.y - SCREEN_HEIGHT) <= BALL_RADIUS || abs(ball.position.y) <= BALL_RADIUS) {
-            justLost = true
-            /*
-            ball_ySpeed = abs(ball.position.y) <= BALL_RADIUS ? abs(ball_ySpeed) : abs(ball_ySpeed) * -1
-            updatePolar()
-            speedUp()
-            addScore(1)
-            */
+        // Top Wall Collision Case
+        if (abs(ball.position.y - SCREEN_HEIGHT) <= BALL_RADIUS + wallThickness) {
+            
+            if (!currentLevel.activeWalls[Wall.Top.rawValue]) {
+                justLost = true
+            }
+            else {
+                ball_ySpeed = abs(ball_ySpeed) * -1
+                updatePolar()
+                speedUp()
+                addScore(1)
+            }
+            
+        }
+        
+        // Bottom Wall Collision Case
+        else if (abs(ball.position.y) <= BALL_RADIUS + wallThickness) {
+            
+            if (!currentLevel.activeWalls[Wall.Bottom.rawValue]) {
+                justLost = true
+            }
+            else {
+                ball_ySpeed = abs(ball_ySpeed)
+                updatePolar()
+                speedUp()
+                addScore(1)
+            }
+            
         }
 
-        if (currentShape == 1){
+        switch (currentMode) {
+            
+        case 1:
             if (abs(ball.position.y - obstacle.position.y) < (OBS_LENGTH / 2 + BALL_RADIUS) && abs(ball.position.x -    obstacle.position.x) < (OBS_LENGTH / 2 + BALL_RADIUS)){
                 if (!ball_colliding){
                     if (abs(ball.position.y - obstacle.position.y) > abs(ball.position.x - obstacle.position.x)){
@@ -326,8 +421,8 @@ class GameScene: SKScene {
             else {
                 ball_colliding = false
             }
-        }
-        else if (currentShape == 2){
+            
+        case 2:
             if (pow(Double(ball.position.y - obstacle.position.y), 2.0) + pow(Double(ball.position.x - obstacle.position.x),2.0) < pow(Double(OBS_LENGTH / 2 + BALL_RADIUS),2.0)){
                 if (!ball_colliding){
                     let nx = Double(ball.position.x - obstacle.position.x)
@@ -348,6 +443,10 @@ class GameScene: SKScene {
             else {
                 ball_colliding = false
             }
+            
+        default:
+            return
+            
         }
         
     }
@@ -373,4 +472,26 @@ class GameScene: SKScene {
         ball_speed = sqrt( ball_xSpeed * ball_xSpeed + ball_ySpeed * ball_ySpeed )
         ball_angle = atan2(ball_ySpeed, ball_xSpeed)
     }
+    
+    func distanceBetween(loc1: [CGFloat], loc2: [CGFloat]) -> CGFloat {
+        return sqrt(pow(loc1[0] - loc2[0], 2) + pow(loc1[1] - loc2[1], 2))
+    }
+        
+    func minimum(n1: CGFloat, n2: CGFloat, n3: CGFloat, n4: CGFloat) -> Int {
+    
+        if (n1 < n2 && n1 < n3 && n1 < n4) {
+            return 0
+        }
+        else if (n2 < n3 && n2 < n4) {
+            return 1
+        }
+        else if (n3 < n4) {
+            return 2
+        }
+        else {
+            return 3
+        }
+        
+    }
+    
 }

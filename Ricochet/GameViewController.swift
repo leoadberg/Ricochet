@@ -2,8 +2,8 @@
 //  GameViewController.swift
 //  Ricochet
 //
-//  Created by Leo Adberg on 3/26/16.
-//  Copyright (c) 2016 Leo Adberg. All rights reserved.
+//  Created by Tigersushi on 3/26/16.
+//  Copyright (c) 2016 Tigersushi. All rights reserved.
 //
 
 import UIKit
