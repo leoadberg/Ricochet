@@ -42,9 +42,11 @@ class MenuScene: SKScene {
     
     let levelSelector = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 1.1, height: SCREEN_WIDTH / 3))
     var scroll: CGFloat = 0
+    var scrollSpeed: CGFloat = 0
     let modeSquare = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 2 / 9, height: SCREEN_WIDTH * 2 / 9))
     let modeCircle = SKShapeNode(circleOfRadius: SCREEN_WIDTH / 9)
     var inLevelSelector = false
+    var touching = false
     var touchStart = CGPoint(x: 0, y: 0)
     
     let defaults = NSUserDefaults.standardUserDefaults()
@@ -120,6 +122,7 @@ class MenuScene: SKScene {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
         
+        touching = true
         let location = touches.first!.locationInNode(self)
         touchStart = location
         
@@ -183,6 +186,7 @@ class MenuScene: SKScene {
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
+        touching = false
         let location = touches.first!.locationInNode(self)
         
         for tempLevel in GAME_LEVELS {
@@ -263,21 +267,38 @@ class MenuScene: SKScene {
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        touching = true
         let touch = touches.first! as UITouch
         let positionInScene = touch.locationInNode(self)
         let previousPosition = touch.previousLocationInNode(self)
         let translation = CGPoint(x: positionInScene.x - previousPosition.x, y: positionInScene.y - previousPosition.y)
-        if (inLevelSelector && previousPosition.y < SCREEN_HEIGHT / 2 + SCREEN_WIDTH / 3 && previousPosition.y > SCREEN_HEIGHT / 2 - SCREEN_WIDTH / 3) {
+        if (inLevelSelector && touchStart.y < SCREEN_HEIGHT / 2 + SCREEN_WIDTH / 3 && touchStart.y > SCREEN_HEIGHT / 2 - SCREEN_WIDTH / 3) {
             scroll += translation.x
+            scrollSpeed = translation.x
         }
-        scroll = max(min(0,scroll), -SCREEN_WIDTH * (CGFloat(GAME_LEVELS.count) - 3) / 3)
-        for tempLevel in GAME_LEVELS {
-            tempLevel.position.x = SCREEN_WIDTH * (CGFloat(tempLevel.levelNumber) + 0.5) / 3 + scroll
-        }
+        //scroll = max(min(0,scroll), -SCREEN_WIDTH * (CGFloat(GAME_LEVELS.count) - 3) / 3)
+        //for tempLevel in GAME_LEVELS {
+        //    tempLevel.position.x = SCREEN_WIDTH * (CGFloat(tempLevel.levelNumber) + 0.5) / 3 + scroll
+        //}
     }
     
     override func update(currentTime: CFTimeInterval) {
-        if (!inLevelSelector) {
+        if (inLevelSelector) {
+            if (!touching) {
+                scroll += scrollSpeed
+                scrollSpeed = scrollSpeed * 0.9
+                if (abs(scrollSpeed) < 2) {
+                    scrollSpeed = 0
+                }
+            }
+            if (scroll != 0) {
+                scroll = max(min(0,scroll), -SCREEN_WIDTH * (CGFloat(GAME_LEVELS.count) - 3) / 3)
+                for tempLevel in GAME_LEVELS {
+                    tempLevel.position.x = SCREEN_WIDTH * (CGFloat(tempLevel.levelNumber) + 0.5) / 3 + scroll
+                }
+            }
+        }
+        else {
             for tempLevel in GAME_LEVELS {
                 tempLevel.position = CGPoint(x: 2 * SCREEN_WIDTH, y: SCREEN_HEIGHT / 2)
             }
