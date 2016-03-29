@@ -119,8 +119,7 @@
 				0E63D7091CA75CA30072A37D /* LaunchScreen.storyboard */,
 				0E63D70C1CA75CA30072A37D /* Info.plist */,
 			);
-			name = Ricochet;
-			path = "Ball Game";
+			path = Ricochet;
 			sourceTree = "<group>";
 		};
 		0E63D7141CA75CA40072A37D /* RicochetTests */ = {
@@ -129,8 +128,7 @@
 				0E63D7151CA75CA40072A37D /* Ball_GameTests.swift */,
 				0E63D7171CA75CA40072A37D /* Info.plist */,
 			);
-			name = RicochetTests;
-			path = "Ball GameTests";
+			path = RicochetTests;
 			sourceTree = "<group>";
 		};
 		0E63D71F1CA75CA40072A37D /* RicochetUITests */ = {
@@ -139,8 +137,7 @@
 				0E63D7201CA75CA40072A37D /* Ball_GameUITests.swift */,
 				0E63D7221CA75CA40072A37D /* Info.plist */,
 			);
-			name = RicochetUITests;
-			path = "Ball GameUITests";
+			path = RicochetUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -426,7 +423,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = "Ball Game/Info.plist";
+				INFOPLIST_FILE = Ricochet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tigersushi.Ricochet;
@@ -441,7 +438,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = "Ball Game/Info.plist";
+				INFOPLIST_FILE = Ricochet/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = tigersushi.Ricochet;
