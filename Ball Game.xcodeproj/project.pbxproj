@@ -203,7 +203,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0700;
-				ORGANIZATIONNAME = "Leo Adberg";
+				ORGANIZATIONNAME = "Brandon Tai";
 				TargetAttributes = {
 					0E63D6F81CA75CA30072A37D = {
 						CreatedOnToolsVersion = 7.0;
@@ -426,7 +426,7 @@
 				INFOPLIST_FILE = "Ball Game/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "leoadberg.Ball-Game2";
+				PRODUCT_BUNDLE_IDENTIFIER = tigersushi.Ricochet;
 				PRODUCT_NAME = Ricochet;
 				PROVISIONING_PROFILE = "";
 			};
@@ -441,7 +441,7 @@
 				INFOPLIST_FILE = "Ball Game/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "leoadberg.Ball-Game2";
+				PRODUCT_BUNDLE_IDENTIFIER = tigersushi.Ricochet;
 				PRODUCT_NAME = Ricochet;
 				PROVISIONING_PROFILE = "";
 			};
