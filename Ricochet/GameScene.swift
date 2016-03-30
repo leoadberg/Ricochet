@@ -337,6 +337,11 @@ class GameScene: SKScene {
         let timeSinceLastUpdate: Double = min(currentTime - lastUpdateTime, 1 / MIN_FRAMERATE)
         lastUpdateTime = currentTime
         
+        if (currentLevel.gravityMode == 1) {
+            ball_xSpeed += Double(currentLevel.gravityX) * timeSinceLastUpdate
+            ball_ySpeed += Double(currentLevel.gravityY) * timeSinceLastUpdate
+        }
+        
         ball.position.x += CGFloat(ball_xSpeed * timeSinceLastUpdate)
         ball.position.y += CGFloat(ball_ySpeed * timeSinceLastUpdate)
         

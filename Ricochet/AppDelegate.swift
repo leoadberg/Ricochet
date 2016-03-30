@@ -38,6 +38,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             tempLevel.ballSpeedMultModifier = item["Speed Increase Multiplier"] as! CGFloat
             tempLevel.obsLengthModifier = item["Obstacle Size Multiplier"] as! CGFloat
             tempLevel.ballStartSpeedModifier = item["Start Speed Multiplier"] as! CGFloat
+            tempLevel.gravityMode = item["Gravity Mode"] as! Int
+            tempLevel.gravityX = item["Gravity X"] as! CGFloat
+            tempLevel.gravityY = item["Gravity Y"] as! CGFloat
             //print(item["Score Required"])
             
             //print(item.0[item.0.endIndex.predecessor()])

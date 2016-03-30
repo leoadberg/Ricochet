@@ -17,6 +17,14 @@
 		<integer>1</integer>
 		<key>Score Required</key>
 		<integer>5</integer>
+		<key>Gravity Mode</key>
+		<integer>1</integer>
+		<key>Gravity X</key>
+		<integer>0</integer>
+		<key>Gravity Y</key>
+		<integer>-100</integer>
+		<key>Gravity Strength</key>
+		<integer>0</integer>
 	</dict>
 	<dict>
 		<key>Game Mode</key>
@@ -33,6 +41,14 @@
 		<integer>1</integer>
 		<key>Score Required</key>
 		<integer>10</integer>
+		<key>Gravity Mode</key>
+		<integer>1</integer>
+		<key>Gravity X</key>
+		<integer>100</integer>
+		<key>Gravity Y</key>
+		<integer>100</integer>
+		<key>Gravity Strength</key>
+		<integer>0</integer>
 	</dict>
 	<dict>
 		<key>Game Mode</key>
@@ -49,6 +65,14 @@
 		<integer>1</integer>
 		<key>Score Required</key>
 		<integer>5</integer>
+		<key>Gravity Mode</key>
+		<integer>0</integer>
+		<key>Gravity X</key>
+		<integer>0</integer>
+		<key>Gravity Y</key>
+		<integer>0</integer>
+		<key>Gravity Strength</key>
+		<integer>0</integer>
 	</dict>
 	<dict>
 		<key>Game Mode</key>
@@ -65,6 +89,14 @@
 		<integer>1</integer>
 		<key>Score Required</key>
 		<integer>8</integer>
+		<key>Gravity Mode</key>
+		<integer>0</integer>
+		<key>Gravity X</key>
+		<integer>0</integer>
+		<key>Gravity Y</key>
+		<integer>0</integer>
+		<key>Gravity Strength</key>
+		<integer>0</integer>
 	</dict>
 	<dict>
 		<key>Game Mode</key>
@@ -81,6 +113,14 @@
 		<real>0.2</real>
 		<key>Score Required</key>
 		<integer>5</integer>
+		<key>Gravity Mode</key>
+		<integer>0</integer>
+		<key>Gravity X</key>
+		<integer>0</integer>
+		<key>Gravity Y</key>
+		<integer>0</integer>
+		<key>Gravity Strength</key>
+		<integer>0</integer>
 	</dict>
 	<dict>
 		<key>Game Mode</key>
@@ -97,6 +137,14 @@
 		<integer>1</integer>
 		<key>Score Required</key>
 		<integer>5</integer>
+		<key>Gravity Mode</key>
+		<integer>0</integer>
+		<key>Gravity X</key>
+		<integer>0</integer>
+		<key>Gravity Y</key>
+		<integer>0</integer>
+		<key>Gravity Strength</key>
+		<integer>0</integer>
 	</dict>
 </array>
 </plist>
