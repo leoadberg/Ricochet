@@ -66,14 +66,14 @@ class GameScene: SKScene {
     let nextLevelButton = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6))
     var touchStart = CGPoint(x: 0, y: 0)
     
-    func updateHighscore(score: Int, mode: Int) {
-        if (getHighscore(mode) < score){
-            DEFAULTS.setInteger(score, forKey: "Highscore\(mode)")
+    func updateHighscore(score: Int) {
+        if (getHighscore() < score){
+            DEFAULTS.setInteger(score, forKey: "Highscore"+String(currentLevel.levelNumber))
         }
     }
     
-    func getHighscore(mode: Int) -> Int {
-        return DEFAULTS.integerForKey("Highscore\(mode)")
+    func getHighscore() -> Int {
+        return DEFAULTS.integerForKey("Highscore"+String(currentLevel.levelNumber))
     }
     
     override func didMoveToView(view: SKView) {
@@ -264,10 +264,10 @@ class GameScene: SKScene {
         
         if (justLost) {
             
-            updateHighscore(score, mode: currentMode)
+            updateHighscore(score)
             
             let highscoreLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
-            highscoreLabel.text = "Highscore: \(getHighscore(currentMode))"
+            highscoreLabel.text = "Highscore: \(getHighscore())"
             highscoreLabel.fontSize = SCREEN_WIDTH / 9;
             highscoreLabel.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 9 / 10)
             highscoreLabel.zPosition = 4
