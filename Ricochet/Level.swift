@@ -36,7 +36,7 @@ class Level: SKShapeNode {
     var mode = MODE_CIRCLE
     var activeWalls: [Bool] = [false, false, false, false] // [Top, Right, Bottom, Left]
     var wallThicknessMultiplier = 0.025
-    var gravityMode: Int = 0 //0 = none, 1 = constant acceleration of <x,y>, 2 = gravity at point (x,y) of strength gravityStrenth
+    var gravityMode: Int = 0 //0 = none, 1 = constant acceleration of <x,y>, 2 = gravity at point (x% of screen width,y% of screen height) of strength gravityStrenth
     var gravityX: CGFloat = 0
     var gravityY: CGFloat = 0
     var gravityStrength: CGFloat = 0

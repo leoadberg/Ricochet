@@ -66,13 +66,13 @@
 		<key>Score Required</key>
 		<integer>5</integer>
 		<key>Gravity Mode</key>
-		<integer>0</integer>
+		<integer>2</integer>
 		<key>Gravity X</key>
 		<integer>0</integer>
 		<key>Gravity Y</key>
 		<integer>0</integer>
 		<key>Gravity Strength</key>
-		<integer>0</integer>
+		<real>1000000</real>
 	</dict>
 	<dict>
 		<key>Game Mode</key>

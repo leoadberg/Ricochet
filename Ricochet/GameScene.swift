@@ -340,6 +340,20 @@ class GameScene: SKScene {
         if (currentLevel.gravityMode == 1) {
             ball_xSpeed += Double(currentLevel.gravityX) * timeSinceLastUpdate
             ball_ySpeed += Double(currentLevel.gravityY) * timeSinceLastUpdate
+        } else if (currentLevel.gravityMode == 2) {
+            //ball_xSpeed += Double(currentLevel.gravityStrength / pow(currentLevel.gravityX * SCREEN_WIDTH - CGFloat(ball.position.x), 2)) * timeSinceLastUpdate
+            //ball_ySpeed += Double(currentLevel.gravityStrength / pow(currentLevel.gravityY * SCREEN_HEIGHT - CGFloat(ball.position.y), 2)) * timeSinceLastUpdate
+            
+            let xDist = abs(currentLevel.gravityX * SCREEN_WIDTH - ball.position.x) * 1 + 10
+            let yDist = abs(currentLevel.gravityY * SCREEN_HEIGHT - ball.position.y) * 1 + 10
+            var gravityForce : CGFloat = 0
+            if (abs(xDist) + abs(yDist) > 30) {
+                gravityForce = currentLevel.gravityStrength / (pow(xDist, 2) + pow(yDist, 2))
+            }
+            print(gravityForce)
+            ball_xSpeed += Double(gravityForce * (currentLevel.gravityX * SCREEN_WIDTH - ball.position.x) / (xDist + yDist))
+            ball_ySpeed += Double(gravityForce * (currentLevel.gravityY * SCREEN_HEIGHT - ball.position.y) / (xDist + yDist))
+            
         }
         
         ball.position.x += CGFloat(ball_xSpeed * timeSinceLastUpdate)
