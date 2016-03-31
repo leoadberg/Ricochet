@@ -15,8 +15,12 @@
 		<integer>1</integer>
 		<key>Obstacle Size Multiplier</key>
 		<integer>1</integer>
-		<key>Score Required</key>
+		<key>1 Star</key>
 		<integer>5</integer>
+		<key>2 Star</key>
+		<integer>10</integer>
+		<key>3 Star</key>
+		<integer>15</integer>
 		<key>Gravity Mode</key>
 		<integer>1</integer>
 		<key>Gravity X</key>
@@ -39,8 +43,12 @@
 		<integer>1</integer>
 		<key>Obstacle Size Multiplier</key>
 		<integer>1</integer>
-		<key>Score Required</key>
+		<key>1 Star</key>
+		<integer>5</integer>
+		<key>2 Star</key>
 		<integer>10</integer>
+		<key>3 Star</key>
+		<integer>15</integer>
 		<key>Gravity Mode</key>
 		<integer>1</integer>
 		<key>Gravity X</key>
@@ -63,8 +71,12 @@
 		<integer>1</integer>
 		<key>Obstacle Size Multiplier</key>
 		<integer>1</integer>
-		<key>Score Required</key>
+		<key>1 Star</key>
 		<integer>5</integer>
+		<key>2 Star</key>
+		<integer>10</integer>
+		<key>3 Star</key>
+		<integer>15</integer>
 		<key>Gravity Mode</key>
 		<integer>2</integer>
 		<key>Gravity X</key>
@@ -87,8 +99,12 @@
 		<integer>3</integer>
 		<key>Obstacle Size Multiplier</key>
 		<integer>1</integer>
-		<key>Score Required</key>
-		<integer>8</integer>
+		<key>1 Star</key>
+		<integer>5</integer>
+		<key>2 Star</key>
+		<integer>10</integer>
+		<key>3 Star</key>
+		<integer>15</integer>
 		<key>Gravity Mode</key>
 		<integer>0</integer>
 		<key>Gravity X</key>
@@ -111,8 +127,12 @@
 		<integer>1</integer>
 		<key>Obstacle Size Multiplier</key>
 		<real>0.2</real>
-		<key>Score Required</key>
+		<key>1 Star</key>
 		<integer>5</integer>
+		<key>2 Star</key>
+		<integer>10</integer>
+		<key>3 Star</key>
+		<integer>15</integer>
 		<key>Gravity Mode</key>
 		<integer>0</integer>
 		<key>Gravity X</key>
@@ -135,8 +155,12 @@
 		<integer>1</integer>
 		<key>Obstacle Size Multiplier</key>
 		<integer>1</integer>
-		<key>Score Required</key>
+		<key>1 Star</key>
 		<integer>5</integer>
+		<key>2 Star</key>
+		<integer>10</integer>
+		<key>3 Star</key>
+		<integer>15</integer>
 		<key>Gravity Mode</key>
 		<integer>0</integer>
 		<key>Gravity X</key>

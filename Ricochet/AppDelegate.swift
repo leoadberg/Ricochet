@@ -32,7 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 tempLevel.lock()
             }
             tempLevel.mode = item["Game Mode"] as! Int
-            tempLevel.scoreRequired = item["Score Required"] as! Int
+            tempLevel.oneStar = item["1 Star"] as! Int
+            tempLevel.twoStar = item["2 Star"] as! Int
+            tempLevel.threeStar = item["3 Star"] as! Int
             tempLevel.ballMaxSpeedModifier = item["Max Speed Multiplier"] as! CGFloat
             tempLevel.ballRadiusModifier = item["Ball Radius Multiplier"] as! CGFloat
             tempLevel.ballSpeedMultModifier = item["Speed Increase Multiplier"] as! CGFloat

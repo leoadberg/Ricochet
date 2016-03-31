@@ -71,14 +71,14 @@ class GameScene: SKScene {
             DEFAULTS.setInteger(score, forKey: "Highscore"+String(currentLevel.levelNumber))
         }
     }
-    
+    var currentHighscore : Int = 0
     func getHighscore() -> Int {
         return DEFAULTS.integerForKey("Highscore"+String(currentLevel.levelNumber))
     }
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
-        
+        currentHighscore = getHighscore()
         currentMode = currentLevel.mode
         BALL_RADIUS = BALL_RADIUS * currentLevel.ballRadiusModifier
         BALL_SPEED_MULT = BALL_SPEED_MULT * currentLevel.ballSpeedMultModifier
@@ -97,15 +97,24 @@ class GameScene: SKScene {
         
         self.addChild(scoreLabel)
         
-        requiredScoreLabel.text = "\(currentLevel.scoreRequired) to win";
         requiredScoreLabel.fontColor = SKColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 0.5)
-        requiredScoreLabel.fontSize = SCREEN_WIDTH / 5;
+        requiredScoreLabel.fontSize = SCREEN_WIDTH / 6;
         requiredScoreLabel.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 9 / 10);
         requiredScoreLabel.zPosition = -1
         
-        if (UNLOCKED_LEVELS <= currentLevel.levelNumber) {
-            self.addChild(requiredScoreLabel)
+        if (currentHighscore < currentLevel.oneStar) {
+            requiredScoreLabel.text = "\(currentLevel.oneStar) to ★";
         }
+        else if (currentHighscore < currentLevel.twoStar) {
+            requiredScoreLabel.text = "\(currentLevel.twoStar) to ★★";
+        }
+        else if (currentHighscore < currentLevel.threeStar) {
+            requiredScoreLabel.text = "\(currentLevel.threeStar) to ★★★";
+        }
+        else {
+            requiredScoreLabel.text = "★★★";
+        }
+        self.addChild(requiredScoreLabel)
         
         ball.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / 3)
         ball.zPosition = 0
@@ -313,7 +322,7 @@ class GameScene: SKScene {
             menuButton.strokeColor = COLOR_TRANSPARENT
             self.addChild(menuButton)
             
-            if (score >= currentLevel.scoreRequired || UNLOCKED_LEVELS > currentLevel.levelNumber) {
+            if (score >= currentLevel.oneStar || UNLOCKED_LEVELS > currentLevel.levelNumber) {
                 UNLOCKED_LEVELS = max(UNLOCKED_LEVELS, currentLevel.levelNumber + 1)
                 DEFAULTS.setInteger(UNLOCKED_LEVELS, forKey: "Unlocked Levels")
                 let nextLevelLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
@@ -350,7 +359,7 @@ class GameScene: SKScene {
             if (abs(xDist) + abs(yDist) > 30) {
                 gravityForce = currentLevel.gravityStrength / (pow(xDist, 2) + pow(yDist, 2))
             }
-            print(gravityForce)
+            //print(gravityForce)
             ball_xSpeed += Double(gravityForce * (currentLevel.gravityX * SCREEN_WIDTH - ball.position.x) / (xDist + yDist))
             ball_ySpeed += Double(gravityForce * (currentLevel.gravityY * SCREEN_HEIGHT - ball.position.y) / (xDist + yDist))
             
@@ -480,6 +489,17 @@ class GameScene: SKScene {
     func addScore(n: Int) {
         score += n
         scoreLabel.text = String(score);
+        if (score >= currentHighscore) {
+            if (score > currentLevel.threeStar) {
+                requiredScoreLabel.text = "★★★";
+            }
+            else if (score >= currentLevel.twoStar) {
+                requiredScoreLabel.text = "\(currentLevel.threeStar) to ★★★";
+            }
+            else if (score >= currentLevel.oneStar) {
+                requiredScoreLabel.text = "\(currentLevel.twoStar) to ★★";
+            }
+        }
     }
     
     func updateCartesian() {

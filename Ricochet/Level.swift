@@ -15,18 +15,25 @@ class Level: SKShapeNode {
         super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -SCREEN_WIDTH / 9, y: -SCREEN_WIDTH / 9), size: CGSize(width: SCREEN_WIDTH * 2 / 9, height: SCREEN_WIDTH * 2 / 9)), nil)
         super.fillColor = COLOR_FADED_RED
         super.lineWidth = 4
-        let label = SKLabelNode(fontNamed:"DINAlternate-Bold")
         label.fontSize = SCREEN_WIDTH / 6;
         label.text = String(level)
         label.position.x = super.position.x
-        label.position.y = super.position.y - SCREEN_WIDTH / 16
+        label.position.y = super.position.y - SCREEN_WIDTH / 32
+        starText.fontSize = SCREEN_WIDTH / 16;
+        starText.position.x = super.position.x
+        starText.position.y = super.position.y - SCREEN_WIDTH / 11
         super.addChild(label)
+        super.addChild(starText)
         super.name = "Level"+String(level)
         levelNumber = level
     }
     
     var levelNumber = 0
-    var scoreRequired = 0
+    var oneStar = 0
+    var twoStar = 0
+    var threeStar = 0
+    var starText = SKLabelNode(fontNamed: "DINAlternate-Bold")
+    var label = SKLabelNode(fontNamed:"DINAlternate-Bold")
     var locked = false
     var ballRadiusModifier : CGFloat = 1
     var ballMaxSpeedModifier : CGFloat = 1
@@ -41,6 +48,26 @@ class Level: SKShapeNode {
     var gravityY: CGFloat = 0
     var gravityStrength: CGFloat = 0
     
+    func update() {
+        self.position.x = SCREEN_WIDTH * 2
+        let highscore = DEFAULTS.integerForKey("Highscore"+String(levelNumber))
+        if (highscore >= threeStar) {
+            starText.text = "★★★"
+            label.position.y = -SCREEN_WIDTH / 32
+        }
+        else if (highscore >= twoStar) {
+            starText.text = "★★"
+            label.position.y = -SCREEN_WIDTH / 32
+        }
+        else if (highscore >= oneStar) {
+            starText.text = "★"
+            label.position.y = -SCREEN_WIDTH / 32
+        }
+        else {
+            starText.text = ""
+            label.position.y = -SCREEN_WIDTH / 16
+        }
+    }
     
     func unlock() {
         locked = false

@@ -58,6 +58,7 @@ class MenuScene: SKScene {
         //self.scene!.removeAllChildren()
         
         for tempLevel in GAME_LEVELS {
+            tempLevel.update()
             if (tempLevel.levelNumber > UNLOCKED_LEVELS){
                 tempLevel.lock()
             } else {
@@ -211,7 +212,7 @@ class MenuScene: SKScene {
             let modeSelectorMove = SKAction.moveToX(SCREEN_WIDTH / 2, duration: 0.5)
             modeSelectorMove.timingMode = .EaseInEaseOut
             levelSelector.runAction(modeSelectorMove)
-            
+            /*
             let modeSquareMove = SKAction.moveToX(SCREEN_WIDTH / 3, duration: 0.5)
             modeSquareMove.timingMode = .EaseInEaseOut
             modeSquare.runAction(modeSquareMove)
@@ -219,7 +220,7 @@ class MenuScene: SKScene {
             let modeCircleMove = SKAction.moveToX(SCREEN_WIDTH * 2 / 3, duration: 0.5)
             modeCircleMove.timingMode = .EaseInEaseOut
             modeCircle.runAction(modeCircleMove)
-            
+            */
             /*for level in LEVELS {
                 let levelIcon = Level(level: level)
                 levelIcon.position = CGPoint(x: 2 * SCREEN_WIDTH, y: SCREEN_HEIGHT / 2)
@@ -231,9 +232,16 @@ class MenuScene: SKScene {
                 self.addChild(levelIcon)
             }*/
             
+            scroll = -SCREEN_WIDTH * CGFloat(min(GAME_LEVELS.count,max(UNLOCKED_LEVELS-1,0))) / 3
+            
             for tempLevel in GAME_LEVELS {
-                tempLevel.position = CGPoint(x: 2 * SCREEN_WIDTH, y: SCREEN_HEIGHT / 2)
-                let tempLevelMove = SKAction.moveToX(SCREEN_WIDTH * (CGFloat(tempLevel.levelNumber) + 0.5) / 3, duration: 0.5)
+                if (UNLOCKED_LEVELS > tempLevel.levelNumber + 2) {
+                    tempLevel.position = CGPoint(x: -SCREEN_WIDTH, y: SCREEN_HEIGHT / 2)
+                }
+                else {
+                    tempLevel.position = CGPoint(x: 2 * SCREEN_WIDTH, y: SCREEN_HEIGHT / 2)
+                }
+                let tempLevelMove = SKAction.moveToX(SCREEN_WIDTH * (CGFloat(tempLevel.levelNumber) + 0.5) / 3 + scroll, duration: 0.5)
                 tempLevel.runAction(tempLevelMove)
                 self.addChild(tempLevel)
             }
@@ -283,7 +291,7 @@ class MenuScene: SKScene {
     }
     
     override func update(currentTime: CFTimeInterval) {
-        if (inLevelSelector) {
+        if (inLevelSelector && !(GAME_LEVELS.first?.hasActions())!) {
             if (!touching) {
                 scroll += scrollSpeed
                 scrollSpeed = scrollSpeed * 0.9
@@ -299,9 +307,9 @@ class MenuScene: SKScene {
             }
         }
         else {
-            for tempLevel in GAME_LEVELS {
-                tempLevel.position = CGPoint(x: 2 * SCREEN_WIDTH, y: SCREEN_HEIGHT / 2)
-            }
+            //for tempLevel in GAME_LEVELS {
+            //    tempLevel.position = CGPoint(x: 2 * SCREEN_WIDTH, y: SCREEN_HEIGHT / 2)
+            //}
         }
     }
     
