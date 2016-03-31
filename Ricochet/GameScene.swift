@@ -66,6 +66,8 @@ class GameScene: SKScene {
     let nextLevelButton = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6))
     var touchStart = CGPoint(x: 0, y: 0)
     
+    var hintLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
+    
     func updateHighscore(score: Int) {
         if (getHighscore() < score){
             DEFAULTS.setInteger(score, forKey: "Highscore"+String(currentLevel.levelNumber))
@@ -78,6 +80,13 @@ class GameScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
+        hintLabel.text = currentLevel.hint
+        hintLabel.fontColor = SKColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 0.5)
+        hintLabel.fontSize = SCREEN_WIDTH / 10
+        hintLabel.position.x = SCREEN_WIDTH / 2
+        hintLabel.position.y = SCREEN_HEIGHT / 10
+        self.addChild(hintLabel)
+        
         currentHighscore = getHighscore()
         currentMode = currentLevel.mode
         BALL_RADIUS = BALL_RADIUS * currentLevel.ballRadiusModifier
@@ -160,6 +169,8 @@ class GameScene: SKScene {
         
         if (first || lost) {
             first = false
+            let disappear = SKAction.fadeOutWithDuration(0.5)
+            hintLabel.runAction(disappear)
             return
         }
         

@@ -44,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             tempLevel.gravityX = item["Gravity X"] as! CGFloat
             tempLevel.gravityY = item["Gravity Y"] as! CGFloat
             tempLevel.gravityStrength = item["Gravity Strength"] as! CGFloat
+            tempLevel.hint = item["Hint"] as! String
             //print(item["Score Required"])
             
             //print(item.0[item.0.endIndex.predecessor()])
