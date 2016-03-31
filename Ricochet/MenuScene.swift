@@ -9,7 +9,7 @@
 import SpriteKit
 import Darwin
 
-let LEVELS: [Int] = [1,2,3,4,5,6,7,8,9]
+//let LEVELS: [Int] = [1,2,3,4,5,6,7,8,9]
 
 let SCREEN: CGRect = UIScreen.mainScreen().bounds
 let SCREEN_WIDTH = SCREEN.width
@@ -58,7 +58,7 @@ class MenuScene: SKScene {
         //self.scene!.removeAllChildren()
         
         for tempLevel in GAME_LEVELS {
-            tempLevel.update()
+            self.addChild(tempLevel)
             if (tempLevel.levelNumber > UNLOCKED_LEVELS){
                 tempLevel.lock()
             } else {
@@ -102,22 +102,30 @@ class MenuScene: SKScene {
         levelSelector.position = CGPoint(x: SCREEN_WIDTH * 2, y: SCREEN_HEIGHT / 2)
         levelSelector.fillColor = COLOR_FADED_GREEN
         levelSelector.lineWidth = 4
+        levelSelector.zPosition = -1
         self.addChild(levelSelector)
         
-        modeSquare.position = CGPoint(x: SCREEN_WIDTH * 2, y: SCREEN_HEIGHT / 2)
-        modeSquare.fillColor = COLOR_FADED_RED
-        modeSquare.lineWidth = 4
+        //modeSquare.position = CGPoint(x: SCREEN_WIDTH * 2, y: SCREEN_HEIGHT / 2)
+        //modeSquare.fillColor = COLOR_FADED_RED
+        //modeSquare.lineWidth = 4
         //self.addChild(modeSquare)
         
-        modeCircle.position = CGPoint(x: SCREEN_WIDTH * 2, y: SCREEN_HEIGHT / 2)
-        modeCircle.fillColor = COLOR_FADED_RED
-        modeCircle.lineWidth = 4
+        //modeCircle.position = CGPoint(x: SCREEN_WIDTH * 2, y: SCREEN_HEIGHT / 2)
+        //modeCircle.fillColor = COLOR_FADED_RED
+        //modeCircle.lineWidth = 4
         //self.addChild(modeCircle)
         
         //if (defaults.integerForKey("Unlocked Levels")==0) {
         //    defaults.setInteger(1, forKey: "Unlocked Levels")
         //}
         //unlockedLevels = defaults.integerForKey("Unlocked Levels")
+        
+        for tempLevel in GAME_LEVELS {
+            if (!inLevelSelector) {
+                tempLevel.position.x = SCREEN_WIDTH * 2
+                tempLevel.update()
+            }
+        }
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -134,6 +142,10 @@ class MenuScene: SKScene {
         //}
         
         for tempLevel in GAME_LEVELS {
+            if (!inLevelSelector) {
+                tempLevel.position.x = SCREEN_WIDTH * 2
+                tempLevel.update()
+            }
             if (tempLevel.containsPoint(location)) {
                tempLevel.select()
             }
@@ -232,10 +244,11 @@ class MenuScene: SKScene {
                 self.addChild(levelIcon)
             }*/
             
-            scroll = -SCREEN_WIDTH * CGFloat(min(GAME_LEVELS.count,max(UNLOCKED_LEVELS-1,0))) / 3
+            scroll = -SCREEN_WIDTH * CGFloat(min(GAME_LEVELS.count-3,max(UNLOCKED_LEVELS-1,0))) / 3
             
             for tempLevel in GAME_LEVELS {
-                if (UNLOCKED_LEVELS > tempLevel.levelNumber + 2) {
+                //tempLevel.update()
+                if (UNLOCKED_LEVELS > tempLevel.levelNumber + 3) {
                     tempLevel.position = CGPoint(x: -SCREEN_WIDTH, y: SCREEN_HEIGHT / 2)
                 }
                 else {
@@ -243,7 +256,6 @@ class MenuScene: SKScene {
                 }
                 let tempLevelMove = SKAction.moveToX(SCREEN_WIDTH * (CGFloat(tempLevel.levelNumber) + 0.5) / 3 + scroll, duration: 0.5)
                 tempLevel.runAction(tempLevelMove)
-                self.addChild(tempLevel)
             }
             
             inLevelSelector = true

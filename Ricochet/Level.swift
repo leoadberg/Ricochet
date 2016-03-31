@@ -49,7 +49,7 @@ class Level: SKShapeNode {
     var gravityStrength: CGFloat = 0
     
     func update() {
-        self.position.x = SCREEN_WIDTH * 2
+        //self.position.x = SCREEN_WIDTH * 2
         let highscore = DEFAULTS.integerForKey("Highscore"+String(levelNumber))
         if (highscore >= threeStar) {
             starText.text = "★★★"

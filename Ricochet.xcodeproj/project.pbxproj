@@ -40,7 +40,7 @@
 
 /* Begin PBXFileReference section */
 		0E534F4F1CA8D15500E27223 /* Levels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Levels.plist; sourceTree = "<group>"; };
-		0E63D6F91CA75CA30072A37D /* Ricochet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ricochet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0E63D6F91CA75CA30072A37D /* Ricochet.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Ricochet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E63D6FC1CA75CA30072A37D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0E63D7001CA75CA30072A37D /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		0E63D7021CA75CA30072A37D /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
