@@ -322,7 +322,7 @@ class GameScene: SKScene {
             menuButton.strokeColor = COLOR_TRANSPARENT
             self.addChild(menuButton)
             
-            if (score >= currentLevel.oneStar || UNLOCKED_LEVELS > currentLevel.levelNumber) {
+            if (GAME_LEVELS.count > currentLevel.levelNumber + 1 && (score >= currentLevel.oneStar || UNLOCKED_LEVELS > currentLevel.levelNumber)) {
                 UNLOCKED_LEVELS = max(UNLOCKED_LEVELS, currentLevel.levelNumber + 1)
                 DEFAULTS.setInteger(UNLOCKED_LEVELS, forKey: "Unlocked Levels")
                 let nextLevelLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
