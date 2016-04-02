@@ -27,10 +27,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let array = NSMutableArray(contentsOfFile: path!)
         
         for (i, item) in (array?.enumerate())!{
-            let tempLevel = Level(level: i)
+            let tempLevel = CreateLevelWithProperties(i, dict: item as! NSDictionary)
+            //let tempLevel = CreateLevelWithProperties(level: i)
             if (i > UNLOCKED_LEVELS){
                 tempLevel.lock()
             }
+            /*
             tempLevel.mode = item["Game Mode"] as! Int
             tempLevel.oneStar = item["1 Star"] as! Int
             tempLevel.twoStar = item["2 Star"] as! Int
@@ -45,6 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             tempLevel.gravityY = item["Gravity Y"] as! CGFloat
             tempLevel.gravityStrength = item["Gravity Strength"] as! CGFloat
             tempLevel.hint = item["Hint"] as! String
+ */
             //print(item["Score Required"])
             
             //print(item.0[item.0.endIndex.predecessor()])
