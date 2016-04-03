@@ -32,6 +32,19 @@ class MenuButton: SKShapeNode {
         super.fillColor = COLOR_FADED_GREEN
     }
     
+    func moveOut() {
+        let buttonMove = SKAction.moveToX(-SCREEN_WIDTH, duration: 0.5)
+        buttonMove.timingMode = .EaseInEaseOut
+        runAction(buttonMove)
+    }
+    
+    func moveIn() {
+        position.x = SCREEN_WIDTH * 2
+        let buttonMove = SKAction.moveToX(SCREEN_WIDTH / 2, duration: 0.5)
+        buttonMove.timingMode = .EaseInEaseOut
+        runAction(buttonMove)
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -67,3 +80,26 @@ class LevelSelector: SKShapeNode {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+func MoveInLevels(inout levels: [Level], _ levelSelector: LevelSelector) {
+    for tempLevel in levels {
+        if (UNLOCKED_LEVELS > tempLevel.levelNumber + 1) {
+            tempLevel.position = CGPoint(x: -SCREEN_WIDTH, y: levelSelector.position.y)
+        }
+        else {
+            tempLevel.position = CGPoint(x: 2 * SCREEN_WIDTH, y: levelSelector.position.y)
+        }
+        let tempLevelMove = SKAction.moveToX(SCREEN_WIDTH * (CGFloat(tempLevel.levelNumber) + 0.5) / 3 + levelSelector.scroll, duration: 0.5)
+        tempLevel.runAction(tempLevelMove)
+    }
+}
+
+func MoveOutLevels(inout levels: [Level], _ levelSelector: LevelSelector) {
+    for tempLevel in levels {
+        let tempLevelMove = SKAction.moveToX(-SCREEN_WIDTH, duration: 0.5)
+        tempLevel.runAction(tempLevelMove)
+    }
+}
+
+
+

@@ -149,31 +149,28 @@ class MenuScene: SKScene {
         }
         
         if (playButton.containsPoint(location) && playButton.containsPoint(touchStart)) {
-            let buttonMove = SKAction.moveToX(-SCREEN_WIDTH, duration: 0.5)
-            buttonMove.timingMode = .EaseInEaseOut
-            playButton.runAction(buttonMove)
-            //playLabel.runAction(buttonMove)
-            
-            //let modeSelectorMove = SKAction.moveToX(SCREEN_WIDTH / 2, duration: 0.5)
-            //modeSelectorMove.timingMode = .EaseInEaseOut
-            //levelSelector.runAction(modeSelectorMove)
-            levelSelector.moveIn()
-            
-            levelSelector.scroll = -SCREEN_WIDTH * CGFloat(min(GAME_LEVELS.count-3,max(UNLOCKED_LEVELS-1,0))) / 3
-            
-            for tempLevel in GAME_LEVELS {
-                //tempLevel.update()
-                if (UNLOCKED_LEVELS > tempLevel.levelNumber + 1) {
-                    tempLevel.position = CGPoint(x: -SCREEN_WIDTH, y: SCREEN_HEIGHT / 2)
-                }
-                else {
-                    tempLevel.position = CGPoint(x: 2 * SCREEN_WIDTH, y: SCREEN_HEIGHT / 2)
-                }
-                let tempLevelMove = SKAction.moveToX(SCREEN_WIDTH * (CGFloat(tempLevel.levelNumber) + 0.5) / 3 + levelSelector.scroll, duration: 0.5)
-                tempLevel.runAction(tempLevelMove)
+            if (customLevelSelector.active) {
+                //MoveOutLevels(&GAME_LEVELS, levelSelector)
+                customLevelSelector.moveOut()
+                customButton.moveIn()
+                customLevelSelector.active = false
             }
-            
+            playButton.moveOut()
+            levelSelector.moveIn()
+            levelSelector.scroll = -SCREEN_WIDTH * CGFloat(min(GAME_LEVELS.count - 3, max(UNLOCKED_LEVELS - 1, 0))) / 3
+            MoveInLevels(&GAME_LEVELS, levelSelector)
             levelSelector.active = true
+        }
+        else if (customButton.containsPoint(location) && customButton.containsPoint(touchStart)) {
+            if (levelSelector.active) {
+                MoveOutLevels(&GAME_LEVELS, levelSelector)
+                levelSelector.moveOut()
+                playButton.moveIn()
+                levelSelector.active = false
+            }
+            customButton.moveOut()
+            customLevelSelector.moveIn()
+            customLevelSelector.active = true
         }
         else if (scoresButton.containsPoint(location) && scoresButton.containsPoint(touchStart)) {
             let scores_scene = ScoresScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))

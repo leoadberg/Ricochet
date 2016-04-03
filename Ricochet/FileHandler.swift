@@ -18,7 +18,10 @@ func CreateArrayFromPlist(plist: String, userDomain: Bool) -> NSMutableArray {
         path = NSBundle.mainBundle().pathForResource(plist, ofType: "plist")!
     }
     if (!FILEMANAGER.fileExistsAtPath(path)) {
-        FILEMANAGER.createFileAtPath(path, contents: nil, attributes: nil)
+        //let emptyArray: [Level] = []
+        let empty = NSMutableArray()
+        return empty
+        //FILEMANAGER.createFileAtPath(path, contents: nil, attributes: nil)
     }
     return NSMutableArray(contentsOfFile: path)!
 }

@@ -33,10 +33,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             GAME_LEVELS.append(tempLevel)
         }
         
-        //let customLevelArray = CreateArrayFromPlist("CustomLevels", userDomain: true)
-        //for (i, item) in customLevelArray.enumerate() {
-            //let tempLevel
-        //}
+        let customLevelArray = CreateArrayFromPlist("CustomLevels", userDomain: true)
+        for (_, item) in customLevelArray.enumerate() {
+            let tempLevel = CreateLevelWithProperties(1, dict: item as! NSDictionary)
+            CUSTOM_LEVELS.append(tempLevel)
+        }
 
         return true
     }
