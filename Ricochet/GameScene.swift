@@ -24,6 +24,28 @@ var effects = Set<LevelEffect>()
 
 class GameScene: SKScene {
     
+    /*
+    /*
+     *
+    **  HI LEO,
+    **  
+    **  I HAVE FINISHED IMPLEMENTING DIRECTIONAL
+    **  GRAVITY AS A SUBCLASS OF LEVELEFFECT. TO USE
+    **  IT, TAKE INPUT FROM THE PLIST, THEN CHECK FOR THE
+    **  EFFECT ID. IF THE EFFECT ID IS 0, ADD A
+    **  DIRECTIONALGRAVITY OBJECT TO THE EFFECTS SET
+    **  HERE IN GAMESCENE WITH THE PARAMETERS (X, Y).
+    **  AFTER YOU'VE DONE THAT, IT SHOULD TAKE CARE OF
+    **  ITSELF.
+    **
+    **  FROM,
+    **  BRANDON TAI ROBOT GUY
+    **
+    **  PS: I ALSO MADE BALL ITS OWN CLASS
+    *
+    */
+    */
+    
     var currentLevel = Level(level: 0)
     
     var OBS_LENGTH: CGFloat = SCREEN_WIDTH / 5
@@ -325,7 +347,7 @@ class GameScene: SKScene {
         lastUpdateTime = currentTime
         
         for effect in effects {
-            //effect.update(timeSinceLastUpdate, &ball, &obstacle)
+            effect.update(timeSinceLastUpdate, &ball, &obstacle)
         }
         
         /*if (currentLevel.gravityMode == 1) {
