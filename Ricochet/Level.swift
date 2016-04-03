@@ -96,3 +96,59 @@ class Level: SKShapeNode {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+class CustomLevel: Level {
+    init() {
+        super.init(level: 1)
+        editButton.lineWidth = 4
+        editButton.fillColor = COLOR_FADED_YELLOW
+        editText.text = "Edit"
+        editText.position = CGPoint(x: -SCREEN_WIDTH / 22, y: -SCREEN_WIDTH / 11)
+        editText.fontSize = SCREEN_WIDTH / 16
+        
+        deleteButton.lineWidth = 4
+        deleteButton.fillColor = COLOR_FADED_RED_DARKER
+        deleteText.text = "×"
+        deleteText.position = CGPoint(x: SCREEN_WIDTH * (1/9-1/24), y: -SCREEN_WIDTH / 10)
+        deleteText.fontSize = SCREEN_WIDTH / 9
+        
+        super.addChild(editButton)
+        super.addChild(editText)
+        super.addChild(deleteButton)
+        super.addChild(deleteText)
+        
+        super.label.fontSize = SCREEN_WIDTH / 16
+        super.label.position.y = SCREEN_WIDTH / 24
+        super.label.text = levelName
+        super.starText.fontSize = SCREEN_WIDTH / 24
+        super.starText.text = "★★★"
+        super.starText.position.y = -SCREEN_WIDTH / 128
+    }
+    
+    let editButton = SKShapeNode(rect: CGRect(x: -SCREEN_WIDTH / 9, y: -SCREEN_WIDTH / 9, width: SCREEN_WIDTH * (2/9-1/12), height: SCREEN_WIDTH / 12))
+    var editText = SKLabelNode(fontNamed: "DINAlternate-Bold")
+    let deleteButton = SKShapeNode(rect: CGRect(x: SCREEN_WIDTH * (1/9-1/12), y: -SCREEN_WIDTH / 9, width: SCREEN_WIDTH / 12, height: SCREEN_WIDTH / 12))
+    var deleteText = SKLabelNode(fontNamed: "DINAlternate-Bold")
+
+    var levelName = "Custom"
+    
+    func selectEdit() {
+        editButton.fillColor = COLOR_FADED_YELLOW_DARKER
+    }
+    
+    func deselectEdit() {
+        editButton.fillColor = COLOR_FADED_YELLOW
+    }
+    
+    func selectDelete() {
+        deleteButton.fillColor = COLOR_FADED_RED_EVEN_DARKER
+    }
+    
+    func deselectDelete() {
+        deleteButton.fillColor = COLOR_FADED_RED_DARKER
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

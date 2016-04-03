@@ -9,8 +9,10 @@
 import UIKit
 
 var GAME_LEVELS: [Level] = []
+var CUSTOM_LEVELS: [Level] = []
 let DEFAULTS = NSUserDefaults.standardUserDefaults()
 var UNLOCKED_LEVELS = 0
+let FILEMANAGER = NSFileManager.defaultManager()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,15 +24,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UNLOCKED_LEVELS = max(DEFAULTS.integerForKey("Unlocked Levels"), 0)
         
-        let array = CreateArrayFromPlist("Levels", userDomain: false)
-        
-        for (i, item) in array.enumerate() {
+        let levelArray = CreateArrayFromPlist("Levels", userDomain: false)
+        for (i, item) in levelArray.enumerate() {
             let tempLevel = CreateLevelWithProperties(i, dict: item as! NSDictionary)
             if (i > UNLOCKED_LEVELS){
                 tempLevel.lock()
             }
             GAME_LEVELS.append(tempLevel)
         }
+        
+        //let customLevelArray = CreateArrayFromPlist("CustomLevels", userDomain: true)
+        //for (i, item) in customLevelArray.enumerate() {
+            //let tempLevel
+        //}
 
         return true
     }

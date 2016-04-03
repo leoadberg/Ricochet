@@ -7,9 +7,9 @@
 //
 
 import XCTest
-@testable import Ball_Game
+@testable import Ricochet
 
-class Ball_GameTests: XCTestCase {
+class RicochetTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

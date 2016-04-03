@@ -59,12 +59,12 @@ class GameScene: SKScene {
     
     func updateHighscore(score: Int) {
         if (getHighscore() < score){
-            DEFAULTS.setInteger(score, forKey: "Highscore"+String(currentLevel.levelNumber))
+            DEFAULTS.setInteger(score, forKey: "Highscore\(currentLevel.levelNumber)")
         }
     }
     var currentHighscore : Int = 0
     func getHighscore() -> Int {
-        return DEFAULTS.integerForKey("Highscore"+String(currentLevel.levelNumber))
+        return DEFAULTS.integerForKey("Highscore\(currentLevel.levelNumber)")
     }
     
     override func didMoveToView(view: SKView) {

@@ -8,7 +8,7 @@
 
 import XCTest
 
-class Ball_GameUITests: XCTestCase {
+class RicochetUITests: XCTestCase {
         
     override func setUp() {
         super.setUp()

@@ -16,7 +16,10 @@ let SCREEN_HEIGHT = SCREEN.height
 let COLOR_FADED_GREEN = SKColor(colorLiteralRed: 161 / 255, green: 212 / 255, blue: 144 / 255, alpha: 1)
 let COLOR_FADED_RED = SKColor(colorLiteralRed: 212 / 255, green: 161 / 255, blue: 144 / 255, alpha: 1)
 let COLOR_FADED_RED_DARKER = SKColor(colorLiteralRed: 207 / 255, green: 129 / 255, blue: 103 / 255, alpha: 1)
+let COLOR_FADED_RED_EVEN_DARKER = SKColor(colorLiteralRed: 201 / 255, green: 64 / 255, blue: 99 / 255, alpha: 1)
 let COLOR_FADED_BLUE = SKColor(colorLiteralRed: 144 / 255, green: 195 / 255, blue: 212 / 255, alpha: 1)
+let COLOR_FADED_YELLOW = SKColor(colorLiteralRed: 212 / 255, green: 212 / 255, blue: 144 / 255, alpha: 1)
+let COLOR_FADED_YELLOW_DARKER = SKColor(colorLiteralRed: 196 / 255, green: 196 / 255, blue: 134 / 255, alpha: 1)
 let COLOR_TRANSPARENT_BLACK = SKColor(colorLiteralRed: 0 / 255, green: 0 / 255, blue: 0 / 255, alpha: 0.6)
 let COLOR_TRANSPARENT = SKColor(colorLiteralRed: 0 / 255, green: 0 / 255, blue: 0 / 255, alpha: 0)
 let COLOR_GREY = SKColor(colorLiteralRed: 190 / 255, green: 190 / 255, blue: 190 / 255, alpha: 1)
@@ -49,6 +52,10 @@ class MenuScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
+        
+        let testCustomeLevel = CustomLevel()
+        testCustomeLevel.position = CGPoint (x: SCREEN_WIDTH / 3, y: SCREEN_HEIGHT / 10)
+        self.addChild(testCustomeLevel)
         
         for tempLevel in GAME_LEVELS {
             self.addChild(tempLevel)
