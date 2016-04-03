@@ -109,7 +109,7 @@ class GameScene: SKScene {
         ball.fillColor = COLOR_FADED_GREEN
         ball.lineWidth = 4
         
-        ball.spd = Double(ball.spd) * unitLength / 4
+        ball.spd *= CGFloat(unitLength) / 4
         ball.angle = (Double(arc4random_uniform(50)) + 20) * (M_PI / 180) + (M_PI / 2) * Double(arc4random_uniform(4))
         
         ball.updateCartesian()
@@ -325,7 +325,7 @@ class GameScene: SKScene {
         lastUpdateTime = currentTime
         
         for effect in effects {
-            effect.update(timeSinceLastUpdate, &ball, &obstacle)
+            //effect.update(timeSinceLastUpdate, &ball, &obstacle)
         }
         
         /*if (currentLevel.gravityMode == 1) {
@@ -340,8 +340,8 @@ class GameScene: SKScene {
                 gravityForce = currentLevel.gravityStrength / (pow(xDist, 2) + pow(yDist, 2))
             }
             //print(gravityForce)
-            ball.xSpeed += Double(gravityForce * (currentLevel.gravityX * SCREEN_WIDTH - ball.position.x) / (xDist + yDist))
-            ball.ySpeed += Double(gravityForce * (currentLevel.gravityY * SCREEN_HEIGHT - ball.position.y) / (xDist + yDist))
+            ball.xSpeed += CGFloat(gravityForce * (currentLevel.gravityX * SCREEN_WIDTH - ball.position.x) / (xDist + yDist))
+            ball.ySpeed += CGFloat(gravityForce * (currentLevel.gravityY * SCREEN_HEIGHT - ball.position.y) / (xDist + yDist))
             
         }
         
@@ -403,12 +403,15 @@ class GameScene: SKScene {
                 if (!ball.colliding){
                     let nx = Double(ball.position.x - obstacle.position.x)
                     let ny = Double(ball.position.y - obstacle.position.y)
-                    let ux = (ball.xSpeed * nx + ball.ySpeed * ny) / (nx * nx + ny * ny) * nx
-                    let uy = (ball.xSpeed * nx + ball.ySpeed * ny) / (nx * nx + ny * ny) * ny
-                    let wx = ball.xSpeed - ux
-                    let wy = ball.ySpeed - uy
-                    ball.xSpeed = wx - ux
-                    ball.ySpeed = wy - uy
+                    let mxy = (Double(ball.xSpeed) * nx + Double(ball.ySpeed) * ny)
+                    let dxy = (nx * nx + ny * ny)
+                    let mdxy = mxy / dxy
+                    let ux = mdxy * nx
+                    let uy = mdxy * ny
+                    let wx = Double(ball.xSpeed) - ux
+                    let wy = Double(ball.ySpeed) - uy
+                    ball.xSpeed = CGFloat(wx - ux)
+                    ball.ySpeed = CGFloat(wy - uy)
                     
                     ball.updatePolar()
                     speedUp()
@@ -428,8 +431,8 @@ class GameScene: SKScene {
     }
     
     func speedUp() {
-        let deltaMax = Double(ball.maxSpeed) - ball.spd
-        ball.spd += deltaMax * Double(ball.speedMult)
+        let deltaMax: Double = Double(ball.maxSpeed) - Double(ball.spd)
+        ball.spd += CGFloat(deltaMax * Double(ball.speedMult))
         
         ball.updateCartesian()
     }
