@@ -23,7 +23,7 @@ class Obstacle: SKShapeNode {
         super.init()
         
         self.shapeID = shapeID
-        self.length = length
+        self.length = shapeID == 0 ? SCREEN_HEIGHT : length
         self.rotateSpeed = rotateSpeed
         self.resizeSpeed = resizeSpeed
         self.minScale = minScale
@@ -40,12 +40,9 @@ class Obstacle: SKShapeNode {
         
         switch(shapeID) {
             
-        case 0:
-            length = SCREEN_HEIGHT
-            super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -length * 3, y: -length * 3), size: CGSize(width: length, height: length)), nil)
-            
-        case 1:
-            super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -length * 3, y: -length * 3), size: CGSize(width: length, height: length)), nil)
+        case 0,
+             1:
+            super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -length / 3, y: -length / 3), size: CGSize(width: length, height: length)), nil)
             
         case 2:
             super.path = CGPathCreateWithEllipseInRect(CGRectMake(-length / 2, -length / 2, length, length), nil)
@@ -64,7 +61,7 @@ class Obstacle: SKShapeNode {
             
         case 0,
              1:
-            if (abs(ball.position.y - super.position.y) < (self.length / 2 + ball.radius) && abs(ball.position.x -    super.position.x) < (self.length / 2 + ball.radius)){
+            if (abs(ball.position.y - super.position.y) < (self.length / 2 + ball.radius) && abs(ball.position.x - super.position.x) < (self.length / 2 + ball.radius)){
                 if (!ball.colliding){
                     if (abs(ball.position.y - super.position.y) > abs(ball.position.x - super.position.x)){
                         ball.ySpeed = ball.position.y >= super.position.y ? abs(ball.ySpeed) : abs(ball.ySpeed) * -1

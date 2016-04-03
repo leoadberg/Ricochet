@@ -331,6 +331,8 @@ class GameScene: SKScene {
         
         ball.update(timeSinceLastUpdate)
         
+        addScore(obstacle.update(timeSinceLastUpdate, &ball))
+        
         // Right Wall Collision Case
         if (abs(ball.position.x - SCREEN_WIDTH) <= ball.radius && !currentLevel.activeWalls[Wall.Right.rawValue]) {
             
@@ -358,8 +360,6 @@ class GameScene: SKScene {
             justLost = true
         
         }
-
-        addScore(obstacle.update(timeSinceLastUpdate, &ball))
         
     }
     
