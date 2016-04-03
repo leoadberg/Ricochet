@@ -43,7 +43,7 @@ class Obstacle: SKShapeNode {
             super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -length * 3, y: -length * 3), size: CGSize(width: length, height: length)), nil)
             
         case 2:
-            super.path = CGPathCreateWithEllipseInRect(CGRectMake(-length, -length, length * 2, length * 2), nil)
+            super.path = CGPathCreateWithEllipseInRect(CGRectMake(-length, -length, length, length), nil)
             
         default:
             super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -length * 3, y: -length * 3), size: CGSize(width: length, height: length)), nil)
