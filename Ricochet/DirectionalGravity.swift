@@ -21,7 +21,7 @@ class DirectionalGravity: LevelEffect {
         
     }
     
-    override func update(timeSinceLastUpdate: Double, inout _ ball: Ball, inout _ obstacle: SKShapeNode) {
+    override func update(timeSinceLastUpdate: Double, inout _ ball: Ball, inout _ obstacle: Obstacle) {
         
         ball.xSpeed += CGFloat(xMagnitude * timeSinceLastUpdate)
         ball.ySpeed += CGFloat(yMagnitude * timeSinceLastUpdate)

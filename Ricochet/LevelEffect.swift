@@ -11,6 +11,6 @@ import SpriteKit
 
 class LevelEffect {
     
-    func update(timeSinceLastUpdate: Double, inout _ ball: Ball, inout _ obstacle: SKShapeNode) {}
+    func update(timeSinceLastUpdate: Double, inout _ ball: Ball, inout _ obstacle: Obstacle) {}
     
 }
