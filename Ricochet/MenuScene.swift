@@ -34,17 +34,21 @@ enum Wall: Int {
 
 class MenuScene: SKScene {
     
-    let playButton = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6))
-    let scoresButton = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6))
+    let playButton = MenuButton("Play")
+    let customButton = MenuButton("Custom")
+    let scoresButton = MenuButton("Scores")
     let nameLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
-    let playLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
     
     let levelSelector = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 1.1, height: SCREEN_WIDTH / 3))
     var scroll: CGFloat = 0
     var scrollSpeed: CGFloat = 0
-    let modeSquare = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 2 / 9, height: SCREEN_WIDTH * 2 / 9))
-    let modeCircle = SKShapeNode(circleOfRadius: SCREEN_WIDTH / 9)
     var inLevelSelector = false
+    
+    let levelSelector_Custom = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 1.1, height: SCREEN_WIDTH / 3))
+    var scroll_Custom: CGFloat = 0
+    var scrollSpeed_Custom: CGFloat = 0
+    var inLevelSelector_Custom = false
+    
     var touching = false
     var touchStart = CGPoint(x: 0, y: 0)
     
@@ -53,9 +57,9 @@ class MenuScene: SKScene {
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         
-        let testCustomeLevel = CustomLevel()
-        testCustomeLevel.position = CGPoint (x: SCREEN_WIDTH / 3, y: SCREEN_HEIGHT / 10)
-        self.addChild(testCustomeLevel)
+        let testCustomLevel = CustomLevel()
+        testCustomLevel.position = CGPoint (x: SCREEN_WIDTH / 3, y: SCREEN_HEIGHT / 10)
+        //self.addChild(testCustomLevel)
         
         for tempLevel in GAME_LEVELS {
             self.addChild(tempLevel)
@@ -74,29 +78,13 @@ class MenuScene: SKScene {
         nameLabel.zPosition = 1
         self.addChild(nameLabel)
         
-        playLabel.text = "Play";
-        playLabel.fontSize = SCREEN_WIDTH / 9;
-        playLabel.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 9 / 20);
-        playLabel.zPosition = 1
-        self.addChild(playLabel)
-        
-        playButton.position = CGPoint(x: playLabel.position.x, y: playLabel.position.y + SCREEN_WIDTH / 27)
-        playButton.fillColor = COLOR_FADED_GREEN
-        playButton.lineWidth = 4
-        playButton.zPosition = 0
+        playButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / 2)
         self.addChild(playButton)
         
-        let scoresLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
-        scoresLabel.text = "Scores";
-        scoresLabel.fontSize = SCREEN_WIDTH / 9;
-        scoresLabel.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / 4);
-        scoresLabel.zPosition = 1
-        self.addChild(scoresLabel)
+        customButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / 3)
+        self.addChild(customButton)
         
-        scoresButton.position = CGPoint(x: scoresLabel.position.x, y: scoresLabel.position.y + SCREEN_WIDTH / 27)
-        scoresButton.fillColor = COLOR_FADED_GREEN
-        scoresButton.lineWidth = 4
-        scoresLabel.zPosition = 0
+        scoresButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / 6)
         self.addChild(scoresButton)
         
         levelSelector.position = CGPoint(x: SCREEN_WIDTH * 2, y: SCREEN_HEIGHT / 2)
@@ -133,31 +121,15 @@ class MenuScene: SKScene {
         }
         
         if (playButton.containsPoint(location)) {
-            playButton.fillColor = COLOR_FADED_RED
-        }
-        else {
-            playButton.fillColor = COLOR_FADED_GREEN
+            playButton.select()
         }
         
         if (scoresButton.containsPoint(location)) {
-            scoresButton.fillColor = COLOR_FADED_RED
-        }
-        else {
-            scoresButton.fillColor = COLOR_FADED_GREEN
+            scoresButton.select()
         }
         
-        if (modeSquare.containsPoint(location)) {
-            modeSquare.fillColor = COLOR_FADED_RED_DARKER
-        }
-        else {
-            modeSquare.fillColor = COLOR_FADED_RED
-        }
-        
-        if (modeCircle.containsPoint(location)) {
-            modeCircle.fillColor = COLOR_FADED_RED_DARKER
-        }
-        else {
-            modeCircle.fillColor = COLOR_FADED_RED
+        if (customButton.containsPoint(location)) {
+            customButton.select()
         }
     }
     
@@ -181,7 +153,7 @@ class MenuScene: SKScene {
             let buttonMove = SKAction.moveToX(-SCREEN_WIDTH, duration: 0.5)
             buttonMove.timingMode = .EaseInEaseOut
             playButton.runAction(buttonMove)
-            playLabel.runAction(buttonMove)
+            //playLabel.runAction(buttonMove)
             
             let modeSelectorMove = SKAction.moveToX(SCREEN_WIDTH / 2, duration: 0.5)
             modeSelectorMove.timingMode = .EaseInEaseOut
@@ -210,8 +182,9 @@ class MenuScene: SKScene {
             self.scene!.view!.presentScene(scores_scene, transition: transition)
         }
         
-        scoresButton.fillColor = COLOR_FADED_GREEN
-        playButton.fillColor = COLOR_FADED_GREEN
+        scoresButton.deselect()
+        playButton.deselect()
+        customButton.deselect()
         
     }
     
