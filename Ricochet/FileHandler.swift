@@ -25,6 +25,7 @@ func CreateArrayFromPlist(plist: String, userDomain: Bool) -> NSMutableArray {
 
 func CreateLevelWithProperties(levelNumber: Int, dict: NSDictionary) -> Level {
     let tempLevel = Level(level: levelNumber)
+    tempLevel.hint = dict["Hint"] as! String
     tempLevel.mode = dict["Game Mode"] as! Int
     tempLevel.oneStar = dict["1 Star"] as! Int
     tempLevel.twoStar = dict["2 Star"] as! Int
@@ -34,10 +35,20 @@ func CreateLevelWithProperties(levelNumber: Int, dict: NSDictionary) -> Level {
     tempLevel.ballSpeedMultModifier = dict["Speed Increase Multiplier"] as! CGFloat
     tempLevel.obsLengthModifier = dict["Obstacle Size Multiplier"] as! CGFloat
     tempLevel.ballStartSpeedModifier = dict["Start Speed Multiplier"] as! CGFloat
+    
+    let tempEffects = dict["Effects"] as! NSArray
+    for effect in tempEffects {
+        switch (effect["EffectID"] as! Int) {
+        case 0:
+            tempLevel.effects.append(DirectionalGravity(x: effect["Gravity X"] as! Double, y: effect["Gravity Y"] as! Double))
+            break;
+        default:
+            break;
+        }
+    }
     tempLevel.gravityMode = dict["Gravity Mode"] as! Int
     tempLevel.gravityX = dict["Gravity X"] as! CGFloat
     tempLevel.gravityY = dict["Gravity Y"] as! CGFloat
     tempLevel.gravityStrength = dict["Gravity Strength"] as! CGFloat
-    tempLevel.hint = dict["Hint"] as! String
     return tempLevel
 }

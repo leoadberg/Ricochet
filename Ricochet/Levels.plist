@@ -72,6 +72,17 @@
 		<integer>0</integer>
 		<key>Hint</key>
 		<string></string>
+		<key>Effects</key>
+		<array>
+			<dict>
+				<key>EffectID</key>
+				<integer>0</integer>
+				<key>Gravity X</key>
+				<integer>0</integer>
+				<key>Gravity Y</key>
+				<integer>-100</integer>
+			</dict>
+		</array>
 	</dict>
 	<dict>
 		<key>Game Mode</key>
@@ -102,6 +113,17 @@
 		<real>1000000</real>
 		<key>Hint</key>
 		<string></string>
+		<key>Effects</key>
+		<array>
+			<dict>
+				<key>EffectID</key>
+				<integer>0</integer>
+				<key>Gravity X</key>
+				<integer>0</integer>
+				<key>Gravity Y</key>
+				<integer>-100</integer>
+			</dict>
+		</array>
 	</dict>
 	<dict>
 		<key>Game Mode</key>
@@ -132,6 +154,17 @@
 		<integer>0</integer>
 		<key>Hint</key>
 		<string></string>
+		<key>Effects</key>
+		<array>
+			<dict>
+				<key>EffectID</key>
+				<integer>0</integer>
+				<key>Gravity X</key>
+				<integer>0</integer>
+				<key>Gravity Y</key>
+				<integer>-100</integer>
+			</dict>
+		</array>
 	</dict>
 	<dict>
 		<key>Game Mode</key>
@@ -162,6 +195,17 @@
 		<integer>0</integer>
 		<key>Hint</key>
 		<string></string>
+		<key>Effects</key>
+		<array>
+			<dict>
+				<key>EffectID</key>
+				<integer>0</integer>
+				<key>Gravity X</key>
+				<integer>0</integer>
+				<key>Gravity Y</key>
+				<integer>-100</integer>
+			</dict>
+		</array>
 	</dict>
 	<dict>
 		<key>Game Mode</key>
@@ -192,6 +236,17 @@
 		<integer>0</integer>
 		<key>Hint</key>
 		<string></string>
+		<key>Effects</key>
+		<array>
+			<dict>
+				<key>EffectID</key>
+				<integer>0</integer>
+				<key>Gravity X</key>
+				<integer>0</integer>
+				<key>Gravity Y</key>
+				<integer>-100</integer>
+			</dict>
+		</array>
 	</dict>
 </array>
 </plist>

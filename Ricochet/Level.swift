@@ -48,6 +48,7 @@ class Level: SKShapeNode {
     var gravityY: CGFloat = 0
     var gravityStrength: CGFloat = 0
     var hint : String = ""
+    var effects: [LevelEffect] = []
     
     func update() {
         //self.position.x = SCREEN_WIDTH * 2

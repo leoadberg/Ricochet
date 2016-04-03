@@ -20,8 +20,6 @@ let LEFT_CENTER: [CGFloat] = [0, SCREEN_HEIGHT / 2]
 
 var wallThickness: CGFloat = SCREEN_WIDTH / 10
 
-var effects = Set<LevelEffect>()
-
 class GameScene: SKScene {
     
     /*
@@ -47,6 +45,8 @@ class GameScene: SKScene {
     */
     
     var currentLevel = Level(level: 0)
+    
+    var effects: [LevelEffect] = []
     
     var OBS_LENGTH: CGFloat = SCREEN_WIDTH / 5
     
@@ -82,6 +82,8 @@ class GameScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
+        effects = currentLevel.effects
+        
         hintLabel.text = currentLevel.hint
         hintLabel.fontColor = SKColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 0.5)
         hintLabel.fontSize = SCREEN_WIDTH / 10

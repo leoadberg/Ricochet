@@ -25,7 +25,7 @@ class Ball: SKShapeNode {
     init(radius: CGFloat = SCREEN_WIDTH / 12, maxSpeed: CGFloat = SCREEN_WIDTH * 6, speedMult: CGFloat = 0.01,initialSpeed: CGFloat = 1, initialAngle: Double = M_PI / 4) {
         
         super.init()
-        super.path = CGPathCreateWithEllipseInRect(CGRectMake(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, radius * 2, radius * 2), nil)
+        super.path = CGPathCreateWithEllipseInRect(CGRectMake(-radius, -radius, radius * 2, radius * 2), nil)
         
         self.radius = radius
         self.spd = initialSpeed
