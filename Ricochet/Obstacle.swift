@@ -29,6 +29,11 @@ class Obstacle: SKShapeNode {
         self.minScale = minScale
         self.maxScale = maxScale
         
+        super.position = CGPoint(x: obstacle.length * -3, y: obstacle.length * -3)
+        super.zPosition = 1
+        super.fillColor = COLOR_FADED_RED
+        super.lineWidth = 4
+        
     }
     
     func draw() {
@@ -43,7 +48,7 @@ class Obstacle: SKShapeNode {
             super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -length * 3, y: -length * 3), size: CGSize(width: length, height: length)), nil)
             
         case 2:
-            super.path = CGPathCreateWithEllipseInRect(CGRectMake(-length, -length, length, length), nil)
+            super.path = CGPathCreateWithEllipseInRect(CGRectMake(-length / 2, -length / 2, length, length), nil)
             
         default:
             super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -length * 3, y: -length * 3), size: CGSize(width: length, height: length)), nil)

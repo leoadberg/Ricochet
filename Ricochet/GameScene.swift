@@ -125,10 +125,6 @@ class GameScene: SKScene {
         }
         
         obstacle.shapeID = currentMode
-        obstacle.position = CGPoint(x: obstacle.length * -3, y: obstacle.length * -3)
-        obstacle.zPosition = 1
-        obstacle.fillColor = COLOR_FADED_RED
-        obstacle.lineWidth = 4
         obstacle.draw()
         
         self.addChild(obstacle)
