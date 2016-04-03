@@ -23,7 +23,7 @@ class Obstacle: SKShapeNode {
         super.init()
         
         self.shapeID = shapeID
-        self.length = shapeID == 0 ? SCREEN_HEIGHT : length
+        self.length = ((shapeID == 0) ? SCREEN_HEIGHT : length)
         self.rotateSpeed = rotateSpeed
         self.resizeSpeed = resizeSpeed
         self.minScale = minScale
