@@ -39,15 +39,12 @@ class MenuScene: SKScene {
     let scoresButton = MenuButton("Scores")
     let nameLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
     
-    let levelSelector = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 1.1, height: SCREEN_WIDTH / 3))
-    var scroll: CGFloat = 0
-    var scrollSpeed: CGFloat = 0
-    var inLevelSelector = false
-    
-    let levelSelector_Custom = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 1.1, height: SCREEN_WIDTH / 3))
-    var scroll_Custom: CGFloat = 0
-    var scrollSpeed_Custom: CGFloat = 0
-    var inLevelSelector_Custom = false
+    //let levelSelector = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 1.1, height: SCREEN_WIDTH / 3))
+    //var scroll: CGFloat = 0
+    //var scrollSpeed: CGFloat = 0
+    //var inLevelSelector = false
+    let levelSelector = LevelSelector()
+    let customLevelSelector = LevelSelector()
     
     var touching = false
     var touchStart = CGPoint(x: 0, y: 0)
@@ -88,13 +85,15 @@ class MenuScene: SKScene {
         self.addChild(scoresButton)
         
         levelSelector.position = CGPoint(x: SCREEN_WIDTH * 2, y: SCREEN_HEIGHT / 2)
-        levelSelector.fillColor = COLOR_FADED_GREEN
-        levelSelector.lineWidth = 4
-        levelSelector.zPosition = -1
+        //levelSelector.fillColor = COLOR_FADED_GREEN
+        //levelSelector.lineWidth = 4
+        //levelSelector.zPosition = -1
         self.addChild(levelSelector)
+        customLevelSelector.position = CGPoint(x: SCREEN_WIDTH * 2, y: SCREEN_HEIGHT / 3)
+        self.addChild(customLevelSelector)
         
         for tempLevel in GAME_LEVELS {
-            if (!inLevelSelector) {
+            if (!levelSelector.active) {
                 tempLevel.position.x = SCREEN_WIDTH * 2
                 tempLevel.update()
             }
@@ -111,7 +110,7 @@ class MenuScene: SKScene {
         //let touchedNode = self.nodeAtPoint(location)
         
         for tempLevel in GAME_LEVELS {
-            if (!inLevelSelector) {
+            if (!levelSelector.active) {
                 tempLevel.position.x = SCREEN_WIDTH * 2
                 tempLevel.update()
             }
@@ -155,25 +154,26 @@ class MenuScene: SKScene {
             playButton.runAction(buttonMove)
             //playLabel.runAction(buttonMove)
             
-            let modeSelectorMove = SKAction.moveToX(SCREEN_WIDTH / 2, duration: 0.5)
-            modeSelectorMove.timingMode = .EaseInEaseOut
-            levelSelector.runAction(modeSelectorMove)
+            //let modeSelectorMove = SKAction.moveToX(SCREEN_WIDTH / 2, duration: 0.5)
+            //modeSelectorMove.timingMode = .EaseInEaseOut
+            //levelSelector.runAction(modeSelectorMove)
+            levelSelector.moveIn()
             
-            scroll = -SCREEN_WIDTH * CGFloat(min(GAME_LEVELS.count-3,max(UNLOCKED_LEVELS-1,0))) / 3
+            levelSelector.scroll = -SCREEN_WIDTH * CGFloat(min(GAME_LEVELS.count-3,max(UNLOCKED_LEVELS-1,0))) / 3
             
             for tempLevel in GAME_LEVELS {
                 //tempLevel.update()
-                if (UNLOCKED_LEVELS > tempLevel.levelNumber + 3) {
+                if (UNLOCKED_LEVELS > tempLevel.levelNumber + 1) {
                     tempLevel.position = CGPoint(x: -SCREEN_WIDTH, y: SCREEN_HEIGHT / 2)
                 }
                 else {
                     tempLevel.position = CGPoint(x: 2 * SCREEN_WIDTH, y: SCREEN_HEIGHT / 2)
                 }
-                let tempLevelMove = SKAction.moveToX(SCREEN_WIDTH * (CGFloat(tempLevel.levelNumber) + 0.5) / 3 + scroll, duration: 0.5)
+                let tempLevelMove = SKAction.moveToX(SCREEN_WIDTH * (CGFloat(tempLevel.levelNumber) + 0.5) / 3 + levelSelector.scroll, duration: 0.5)
                 tempLevel.runAction(tempLevelMove)
             }
             
-            inLevelSelector = true
+            levelSelector.active = true
         }
         else if (scoresButton.containsPoint(location) && scoresButton.containsPoint(touchStart)) {
             let scores_scene = ScoresScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
@@ -194,25 +194,25 @@ class MenuScene: SKScene {
         let positionInScene = touch.locationInNode(self)
         let previousPosition = touch.previousLocationInNode(self)
         let translation = CGPoint(x: positionInScene.x - previousPosition.x, y: positionInScene.y - previousPosition.y)
-        if (inLevelSelector && touchStart.y < SCREEN_HEIGHT / 2 + SCREEN_WIDTH / 3 && touchStart.y > SCREEN_HEIGHT / 2 - SCREEN_WIDTH / 3) {
-            scroll += translation.x
-            scrollSpeed = translation.x
+        if (levelSelector.active && touchStart.y < SCREEN_HEIGHT / 2 + SCREEN_WIDTH / 6 && touchStart.y > SCREEN_HEIGHT / 2 - SCREEN_WIDTH / 6) {
+            levelSelector.scroll += translation.x
+            levelSelector.scrollSpeed = translation.x
         }
     }
     
     override func update(currentTime: CFTimeInterval) {
-        if (inLevelSelector && !(GAME_LEVELS.first?.hasActions())!) {
+        if (levelSelector.active && !(GAME_LEVELS.first?.hasActions())!) {
             if (!touching) {
-                scroll += scrollSpeed
-                scrollSpeed = scrollSpeed * 0.9
-                if (abs(scrollSpeed) < 2) {
-                    scrollSpeed = 0
+                levelSelector.scroll += levelSelector.scrollSpeed
+                levelSelector.scrollSpeed = levelSelector.scrollSpeed * 0.9
+                if (abs(levelSelector.scrollSpeed) < 2) {
+                    levelSelector.scrollSpeed = 0
                 }
             }
-            if (scroll != 0) {
-                scroll = max(min(0,scroll), -SCREEN_WIDTH * (CGFloat(GAME_LEVELS.count) - 3) / 3)
+            if (levelSelector.scroll != 0) {
+                levelSelector.scroll = max(min(0,levelSelector.scroll), -SCREEN_WIDTH * (CGFloat(GAME_LEVELS.count) - 3) / 3)
                 for tempLevel in GAME_LEVELS {
-                    tempLevel.position.x = SCREEN_WIDTH * (CGFloat(tempLevel.levelNumber) + 0.5) / 3 + scroll
+                    tempLevel.position.x = SCREEN_WIDTH * (CGFloat(tempLevel.levelNumber) + 0.5) / 3 + levelSelector.scroll
                 }
             }
         }

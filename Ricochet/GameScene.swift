@@ -98,6 +98,7 @@ class GameScene: SKScene {
         ball.maxSpeed = ball.maxSpeed * currentLevel.ballMaxSpeedModifier
         OBS_LENGTH = OBS_LENGTH * currentLevel.obsLengthModifier
         ball.spd = ball.spd * currentLevel.ballStartSpeedModifier
+        ball.draw()
         
         unitLength = Double(SCREEN_WIDTH)
         wallThickness = SCREEN_WIDTH * CGFloat(currentLevel.wallThicknessMultiplier)
@@ -355,7 +356,7 @@ class GameScene: SKScene {
         /*if (currentLevel.gravityMode == 1) {
             ball.xSpeed += Double(currentLevel.gravityX) * timeSinceLastUpdate
             ball.ySpeed += Double(currentLevel.gravityY) * timeSinceLastUpdate
-        } else*/ if (currentLevel.gravityMode == 2) {
+        } else if (currentLevel.gravityMode == 2) {
             
             let xDist = abs(currentLevel.gravityX * SCREEN_WIDTH - ball.position.x) * 1 + 10
             let yDist = abs(currentLevel.gravityY * SCREEN_HEIGHT - ball.position.y) * 1 + 10
@@ -367,7 +368,7 @@ class GameScene: SKScene {
             ball.xSpeed += CGFloat(gravityForce * (currentLevel.gravityX * SCREEN_WIDTH - ball.position.x) / (xDist + yDist))
             ball.ySpeed += CGFloat(gravityForce * (currentLevel.gravityY * SCREEN_HEIGHT - ball.position.y) / (xDist + yDist))
             
-        }
+        }*/
         
         ball.update(timeSinceLastUpdate)
         
