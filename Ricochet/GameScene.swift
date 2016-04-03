@@ -166,10 +166,10 @@ class GameScene: SKScene {
             case 0:
                 let touchLoc: [CGFloat] = [touchStart.x, touchStart.y]
                 
-                let newActiveWall = minimum(    distanceBetween(touchLoc, TOP_CENTER),
-                                                distanceBetween(touchLoc, RIGHT_CENTER),
-                                                distanceBetween(touchLoc, BOTTOM_CENTER),
-                                                distanceBetween(touchLoc, LEFT_CENTER))
+                let newActiveWall = minimum(distanceBetween(touchLoc, TOP_CENTER),
+                                            distanceBetween(touchLoc, RIGHT_CENTER),
+                                            distanceBetween(touchLoc, BOTTOM_CENTER),
+                                            distanceBetween(touchLoc, LEFT_CENTER))
                 
                 currentLevel.activeWalls = [false, false, false, false]
                 currentLevel.activeWalls[newActiveWall] = true
