@@ -22,40 +22,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UNLOCKED_LEVELS = max(DEFAULTS.integerForKey("Unlocked Levels"), 0)
         
-        let path = NSBundle.mainBundle().pathForResource("Levels", ofType: "plist")
-        //let dict = NSDictionary(contentsOfFile: path!) as? [String: AnyObject]
-        let array = NSMutableArray(contentsOfFile: path!)
+        let array = CreateArrayFromPlist("Levels", userDomain: false)
         
-        for (i, item) in (array?.enumerate())!{
+        for (i, item) in array.enumerate() {
             let tempLevel = CreateLevelWithProperties(i, dict: item as! NSDictionary)
-            //let tempLevel = CreateLevelWithProperties(level: i)
             if (i > UNLOCKED_LEVELS){
                 tempLevel.lock()
             }
-            /*
-            tempLevel.mode = item["Game Mode"] as! Int
-            tempLevel.oneStar = item["1 Star"] as! Int
-            tempLevel.twoStar = item["2 Star"] as! Int
-            tempLevel.threeStar = item["3 Star"] as! Int
-            tempLevel.ballMaxSpeedModifier = item["Max Speed Multiplier"] as! CGFloat
-            tempLevel.ballRadiusModifier = item["Ball Radius Multiplier"] as! CGFloat
-            tempLevel.ballSpeedMultModifier = item["Speed Increase Multiplier"] as! CGFloat
-            tempLevel.obsLengthModifier = item["Obstacle Size Multiplier"] as! CGFloat
-            tempLevel.ballStartSpeedModifier = item["Start Speed Multiplier"] as! CGFloat
-            tempLevel.gravityMode = item["Gravity Mode"] as! Int
-            tempLevel.gravityX = item["Gravity X"] as! CGFloat
-            tempLevel.gravityY = item["Gravity Y"] as! CGFloat
-            tempLevel.gravityStrength = item["Gravity Strength"] as! CGFloat
-            tempLevel.hint = item["Hint"] as! String
- */
-            //print(item["Score Required"])
-            
-            //print(item.0[item.0.endIndex.predecessor()])
-            
             GAME_LEVELS.append(tempLevel)
         }
-        
-        //print(GAME_LEVELS)
 
         return true
     }

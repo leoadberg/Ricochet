@@ -9,15 +9,6 @@
 import SpriteKit
 import Darwin
 
-//infix operator ^^ { }
-//func ^^ (radix: Int, power: Int) -> Int {
-//    return Int(pow(Double(radix), Double(power)))
-//}
-
-//var BALL_RADIUS: CGFloat = SCREEN_WIDTH / 12
-//var BALL_MAX_SPEED: Double = Double(SCREEN_WIDTH) * 6
-//var BALL_SPEED_MULT: Double = 0.01
-
 let MIN_FRAMERATE: Double = 30.0
 
 var unitLength: Double = 0.0
@@ -28,8 +19,6 @@ let BOTTOM_CENTER: [CGFloat] = [SCREEN_WIDTH / 2, 0]
 let LEFT_CENTER: [CGFloat] = [0, SCREEN_HEIGHT / 2]
 
 var wallThickness: CGFloat = SCREEN_WIDTH / 10
-
-//var OBS_LENGTH: CGFloat = SCREEN_WIDTH / 5
 
 class GameScene: SKScene {
     
@@ -218,23 +207,6 @@ class GameScene: SKScene {
             }
             
         }
-        
-        /*
-        for touch in touches {
-            let location = touch.locationInNode(self)
-            
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
-            
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
-            sprite.position = location
-            
-            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-            
-            sprite.runAction(SKAction.repeatActionForever(action))
-            
-            self.addChild(sprite)
-        }*/
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -361,8 +333,6 @@ class GameScene: SKScene {
             ball_xSpeed += Double(currentLevel.gravityX) * timeSinceLastUpdate
             ball_ySpeed += Double(currentLevel.gravityY) * timeSinceLastUpdate
         } else if (currentLevel.gravityMode == 2) {
-            //ball_xSpeed += Double(currentLevel.gravityStrength / pow(currentLevel.gravityX * SCREEN_WIDTH - CGFloat(ball.position.x), 2)) * timeSinceLastUpdate
-            //ball_ySpeed += Double(currentLevel.gravityStrength / pow(currentLevel.gravityY * SCREEN_HEIGHT - CGFloat(ball.position.y), 2)) * timeSinceLastUpdate
             
             let xDist = abs(currentLevel.gravityX * SCREEN_WIDTH - ball.position.x) * 1 + 10
             let yDist = abs(currentLevel.gravityY * SCREEN_HEIGHT - ball.position.y) * 1 + 10

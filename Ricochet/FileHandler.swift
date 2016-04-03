@@ -9,8 +9,15 @@
 import Foundation
 import UIKit
 
-func CreateArrayFromPlist() -> NSMutableArray {
-    
+func CreateArrayFromPlist(plist: String, userDomain: Bool) -> NSMutableArray {
+    var path: String = ""
+    if (userDomain) {
+        path = (NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String).stringByAppendingString(plist+".plist")
+    }
+    else {
+        path = NSBundle.mainBundle().pathForResource(plist, ofType: "plist")!
+    }
+    return NSMutableArray(contentsOfFile: path)!
 }
 
 func CreateLevelWithProperties(levelNumber: Int, dict: NSDictionary) -> Level {

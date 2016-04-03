@@ -9,8 +9,6 @@
 import SpriteKit
 import Darwin
 
-//let LEVELS: [Int] = [1,2,3,4,5,6,7,8,9]
-
 let SCREEN: CGRect = UIScreen.mainScreen().bounds
 let SCREEN_WIDTH = SCREEN.width
 let SCREEN_HEIGHT = SCREEN.height
@@ -30,8 +28,6 @@ let MODE_CIRCLE = 2
 enum Wall: Int {
     case Top = 0, Right = 1, Bottom = 2, Left = 3
 }
-
-//var unlockedLevels = 1
 
 class MenuScene: SKScene {
     
@@ -53,9 +49,6 @@ class MenuScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
-        
-        //self.scene!.removeAllActions()
-        //self.scene!.removeAllChildren()
         
         for tempLevel in GAME_LEVELS {
             self.addChild(tempLevel)
@@ -105,21 +98,6 @@ class MenuScene: SKScene {
         levelSelector.zPosition = -1
         self.addChild(levelSelector)
         
-        //modeSquare.position = CGPoint(x: SCREEN_WIDTH * 2, y: SCREEN_HEIGHT / 2)
-        //modeSquare.fillColor = COLOR_FADED_RED
-        //modeSquare.lineWidth = 4
-        //self.addChild(modeSquare)
-        
-        //modeCircle.position = CGPoint(x: SCREEN_WIDTH * 2, y: SCREEN_HEIGHT / 2)
-        //modeCircle.fillColor = COLOR_FADED_RED
-        //modeCircle.lineWidth = 4
-        //self.addChild(modeCircle)
-        
-        //if (defaults.integerForKey("Unlocked Levels")==0) {
-        //    defaults.setInteger(1, forKey: "Unlocked Levels")
-        //}
-        //unlockedLevels = defaults.integerForKey("Unlocked Levels")
-        
         for tempLevel in GAME_LEVELS {
             if (!inLevelSelector) {
                 tempLevel.position.x = SCREEN_WIDTH * 2
@@ -136,10 +114,6 @@ class MenuScene: SKScene {
         touchStart = location
         
         //let touchedNode = self.nodeAtPoint(location)
-        
-        //if ((touchedNode.name?.containsString("Level")) != nil) {
-        //    let tempLevel = Int(String(touchedNode.name?.endIndex.predecessor()))
-        //}
         
         for tempLevel in GAME_LEVELS {
             if (!inLevelSelector) {
@@ -178,23 +152,6 @@ class MenuScene: SKScene {
         else {
             modeCircle.fillColor = COLOR_FADED_RED
         }
-        
-        /*
-         for touch in touches {
-         let location = touch.locationInNode(self)
-         
-         let sprite = SKSpriteNode(imageNamed:"Spaceship")
-         
-         sprite.xScale = 0.5
-         sprite.yScale = 0.5
-         sprite.position = location
-         
-         let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-         
-         sprite.runAction(SKAction.repeatActionForever(action))
-         
-         self.addChild(sprite)
-         }*/
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -209,8 +166,6 @@ class MenuScene: SKScene {
                 game_scene.scaleMode = .AspectFill
                 game_scene.currentLevel = tempLevel
                 let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
-                //self.scene!.removeAllActions()
-                //self.scene!.removeAllChildren()
                 self.scene!.view!.presentScene(game_scene, transition: transition)
             }
         }
@@ -224,25 +179,6 @@ class MenuScene: SKScene {
             let modeSelectorMove = SKAction.moveToX(SCREEN_WIDTH / 2, duration: 0.5)
             modeSelectorMove.timingMode = .EaseInEaseOut
             levelSelector.runAction(modeSelectorMove)
-            /*
-            let modeSquareMove = SKAction.moveToX(SCREEN_WIDTH / 3, duration: 0.5)
-            modeSquareMove.timingMode = .EaseInEaseOut
-            modeSquare.runAction(modeSquareMove)
-            
-            let modeCircleMove = SKAction.moveToX(SCREEN_WIDTH * 2 / 3, duration: 0.5)
-            modeCircleMove.timingMode = .EaseInEaseOut
-            modeCircle.runAction(modeCircleMove)
-            */
-            /*for level in LEVELS {
-                let levelIcon = Level(level: level)
-                levelIcon.position = CGPoint(x: 2 * SCREEN_WIDTH, y: SCREEN_HEIGHT / 2)
-                let levelIconMove = SKAction.moveToX(SCREEN_WIDTH * (CGFloat(level) - 0.5) / 3, duration: 0.5)
-                levelIcon.runAction(levelIconMove)
-                if (level > 1){
-                    levelIcon.lock()
-                }
-                self.addChild(levelIcon)
-            }*/
             
             scroll = -SCREEN_WIDTH * CGFloat(min(GAME_LEVELS.count-3,max(UNLOCKED_LEVELS-1,0))) / 3
             
@@ -260,20 +196,6 @@ class MenuScene: SKScene {
             
             inLevelSelector = true
         }
-        /*else if(modeSquare.containsPoint(location)) {
-            let game_scene = GameScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
-            game_scene.scaleMode = .AspectFill
-            game_scene.mode = MODE_SQUARE
-            let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
-            self.scene!.view!.presentScene(game_scene, transition: transition)
-        }
-        else if(modeCircle.containsPoint(location)) {
-            let game_scene = GameScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
-            game_scene.scaleMode = .AspectFill
-            game_scene.mode = MODE_CIRCLE
-            let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
-            self.scene!.view!.presentScene(game_scene, transition: transition)
-        }*/
         else if (scoresButton.containsPoint(location) && scoresButton.containsPoint(touchStart)) {
             let scores_scene = ScoresScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
             scores_scene.scaleMode = .AspectFill
@@ -296,10 +218,6 @@ class MenuScene: SKScene {
             scroll += translation.x
             scrollSpeed = translation.x
         }
-        //scroll = max(min(0,scroll), -SCREEN_WIDTH * (CGFloat(GAME_LEVELS.count) - 3) / 3)
-        //for tempLevel in GAME_LEVELS {
-        //    tempLevel.position.x = SCREEN_WIDTH * (CGFloat(tempLevel.levelNumber) + 0.5) / 3 + scroll
-        //}
     }
     
     override func update(currentTime: CFTimeInterval) {
@@ -317,11 +235,6 @@ class MenuScene: SKScene {
                     tempLevel.position.x = SCREEN_WIDTH * (CGFloat(tempLevel.levelNumber) + 0.5) / 3 + scroll
                 }
             }
-        }
-        else {
-            //for tempLevel in GAME_LEVELS {
-            //    tempLevel.position = CGPoint(x: 2 * SCREEN_WIDTH, y: SCREEN_HEIGHT / 2)
-            //}
         }
     }
     
