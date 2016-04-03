@@ -23,13 +23,13 @@ class Obstacle: SKShapeNode {
         super.init()
         
         self.shapeID = shapeID
-        self.length = ((shapeID == 0) ? SCREEN_HEIGHT : length)
+        self.length = length
         self.rotateSpeed = rotateSpeed
         self.resizeSpeed = resizeSpeed
         self.minScale = minScale
         self.maxScale = maxScale
         
-        super.position = CGPoint(x: self.length * -3, y: self.length * -3)
+        super.position = CGPoint(x: SCREEN_HEIGHT * -3, y: SCREEN_HEIGHT * -3)
         super.zPosition = 1
         super.fillColor = COLOR_FADED_RED
         super.lineWidth = 4
