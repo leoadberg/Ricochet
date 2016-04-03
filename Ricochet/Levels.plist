@@ -21,14 +21,6 @@
 		<integer>10</integer>
 		<key>3 Star</key>
 		<integer>15</integer>
-		<key>Gravity Mode</key>
-		<integer>1</integer>
-		<key>Gravity X</key>
-		<integer>0</integer>
-		<key>Gravity Y</key>
-		<integer>-100</integer>
-		<key>Gravity Strength</key>
-		<integer>0</integer>
 		<key>Hint</key>
 		<string>Ricochet</string>
 		<key>Effects</key>
@@ -62,14 +54,6 @@
 		<integer>10</integer>
 		<key>3 Star</key>
 		<integer>15</integer>
-		<key>Gravity Mode</key>
-		<integer>2</integer>
-		<key>Gravity X</key>
-		<integer>0</integer>
-		<key>Gravity Y</key>
-		<integer>0</integer>
-		<key>Gravity Strength</key>
-		<real>1000000</real>
 		<key>Hint</key>
 		<string></string>
 		<key>Effects</key>
@@ -103,14 +87,6 @@
 		<integer>10</integer>
 		<key>3 Star</key>
 		<integer>15</integer>
-		<key>Gravity Mode</key>
-		<integer>0</integer>
-		<key>Gravity X</key>
-		<integer>0</integer>
-		<key>Gravity Y</key>
-		<integer>0</integer>
-		<key>Gravity Strength</key>
-		<integer>0</integer>
 		<key>Hint</key>
 		<string></string>
 		<key>Effects</key>
@@ -144,14 +120,6 @@
 		<integer>10</integer>
 		<key>3 Star</key>
 		<integer>15</integer>
-		<key>Gravity Mode</key>
-		<integer>0</integer>
-		<key>Gravity X</key>
-		<integer>0</integer>
-		<key>Gravity Y</key>
-		<integer>0</integer>
-		<key>Gravity Strength</key>
-		<integer>0</integer>
 		<key>Hint</key>
 		<string></string>
 		<key>Effects</key>
@@ -185,14 +153,6 @@
 		<integer>10</integer>
 		<key>3 Star</key>
 		<integer>15</integer>
-		<key>Gravity Mode</key>
-		<integer>0</integer>
-		<key>Gravity X</key>
-		<integer>0</integer>
-		<key>Gravity Y</key>
-		<integer>0</integer>
-		<key>Gravity Strength</key>
-		<integer>0</integer>
 		<key>Hint</key>
 		<string></string>
 		<key>Effects</key>
