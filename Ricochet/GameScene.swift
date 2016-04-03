@@ -22,33 +22,9 @@ var wallThickness: CGFloat = SCREEN_WIDTH / 10
 
 class GameScene: SKScene {
     
-    /*
-    /*
-     *
-    **  HI LEO,
-    **  
-    **  I HAVE FINISHED IMPLEMENTING DIRECTIONAL
-    **  GRAVITY AS A SUBCLASS OF LEVELEFFECT. TO USE
-    **  IT, TAKE INPUT FROM THE PLIST, THEN CHECK FOR THE
-    **  EFFECT ID. IF THE EFFECT ID IS 0, ADD A
-    **  DIRECTIONALGRAVITY OBJECT TO THE EFFECTS SET
-    **  HERE IN GAMESCENE WITH THE PARAMETERS (X, Y).
-    **  AFTER YOU'VE DONE THAT, IT SHOULD TAKE CARE OF
-    **  ITSELF.
-    **
-    **  FROM,
-    **  BRANDON TAI ROBOT GUY
-    **
-    **  PS: I ALSO MADE BALL ITS OWN CLASS
-    *
-    */
-    */
-    
     var currentLevel = Level(level: 0)
     
     var effects: [LevelEffect] = []
-    
-    var OBS_LENGTH: CGFloat = SCREEN_WIDTH / 5
     
     var currentMode: Int = 0
     
@@ -61,7 +37,7 @@ class GameScene: SKScene {
     let requiredScoreLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
     
     var ball = Ball()
-    var obstacle = SKShapeNode(rectOfSize: CGSize(width: 1, height: 1))
+    var obstacle = Obstacle()
     
     let restartButton = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6))
     let menuButton = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6))
@@ -93,11 +69,11 @@ class GameScene: SKScene {
         
         currentHighscore = getHighscore()
         currentMode = currentLevel.mode
-        ball.radius = ball.radius * currentLevel.ballRadiusModifier
-        ball.speedMult = ball.speedMult * currentLevel.ballSpeedMultModifier
-        ball.maxSpeed = ball.maxSpeed * currentLevel.ballMaxSpeedModifier
-        OBS_LENGTH = OBS_LENGTH * currentLevel.obsLengthModifier
-        ball.spd = ball.spd * currentLevel.ballStartSpeedModifier
+        ball.radius *= currentLevel.ballRadiusModifier
+        ball.speedMult *= currentLevel.ballSpeedMultModifier
+        ball.maxSpeed *= currentLevel.ballMaxSpeedModifier
+        obstacle.length *= currentLevel.obsLengthModifier
+        ball.spd *= currentLevel.ballStartSpeedModifier
         ball.draw()
         
         unitLength = Double(SCREEN_WIDTH)
@@ -144,29 +120,33 @@ class GameScene: SKScene {
         if (currentMode == 0) {
             
             currentLevel.activeWalls = [false, false, false, false]
-            OBS_LENGTH = SCREEN_HEIGHT
+            obstacle.length = SCREEN_HEIGHT
             
         }
         
-        switch (currentMode) {
-            
-        case 0,
-             1:
-            obstacle = SKShapeNode(rectOfSize: CGSize(width: OBS_LENGTH, height: OBS_LENGTH))
-            
-        case 2:
-            obstacle = SKShapeNode(circleOfRadius: OBS_LENGTH / 2)
-            
-        default:
-            obstacle = SKShapeNode(rectOfSize: CGSize(width: OBS_LENGTH, height: OBS_LENGTH))
-            
-        }
-        obstacle.position = CGPoint(x: OBS_LENGTH * -3, y: OBS_LENGTH * -3)
+        obstacle.shapeID = currentMode
+        obstacle.position = CGPoint(x: obstacle.length * -3, y: obstacle.length * -3)
         obstacle.zPosition = 1
         obstacle.fillColor = COLOR_FADED_RED
         obstacle.lineWidth = 4
+        obstacle.draw()
         
         self.addChild(obstacle)
+        
+        /*switch (currentMode) {
+            
+        case 0,
+             1:
+            obstacle = SKShapeNode(rectOfSize: CGSize(width: obstacle.length, height: obstacle.length))
+            
+        case 2:
+            obstacle = SKShapeNode(circleOfRadius: obstacle.length / 2)
+            
+        default:
+            obstacle = SKShapeNode(rectOfSize: CGSize(width: obstacle.length, height: obstacle.length))
+            
+        }*/
+        
         
         self.scene?.backgroundColor = COLOR_FADED_BLUE
     }
@@ -201,19 +181,19 @@ class GameScene: SKScene {
                 switch (newActiveWall) {
                     
                 case Wall.Top.rawValue:
-                    obstacle.position = CGPoint(x: OBS_LENGTH / 2, y: OBS_LENGTH * 1.5 - wallThickness)
+                    obstacle.position = CGPoint(x: obstacle.length / 2, y: obstacle.length * 1.5 - wallThickness)
                     
                 case Wall.Right.rawValue:
-                    obstacle.position = CGPoint(x: SCREEN_WIDTH + OBS_LENGTH / 2 - wallThickness, y: OBS_LENGTH / 2)
+                    obstacle.position = CGPoint(x: SCREEN_WIDTH + obstacle.length / 2 - wallThickness, y: obstacle.length / 2)
                     
                 case Wall.Bottom.rawValue:
-                    obstacle.position = CGPoint(x: OBS_LENGTH / 2, y: OBS_LENGTH / -2 + wallThickness)
+                    obstacle.position = CGPoint(x: obstacle.length / 2, y: obstacle.length / -2 + wallThickness)
                     
                 case Wall.Left.rawValue:
-                    obstacle.position = CGPoint(x: OBS_LENGTH / -2 + wallThickness, y: OBS_LENGTH / 2)
+                    obstacle.position = CGPoint(x: obstacle.length / -2 + wallThickness, y: obstacle.length / 2)
                     
                 default:
-                    obstacle.position = CGPoint(x: -3 * OBS_LENGTH, y: -3 * OBS_LENGTH)
+                    obstacle.position = CGPoint(x: -3 * obstacle.length, y: -3 * obstacle.length)
                     
                 }
                 
@@ -387,7 +367,7 @@ class GameScene: SKScene {
             
         case 0,
              1:
-            if (abs(ball.position.y - obstacle.position.y) < (OBS_LENGTH / 2 + ball.radius) && abs(ball.position.x -    obstacle.position.x) < (OBS_LENGTH / 2 + ball.radius)){
+            if (abs(ball.position.y - obstacle.position.y) < (obstacle.length / 2 + ball.radius) && abs(ball.position.x -    obstacle.position.x) < (obstacle.length / 2 + ball.radius)){
                 if (!ball.colliding){
                     if (abs(ball.position.y - obstacle.position.y) > abs(ball.position.x - obstacle.position.x)){
                         ball.ySpeed = ball.position.y >= obstacle.position.y ? abs(ball.ySpeed) : abs(ball.ySpeed) * -1
@@ -407,7 +387,7 @@ class GameScene: SKScene {
             }
             
         case 2:
-            if (pow(Double(ball.position.y - obstacle.position.y), 2.0) + pow(Double(ball.position.x - obstacle.position.x),2.0) < pow(Double(OBS_LENGTH / 2 + ball.radius),2.0)){
+            if (pow(Double(ball.position.y - obstacle.position.y), 2.0) + pow(Double(ball.position.x - obstacle.position.x),2.0) < pow(Double(obstacle.length / 2 + ball.radius),2.0)){
                 if (!ball.colliding){
                     let nx = Double(ball.position.x - obstacle.position.x)
                     let ny = Double(ball.position.y - obstacle.position.y)

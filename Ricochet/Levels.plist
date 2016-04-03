@@ -39,41 +39,6 @@
 		<key>Game Mode</key>
 		<integer>2</integer>
 		<key>Ball Radius Multiplier</key>
-		<integer>2</integer>
-		<key>Max Speed Multiplier</key>
-		<integer>1</integer>
-		<key>Speed Increase Multiplier</key>
-		<integer>1</integer>
-		<key>Start Speed Multiplier</key>
-		<integer>1</integer>
-		<key>Obstacle Size Multiplier</key>
-		<integer>1</integer>
-		<key>1 Star</key>
-		<integer>5</integer>
-		<key>2 Star</key>
-		<integer>10</integer>
-		<key>3 Star</key>
-		<integer>15</integer>
-		<key>Hint</key>
-		<string></string>
-		<key>Effects</key>
-		<array>
-			<dict>
-				<key>EffectID</key>
-				<integer>1</integer>
-				<key>Gravity X</key>
-				<real>0.5</real>
-				<key>Gravity Y</key>
-				<real>0.5</real>
-				<key>Gravity Strength</key>
-				<integer>1000000</integer>
-			</dict>
-		</array>
-	</dict>
-	<dict>
-		<key>Game Mode</key>
-		<integer>2</integer>
-		<key>Ball Radius Multiplier</key>
 		<real>0.5</real>
 		<key>Max Speed Multiplier</key>
 		<integer>1</integer>
