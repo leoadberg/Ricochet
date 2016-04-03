@@ -126,12 +126,17 @@ class GameScene: SKScene {
         
         self.addChild(ball)
         
+        if (currentMode == 0) {
+            
+            currentLevel.activeWalls = [false, false, false, false]
+            OBS_LENGTH = SCREEN_HEIGHT
+            
+        }
+        
         switch (currentMode) {
             
-        case 0:
-            obstacle = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
-            
-        case 1:
+        case 0,
+             1:
             obstacle = SKShapeNode(rectOfSize: CGSize(width: OBS_LENGTH, height: OBS_LENGTH))
             
         case 2:
@@ -181,19 +186,19 @@ class GameScene: SKScene {
                 switch (newActiveWall) {
                     
                 case Wall.Top.rawValue:
-                    obstacle.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 1.5 - wallThickness)
+                    obstacle.position = CGPoint(x: OBS_LENGTH / 2, y: OBS_LENGTH * 1.5 - wallThickness)
                     
                 case Wall.Right.rawValue:
-                    obstacle.position = CGPoint(x: SCREEN_WIDTH * 1.5 - wallThickness, y: SCREEN_HEIGHT / 2)
+                    obstacle.position = CGPoint(x: SCREEN_WIDTH + OBS_LENGTH / 1.5 - wallThickness, y: OBS_LENGTH / 2)
                     
                 case Wall.Bottom.rawValue:
-                    obstacle.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / -2 + wallThickness)
+                    obstacle.position = CGPoint(x: OBS_LENGTH / 2, y: OBS_LENGTH / -2 + wallThickness)
                     
                 case Wall.Left.rawValue:
-                    obstacle.position = CGPoint(x: SCREEN_WIDTH / -2 + wallThickness, y: SCREEN_HEIGHT / 2)
+                    obstacle.position = CGPoint(x: OBS_LENGTH / -2 + wallThickness, y: OBS_LENGTH / 2)
                     
                 default:
-                    obstacle.position = CGPoint(x: -3 * SCREEN_WIDTH, y: -3 * SCREEN_HEIGHT)
+                    obstacle.position = CGPoint(x: -3 * OBS_LENGTH, y: -3 * OBS_LENGTH)
                     
                 }
                 
@@ -350,68 +355,37 @@ class GameScene: SKScene {
         ball.position.y += CGFloat(ball_ySpeed * timeSinceLastUpdate)
         
         // Right Wall Collision Case
-        if (abs(ball.position.x - SCREEN_WIDTH) <= BALL_RADIUS + wallThickness) {
+        if (abs(ball.position.x - SCREEN_WIDTH) <= BALL_RADIUS && !currentLevel.activeWalls[Wall.Right.rawValue]) {
             
-            if (!currentLevel.activeWalls[Wall.Right.rawValue]) {
-                justLost = true
-            }
-            else {
-                ball_xSpeed = abs(ball_xSpeed) * -1
-                updatePolar()
-                speedUp()
-                addScore(1)
-            }
-            
+            justLost = true
+                
         }
     
         // Left Wall Collision Case
-        else if (abs(ball.position.x) <= BALL_RADIUS + wallThickness) {
+        else if (abs(ball.position.x) <= BALL_RADIUS && !currentLevel.activeWalls[Wall.Left.rawValue]) {
             
-            if (!currentLevel.activeWalls[Wall.Left.rawValue]) {
-                justLost = true
-            }
-            else {
-                ball_xSpeed = abs(ball_xSpeed)
-                updatePolar()
-                speedUp()
-                addScore(1)
-            }
+            justLost = true
             
         }
         
         // Top Wall Collision Case
-        if (abs(ball.position.y - SCREEN_HEIGHT) <= BALL_RADIUS + wallThickness) {
+        if (abs(ball.position.y - SCREEN_HEIGHT) <= BALL_RADIUS && !currentLevel.activeWalls[Wall.Top.rawValue]) {
             
-            if (!currentLevel.activeWalls[Wall.Top.rawValue]) {
-                justLost = true
-            }
-            else {
-                ball_ySpeed = abs(ball_ySpeed) * -1
-                updatePolar()
-                speedUp()
-                addScore(1)
-            }
+            justLost = true
             
         }
         
         // Bottom Wall Collision Case
-        else if (abs(ball.position.y) <= BALL_RADIUS + wallThickness) {
+        else if (abs(ball.position.y) <= BALL_RADIUS && !currentLevel.activeWalls[Wall.Bottom.rawValue]) {
             
-            if (!currentLevel.activeWalls[Wall.Bottom.rawValue]) {
-                justLost = true
-            }
-            else {
-                ball_ySpeed = abs(ball_ySpeed)
-                updatePolar()
-                speedUp()
-                addScore(1)
-            }
-            
+            justLost = true
+        
         }
 
         switch (currentMode) {
             
-        case 1:
+        case 0,
+             1:
             if (abs(ball.position.y - obstacle.position.y) < (OBS_LENGTH / 2 + BALL_RADIUS) && abs(ball.position.x -    obstacle.position.x) < (OBS_LENGTH / 2 + BALL_RADIUS)){
                 if (!ball_colliding){
                     if (abs(ball.position.y - obstacle.position.y) > abs(ball.position.x - obstacle.position.x)){
