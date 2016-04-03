@@ -189,7 +189,7 @@ class GameScene: SKScene {
                     obstacle.position = CGPoint(x: OBS_LENGTH / 2, y: OBS_LENGTH * 1.5 - wallThickness)
                     
                 case Wall.Right.rawValue:
-                    obstacle.position = CGPoint(x: SCREEN_WIDTH + OBS_LENGTH / 1.5 - wallThickness, y: OBS_LENGTH / 2)
+                    obstacle.position = CGPoint(x: SCREEN_WIDTH + OBS_LENGTH / 2 - wallThickness, y: OBS_LENGTH / 2)
                     
                 case Wall.Bottom.rawValue:
                     obstacle.position = CGPoint(x: OBS_LENGTH / 2, y: OBS_LENGTH / -2 + wallThickness)
