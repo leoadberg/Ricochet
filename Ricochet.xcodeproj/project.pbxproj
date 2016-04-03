@@ -21,6 +21,7 @@
 		0E6CA8471CA86821008D0E9F /* ScoresScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6CA8461CA86821008D0E9F /* ScoresScene.swift */; };
 		0EBEA5701CA9C635008E1095 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBEA56F1CA9C635008E1095 /* Level.swift */; };
 		0EE51D7E1CB07C7B00D2AC9F /* FileHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE51D7D1CB07C7B00D2AC9F /* FileHandler.swift */; };
+		CA6B7DA11CB102C200C8C117 /* DirectionalGravity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6B7DA01CB102C200C8C117 /* DirectionalGravity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		0E6CA8461CA86821008D0E9F /* ScoresScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoresScene.swift; sourceTree = "<group>"; };
 		0EBEA56F1CA9C635008E1095 /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		0EE51D7D1CB07C7B00D2AC9F /* FileHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileHandler.swift; sourceTree = "<group>"; };
+		CA6B7DA01CB102C200C8C117 /* DirectionalGravity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectionalGravity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 				0E6CA8461CA86821008D0E9F /* ScoresScene.swift */,
 				0EBEA56F1CA9C635008E1095 /* Level.swift */,
 				0E602B221CB1002F00A029BA /* LevelEffect.swift */,
+				CA6B7DA01CB102C200C8C117 /* DirectionalGravity.swift */,
 				0E6CA8421CA7B3D8008D0E9F /* MenuScene.swift */,
 				0E534F4F1CA8D15500E27223 /* Levels.plist */,
 				0E63D7021CA75CA30072A37D /* GameViewController.swift */,
@@ -281,6 +284,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0EBEA5701CA9C635008E1095 /* Level.swift in Sources */,
+				CA6B7DA11CB102C200C8C117 /* DirectionalGravity.swift in Sources */,
 				0E602B231CB1002F00A029BA /* LevelEffect.swift in Sources */,
 				0EE51D7E1CB07C7B00D2AC9F /* FileHandler.swift in Sources */,
 				0E63D7011CA75CA30072A37D /* GameScene.swift in Sources */,

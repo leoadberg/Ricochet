@@ -20,7 +20,13 @@ let LEFT_CENTER: [CGFloat] = [0, SCREEN_HEIGHT / 2]
 
 var wallThickness: CGFloat = SCREEN_WIDTH / 10
 
+var effects = Set<LevelEffect>()
+
 class GameScene: SKScene {
+    
+    var scenePtr: UnsafeMutablePointer<GameScene> = UnsafeMutablePointer<GameScene>.alloc(1)
+    
+    scenePtr.inititalize(self)
     
     var currentLevel = Level(level: 0)
     var BALL_RADIUS = SCREEN_WIDTH / 12
@@ -175,10 +181,10 @@ class GameScene: SKScene {
             case 0:
                 let touchLoc: [CGFloat] = [touchStart.x, touchStart.y]
                 
-                let newActiveWall = minimum(    distanceBetween(touchLoc, loc2: TOP_CENTER),
-                                            n2: distanceBetween(touchLoc, loc2: RIGHT_CENTER),
-                                            n3: distanceBetween(touchLoc, loc2: BOTTOM_CENTER),
-                                            n4: distanceBetween(touchLoc, loc2: LEFT_CENTER))
+                let newActiveWall = minimum(    distanceBetween(touchLoc, TOP_CENTER),
+                                                distanceBetween(touchLoc, RIGHT_CENTER),
+                                                distanceBetween(touchLoc, BOTTOM_CENTER),
+                                                distanceBetween(touchLoc, LEFT_CENTER))
                 
                 currentLevel.activeWalls = [false, false, false, false]
                 currentLevel.activeWalls[newActiveWall] = true
@@ -334,10 +340,14 @@ class GameScene: SKScene {
         let timeSinceLastUpdate: Double = min(currentTime - lastUpdateTime, 1 / MIN_FRAMERATE)
         lastUpdateTime = currentTime
         
-        if (currentLevel.gravityMode == 1) {
+        for effect in effects {
+            effect.update(SCENE, timeSinceLastUpdate)
+        }
+        
+        /*if (currentLevel.gravityMode == 1) {
             ball_xSpeed += Double(currentLevel.gravityX) * timeSinceLastUpdate
             ball_ySpeed += Double(currentLevel.gravityY) * timeSinceLastUpdate
-        } else if (currentLevel.gravityMode == 2) {
+        } else*/ if (currentLevel.gravityMode == 2) {
             
             let xDist = abs(currentLevel.gravityX * SCREEN_WIDTH - ball.position.x) * 1 + 10
             let yDist = abs(currentLevel.gravityY * SCREEN_HEIGHT - ball.position.y) * 1 + 10
@@ -467,24 +477,29 @@ class GameScene: SKScene {
         ball_angle = atan2(ball_ySpeed, ball_xSpeed)
     }
     
-    func distanceBetween(loc1: [CGFloat], loc2: [CGFloat]) -> CGFloat {
+    func distanceBetween(loc1: [CGFloat], _ loc2: [CGFloat]) -> CGFloat {
         return sqrt(pow(loc1[0] - loc2[0], 2) + pow(loc1[1] - loc2[1], 2))
     }
-        
-    func minimum(n1: CGFloat, n2: CGFloat, n3: CGFloat, n4: CGFloat) -> Int {
     
-        if (n1 < n2 && n1 < n3 && n1 < n4) {
-            return 0
+    func minimum(n0: CGFloat, _ nums: CGFloat...) -> Int {
+    
+        var minValue: CGFloat = n0
+        var minIndex: Int = 0
+        
+        var i = 0
+        
+        for num in nums {
+            
+            i += 1
+            
+            if (num < minValue) {
+                minValue = num
+                minIndex = i
+            }
+            
         }
-        else if (n2 < n3 && n2 < n4) {
-            return 1
-        }
-        else if (n3 < n4) {
-            return 2
-        }
-        else {
-            return 3
-        }
+        
+        return minIndex
         
     }
     

@@ -8,14 +8,18 @@
 
 import Foundation
 
-class LevelEffect {
+class LevelEffect: Hashable, Equatable {
     
-    var effectID = -1
+    var hashValue = -1
     
     init(effectID: Int) {
-        self.effectID = effectID
+        self.hashValue = effectID
     }
     
-    func update(scene: GameScene, timeSinceLastUpdate: Double) {}
+    func update(scene: UnsafeMutablePointer<GameScene>, _ timeSinceLastUpdate: Double) {}
     
+}
+
+func == (lhs: LevelEffect, rhs: LevelEffect) -> Bool {
+    return lhs.hashValue == rhs.hashValue
 }
