@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SpriteKit
 
 class DirectionalGravity: LevelEffect {
     
@@ -22,10 +23,10 @@ class DirectionalGravity: LevelEffect {
         
     }
     
-    override func update(scene: UnsafeMutablePointer<GameScene>, _ timeSinceLastUpdate: Double) {
+    override func update(timeSinceLastUpdate: Double, inout _ ball: Ball, inout _ obstacle: SKShapeNode) {
         
-        scene.memory.ball_xSpeed += Double(xMagnitude) * timeSinceLastUpdate
-        scene.memory.ball_ySpeed += Double(yMagnitude) * timeSinceLastUpdate
+        ball.xSpeed += CGFloat(xMagnitude * timeSinceLastUpdate)
+        ball.ySpeed += CGFloat(yMagnitude * timeSinceLastUpdate)
         
     }
     

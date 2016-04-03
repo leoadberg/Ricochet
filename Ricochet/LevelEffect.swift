@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SpriteKit
 
 class LevelEffect: Hashable, Equatable {
     
@@ -16,7 +17,7 @@ class LevelEffect: Hashable, Equatable {
         self.hashValue = effectID
     }
     
-    func update(scene: UnsafeMutablePointer<GameScene>, _ timeSinceLastUpdate: Double) {}
+    func update(timeSinceLastUpdate: Double, inout _ ball: Ball, inout _ obstacle: SKShapeNode) {}
     
 }
 

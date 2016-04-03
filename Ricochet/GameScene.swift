@@ -24,16 +24,9 @@ var effects = Set<LevelEffect>()
 
 class GameScene: SKScene {
     
-    var scenePtr: UnsafeMutablePointer<GameScene> = UnsafeMutablePointer<GameScene>.alloc(1)
-    
-    scenePtr.inititalize(self)
-    
     var currentLevel = Level(level: 0)
-    var BALL_RADIUS = SCREEN_WIDTH / 12
-    var BALL_MAX_SPEED: CGFloat = SCREEN_WIDTH * 6
-    var BALL_SPEED_MULT: CGFloat = 0.01
+    
     var OBS_LENGTH: CGFloat = SCREEN_WIDTH / 5
-    var BALL_START_SPEED: CGFloat = 1
     
     var currentMode: Int = 0
     
@@ -45,15 +38,7 @@ class GameScene: SKScene {
     let scoreLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
     let requiredScoreLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
     
-    // Ball Speed in unitLength / second
-    var ball_speed: Double = 0
-    var ball_angle: Double = 0
-    var ball_xSpeed: Double = 0
-    var ball_ySpeed: Double = 0
-    
-    var ball_colliding: Bool = false
-    
-    var ball = SKShapeNode(circleOfRadius: 1)
+    var ball = Ball()
     var obstacle = SKShapeNode(rectOfSize: CGSize(width: 1, height: 1))
     
     let restartButton = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6))
@@ -84,12 +69,11 @@ class GameScene: SKScene {
         
         currentHighscore = getHighscore()
         currentMode = currentLevel.mode
-        BALL_RADIUS = BALL_RADIUS * currentLevel.ballRadiusModifier
-        BALL_SPEED_MULT = BALL_SPEED_MULT * currentLevel.ballSpeedMultModifier
-        BALL_MAX_SPEED = BALL_MAX_SPEED * currentLevel.ballMaxSpeedModifier
+        ball.radius = ball.radius * currentLevel.ballRadiusModifier
+        ball.speedMult = ball.speedMult * currentLevel.ballSpeedMultModifier
+        ball.maxSpeed = ball.maxSpeed * currentLevel.ballMaxSpeedModifier
         OBS_LENGTH = OBS_LENGTH * currentLevel.obsLengthModifier
-        BALL_START_SPEED = BALL_START_SPEED * currentLevel.ballStartSpeedModifier
-        ball = SKShapeNode(circleOfRadius: BALL_RADIUS)
+        ball.spd = ball.spd * currentLevel.ballStartSpeedModifier
         
         unitLength = Double(SCREEN_WIDTH)
         wallThickness = SCREEN_WIDTH * CGFloat(currentLevel.wallThicknessMultiplier)
@@ -125,10 +109,10 @@ class GameScene: SKScene {
         ball.fillColor = COLOR_FADED_GREEN
         ball.lineWidth = 4
         
-        ball_speed = Double(BALL_START_SPEED) * unitLength / 4
-        ball_angle = (Double(arc4random_uniform(50)) + 20) * (M_PI / 180) + (M_PI / 2) * Double(arc4random_uniform(4))
+        ball.spd = Double(ball.spd) * unitLength / 4
+        ball.angle = (Double(arc4random_uniform(50)) + 20) * (M_PI / 180) + (M_PI / 2) * Double(arc4random_uniform(4))
         
-        updateCartesian()
+        ball.updateCartesian()
         
         self.addChild(ball)
         
@@ -341,12 +325,12 @@ class GameScene: SKScene {
         lastUpdateTime = currentTime
         
         for effect in effects {
-            effect.update(SCENE, timeSinceLastUpdate)
+            effect.update(timeSinceLastUpdate, &ball, &obstacle)
         }
         
         /*if (currentLevel.gravityMode == 1) {
-            ball_xSpeed += Double(currentLevel.gravityX) * timeSinceLastUpdate
-            ball_ySpeed += Double(currentLevel.gravityY) * timeSinceLastUpdate
+            ball.xSpeed += Double(currentLevel.gravityX) * timeSinceLastUpdate
+            ball.ySpeed += Double(currentLevel.gravityY) * timeSinceLastUpdate
         } else*/ if (currentLevel.gravityMode == 2) {
             
             let xDist = abs(currentLevel.gravityX * SCREEN_WIDTH - ball.position.x) * 1 + 10
@@ -356,37 +340,36 @@ class GameScene: SKScene {
                 gravityForce = currentLevel.gravityStrength / (pow(xDist, 2) + pow(yDist, 2))
             }
             //print(gravityForce)
-            ball_xSpeed += Double(gravityForce * (currentLevel.gravityX * SCREEN_WIDTH - ball.position.x) / (xDist + yDist))
-            ball_ySpeed += Double(gravityForce * (currentLevel.gravityY * SCREEN_HEIGHT - ball.position.y) / (xDist + yDist))
+            ball.xSpeed += Double(gravityForce * (currentLevel.gravityX * SCREEN_WIDTH - ball.position.x) / (xDist + yDist))
+            ball.ySpeed += Double(gravityForce * (currentLevel.gravityY * SCREEN_HEIGHT - ball.position.y) / (xDist + yDist))
             
         }
         
-        ball.position.x += CGFloat(ball_xSpeed * timeSinceLastUpdate)
-        ball.position.y += CGFloat(ball_ySpeed * timeSinceLastUpdate)
+        ball.update(timeSinceLastUpdate)
         
         // Right Wall Collision Case
-        if (abs(ball.position.x - SCREEN_WIDTH) <= BALL_RADIUS && !currentLevel.activeWalls[Wall.Right.rawValue]) {
+        if (abs(ball.position.x - SCREEN_WIDTH) <= ball.radius && !currentLevel.activeWalls[Wall.Right.rawValue]) {
             
             justLost = true
                 
         }
     
         // Left Wall Collision Case
-        else if (abs(ball.position.x) <= BALL_RADIUS && !currentLevel.activeWalls[Wall.Left.rawValue]) {
+        else if (abs(ball.position.x) <= ball.radius && !currentLevel.activeWalls[Wall.Left.rawValue]) {
             
             justLost = true
             
         }
         
         // Top Wall Collision Case
-        if (abs(ball.position.y - SCREEN_HEIGHT) <= BALL_RADIUS && !currentLevel.activeWalls[Wall.Top.rawValue]) {
+        if (abs(ball.position.y - SCREEN_HEIGHT) <= ball.radius && !currentLevel.activeWalls[Wall.Top.rawValue]) {
             
             justLost = true
             
         }
         
         // Bottom Wall Collision Case
-        else if (abs(ball.position.y) <= BALL_RADIUS && !currentLevel.activeWalls[Wall.Bottom.rawValue]) {
+        else if (abs(ball.position.y) <= ball.radius && !currentLevel.activeWalls[Wall.Bottom.rawValue]) {
             
             justLost = true
         
@@ -396,45 +379,45 @@ class GameScene: SKScene {
             
         case 0,
              1:
-            if (abs(ball.position.y - obstacle.position.y) < (OBS_LENGTH / 2 + BALL_RADIUS) && abs(ball.position.x -    obstacle.position.x) < (OBS_LENGTH / 2 + BALL_RADIUS)){
-                if (!ball_colliding){
+            if (abs(ball.position.y - obstacle.position.y) < (OBS_LENGTH / 2 + ball.radius) && abs(ball.position.x -    obstacle.position.x) < (OBS_LENGTH / 2 + ball.radius)){
+                if (!ball.colliding){
                     if (abs(ball.position.y - obstacle.position.y) > abs(ball.position.x - obstacle.position.x)){
-                        ball_ySpeed = ball.position.y >= obstacle.position.y ? abs(ball_ySpeed) : abs(ball_ySpeed) * -1
+                        ball.ySpeed = ball.position.y >= obstacle.position.y ? abs(ball.ySpeed) : abs(ball.ySpeed) * -1
                     }
                     else {
-                        ball_xSpeed = ball.position.x >= obstacle.position.x ? abs(ball_xSpeed) : abs(ball_xSpeed) * -1
+                        ball.xSpeed = ball.position.x >= obstacle.position.x ? abs(ball.xSpeed) : abs(ball.xSpeed) * -1
                     }
                     
-                    updatePolar()
+                    ball.updatePolar()
                     speedUp()
                     addScore(1)
                 }
-                ball_colliding = true
+                ball.colliding = true
             }
             else {
-                ball_colliding = false
+                ball.colliding = false
             }
             
         case 2:
-            if (pow(Double(ball.position.y - obstacle.position.y), 2.0) + pow(Double(ball.position.x - obstacle.position.x),2.0) < pow(Double(OBS_LENGTH / 2 + BALL_RADIUS),2.0)){
-                if (!ball_colliding){
+            if (pow(Double(ball.position.y - obstacle.position.y), 2.0) + pow(Double(ball.position.x - obstacle.position.x),2.0) < pow(Double(OBS_LENGTH / 2 + ball.radius),2.0)){
+                if (!ball.colliding){
                     let nx = Double(ball.position.x - obstacle.position.x)
                     let ny = Double(ball.position.y - obstacle.position.y)
-                    let ux = (ball_xSpeed * nx + ball_ySpeed * ny) / (nx * nx + ny * ny) * nx
-                    let uy = (ball_xSpeed * nx + ball_ySpeed * ny) / (nx * nx + ny * ny) * ny
-                    let wx = ball_xSpeed - ux
-                    let wy = ball_ySpeed - uy
-                    ball_xSpeed = wx - ux
-                    ball_ySpeed = wy - uy
+                    let ux = (ball.xSpeed * nx + ball.ySpeed * ny) / (nx * nx + ny * ny) * nx
+                    let uy = (ball.xSpeed * nx + ball.ySpeed * ny) / (nx * nx + ny * ny) * ny
+                    let wx = ball.xSpeed - ux
+                    let wy = ball.ySpeed - uy
+                    ball.xSpeed = wx - ux
+                    ball.ySpeed = wy - uy
                     
-                    updatePolar()
+                    ball.updatePolar()
                     speedUp()
                     addScore(1)
                 }
-                ball_colliding = true
+                ball.colliding = true
             }
             else {
-                ball_colliding = false
+                ball.colliding = false
             }
             
         default:
@@ -445,10 +428,10 @@ class GameScene: SKScene {
     }
     
     func speedUp() {
-        let deltaMax = Double(BALL_MAX_SPEED) - ball_speed
-        ball_speed += deltaMax * Double(BALL_SPEED_MULT)
+        let deltaMax = Double(ball.maxSpeed) - ball.spd
+        ball.spd += deltaMax * Double(ball.speedMult)
         
-        updateCartesian()
+        ball.updateCartesian()
     }
     
     func addScore(n: Int) {
@@ -465,16 +448,6 @@ class GameScene: SKScene {
                 requiredScoreLabel.text = "\(currentLevel.twoStar) to ★★";
             }
         }
-    }
-    
-    func updateCartesian() {
-        ball_xSpeed = ball_speed * cos(ball_angle)
-        ball_ySpeed = ball_speed * sin(ball_angle)
-    }
-    
-    func updatePolar() {
-        ball_speed = sqrt( ball_xSpeed * ball_xSpeed + ball_ySpeed * ball_ySpeed )
-        ball_angle = atan2(ball_ySpeed, ball_xSpeed)
     }
     
     func distanceBetween(loc1: [CGFloat], _ loc2: [CGFloat]) -> CGFloat {
