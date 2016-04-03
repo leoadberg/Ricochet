@@ -22,7 +22,7 @@ class Ball: SKShapeNode {
     
     var colliding: Bool = false
     
-    init(radius: CGFloat = SCREEN_WIDTH / 12, maxSpeed: CGFloat = SCREEN_WIDTH * 6, speedMult: CGFloat = 0.01,initialSpeed: CGFloat = 1, initialAngle: Double = M_PI / 4) {
+    init(radius: CGFloat = SCREEN_WIDTH / 12, maxSpeed: CGFloat = SCREEN_WIDTH * 6, speedMult: CGFloat = 0.01, initialSpeed: CGFloat = 1, initialAngle: Double = M_PI / 4) {
         
         super.init()
         
@@ -51,6 +51,13 @@ class Ball: SKShapeNode {
     func updatePolar() {
         self.spd = sqrt(self.xSpeed * self.xSpeed + self.ySpeed * self.ySpeed)
         self.angle = atan2(Double(self.ySpeed), Double(self.xSpeed))
+    }
+    
+    func speedUp() {
+        let deltaMax: Double = Double(self.maxSpeed) - Double(self.spd)
+        self.spd += CGFloat(deltaMax * Double(self.speedMult))
+        
+        self.updateCartesian()
     }
     
     required init?(coder aDecoder: NSCoder) {

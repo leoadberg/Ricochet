@@ -359,66 +359,8 @@ class GameScene: SKScene {
         
         }
 
-        switch (currentMode) {
-            
-        case 0,
-             1:
-            if (abs(ball.position.y - obstacle.position.y) < (obstacle.length / 2 + ball.radius) && abs(ball.position.x -    obstacle.position.x) < (obstacle.length / 2 + ball.radius)){
-                if (!ball.colliding){
-                    if (abs(ball.position.y - obstacle.position.y) > abs(ball.position.x - obstacle.position.x)){
-                        ball.ySpeed = ball.position.y >= obstacle.position.y ? abs(ball.ySpeed) : abs(ball.ySpeed) * -1
-                    }
-                    else {
-                        ball.xSpeed = ball.position.x >= obstacle.position.x ? abs(ball.xSpeed) : abs(ball.xSpeed) * -1
-                    }
-                    
-                    ball.updatePolar()
-                    speedUp()
-                    addScore(1)
-                }
-                ball.colliding = true
-            }
-            else {
-                ball.colliding = false
-            }
-            
-        case 2:
-            if (pow(Double(ball.position.y - obstacle.position.y), 2.0) + pow(Double(ball.position.x - obstacle.position.x),2.0) < pow(Double(obstacle.length / 2 + ball.radius),2.0)){
-                if (!ball.colliding){
-                    let nx = Double(ball.position.x - obstacle.position.x)
-                    let ny = Double(ball.position.y - obstacle.position.y)
-                    let mxy = (Double(ball.xSpeed) * nx + Double(ball.ySpeed) * ny)
-                    let dxy = (nx * nx + ny * ny)
-                    let mdxy = mxy / dxy
-                    let ux = mdxy * nx
-                    let uy = mdxy * ny
-                    let wx = Double(ball.xSpeed) - ux
-                    let wy = Double(ball.ySpeed) - uy
-                    ball.xSpeed = CGFloat(wx - ux)
-                    ball.ySpeed = CGFloat(wy - uy)
-                    
-                    ball.updatePolar()
-                    speedUp()
-                    addScore(1)
-                }
-                ball.colliding = true
-            }
-            else {
-                ball.colliding = false
-            }
-            
-        default:
-            return
-            
-        }
+        addScore(obstacle.update(timeSinceLastUpdate, &ball))
         
-    }
-    
-    func speedUp() {
-        let deltaMax: Double = Double(ball.maxSpeed) - Double(ball.spd)
-        ball.spd += CGFloat(deltaMax * Double(ball.speedMult))
-        
-        ball.updateCartesian()
     }
     
     func addScore(n: Int) {
