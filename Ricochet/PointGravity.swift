@@ -37,7 +37,7 @@ class PointGravity: LevelEffect {
         
         deltaXSpeed = deltaXSpeed / CGFloat(xDist + yDist)
         ball.xSpeed += deltaXSpeed
-        var deltaYSpeed = CGFloat(gravityForce * (self.yLocation * Double(SCREEN_HEIGHT) - Double(ball.position.y)) / (xDist + yDist))
+        let deltaYSpeed = CGFloat(gravityForce * (self.yLocation * Double(SCREEN_HEIGHT) - Double(ball.position.y)) / (xDist + yDist))
         ball.ySpeed += deltaYSpeed
         
     }

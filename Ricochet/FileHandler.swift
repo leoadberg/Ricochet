@@ -51,9 +51,5 @@ func CreateLevelWithProperties(levelNumber: Int, dict: NSDictionary) -> Level {
             break;
         }
     }
-    //tempLevel.gravityMode = dict["Gravity Mode"] as! Int
-    //tempLevel.gravityX = dict["Gravity X"] as! CGFloat
-    //tempLevel.gravityY = dict["Gravity Y"] as! CGFloat
-    //tempLevel.gravityStrength = dict["Gravity Strength"] as! CGFloat
     return tempLevel
 }

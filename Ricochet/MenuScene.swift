@@ -55,8 +55,8 @@ class MenuScene: SKScene {
         /* Setup your scene here */
         
         let testCustomLevel = CustomLevel()
-        testCustomLevel.position = CGPoint (x: SCREEN_WIDTH / 3, y: SCREEN_HEIGHT / 10)
-        //self.addChild(testCustomLevel)
+        testCustomLevel.position = CGPoint (x: SCREEN_WIDTH / 5, y: SCREEN_HEIGHT / 10)
+        self.addChild(testCustomLevel)
         
         for tempLevel in GAME_LEVELS {
             self.addChild(tempLevel)
