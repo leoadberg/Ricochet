@@ -353,23 +353,6 @@ class GameScene: SKScene {
             effect.update(timeSinceLastUpdate, &ball, &obstacle)
         }
         
-        /*if (currentLevel.gravityMode == 1) {
-            ball.xSpeed += Double(currentLevel.gravityX) * timeSinceLastUpdate
-            ball.ySpeed += Double(currentLevel.gravityY) * timeSinceLastUpdate
-        } else if (currentLevel.gravityMode == 2) {
-            
-            let xDist = abs(currentLevel.gravityX * SCREEN_WIDTH - ball.position.x) * 1 + 10
-            let yDist = abs(currentLevel.gravityY * SCREEN_HEIGHT - ball.position.y) * 1 + 10
-            var gravityForce : CGFloat = 0
-            if (abs(xDist) + abs(yDist) > 30) {
-                gravityForce = currentLevel.gravityStrength / (pow(xDist, 2) + pow(yDist, 2))
-            }
-            //print(gravityForce)
-            ball.xSpeed += CGFloat(gravityForce * (currentLevel.gravityX * SCREEN_WIDTH - ball.position.x) / (xDist + yDist))
-            ball.ySpeed += CGFloat(gravityForce * (currentLevel.gravityY * SCREEN_HEIGHT - ball.position.y) / (xDist + yDist))
-            
-        }*/
-        
         ball.update(timeSinceLastUpdate)
         
         // Right Wall Collision Case

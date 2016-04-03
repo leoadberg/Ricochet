@@ -15,9 +15,7 @@ class DirectionalGravity: LevelEffect {
     var yMagnitude: Double = 0.0
     
     init(x: Double, y: Double) {
-        /*
-        super.init(effectID: 0)
-        */
+        
         self.xMagnitude = x
         self.yMagnitude = y
         
