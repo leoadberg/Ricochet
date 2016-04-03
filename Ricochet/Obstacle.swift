@@ -29,7 +29,7 @@ class Obstacle: SKShapeNode {
         self.minScale = minScale
         self.maxScale = maxScale
         
-        super.position = CGPoint(x: obstacle.length * -3, y: obstacle.length * -3)
+        super.position = CGPoint(x: self.length * -3, y: self.length * -3)
         super.zPosition = 1
         super.fillColor = COLOR_FADED_RED
         super.lineWidth = 4
