@@ -155,12 +155,27 @@ class Obstacle: SKShapeNode {
             }
             
             if (distanceBetween([ballPseudoX, ballPseudoY], [closestX, closestY]) < ball.radius) {
-                // WE HAVE COLLISION BOIS
-                print("jack")
+                
+                if (!ball.colliding){
+                    if (abs(ball.position.y - super.position.y) > abs(ball.position.x - super.position.x)){
+                        ball.ySpeed = ball.position.y >= super.position.y ? abs(ball.ySpeed) : abs(ball.ySpeed) * -1
+                    }
+                    else {
+                        ball.xSpeed = ball.position.x >= super.position.x ? abs(ball.xSpeed) : abs(ball.xSpeed) * -1
+                    }
+                    
+                    ball.updatePolar()
+                    ball.speedUp()
+                    plus = 1
+                }
+                
+                ball.colliding = true
+                
             }
             else {
-                // NO COLLISION RIPERONI
-                print("jeremiah")
+                
+                ball.colliding = false
+                
             }
             /*
             if (abs(ball.position.y - super.position.y) < (self.length / 2 + ball.radius) && abs(ball.position.x - super.position.x) < (self.length / 2 + ball.radius)){
