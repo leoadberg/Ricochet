@@ -133,21 +133,6 @@ class GameScene: SKScene {
         
         self.addChild(obstacle)
         
-        /*switch (currentMode) {
-            
-        case 0,
-             1:
-            obstacle = SKShapeNode(rectOfSize: CGSize(width: obstacle.length, height: obstacle.length))
-            
-        case 2:
-            obstacle = SKShapeNode(circleOfRadius: obstacle.length / 2)
-            
-        default:
-            obstacle = SKShapeNode(rectOfSize: CGSize(width: obstacle.length, height: obstacle.length))
-            
-        }*/
-        
-        
         self.scene?.backgroundColor = COLOR_FADED_BLUE
     }
     
@@ -165,46 +150,7 @@ class GameScene: SKScene {
         
         if (!lost) {
             
-            switch (currentMode) {
-            
-            case 0:
-                let touchLoc: [CGFloat] = [touchStart.x, touchStart.y]
-                
-                let newActiveWall = minimum(distanceBetween(touchLoc, TOP_CENTER),
-                                            distanceBetween(touchLoc, RIGHT_CENTER),
-                                            distanceBetween(touchLoc, BOTTOM_CENTER),
-                                            distanceBetween(touchLoc, LEFT_CENTER))
-                
-                currentLevel.activeWalls = [false, false, false, false]
-                currentLevel.activeWalls[newActiveWall] = true
-                
-                switch (newActiveWall) {
-                    
-                case Wall.Top.rawValue:
-                    obstacle.position = CGPoint(x: obstacle.length / 2, y: obstacle.length * 1.5 - wallThickness)
-                    
-                case Wall.Right.rawValue:
-                    obstacle.position = CGPoint(x: SCREEN_WIDTH + obstacle.length / 2 - wallThickness, y: obstacle.length / 2)
-                    
-                case Wall.Bottom.rawValue:
-                    obstacle.position = CGPoint(x: obstacle.length / 2, y: obstacle.length / -2 + wallThickness)
-                    
-                case Wall.Left.rawValue:
-                    obstacle.position = CGPoint(x: obstacle.length / -2 + wallThickness, y: obstacle.length / 2)
-                    
-                default:
-                    obstacle.position = CGPoint(x: -3 * obstacle.length, y: -3 * obstacle.length)
-                    
-                }
-                
-            case 1,
-                 2:
-                obstacle.position = touches.first!.locationInNode(self)
-            
-            default:
-                return
-                
-            }
+            obstacle.move(touchStart, &currentLevel)
             
         }
     }
@@ -390,30 +336,30 @@ class GameScene: SKScene {
         }
     }
     
-    func distanceBetween(loc1: [CGFloat], _ loc2: [CGFloat]) -> CGFloat {
-        return sqrt(pow(loc1[0] - loc2[0], 2) + pow(loc1[1] - loc2[1], 2))
-    }
+}
+
+func minimum(n0: CGFloat, _ nums: CGFloat...) -> Int {
     
-    func minimum(n0: CGFloat, _ nums: CGFloat...) -> Int {
+    var minValue: CGFloat = n0
+    var minIndex: Int = 0
     
-        var minValue: CGFloat = n0
-        var minIndex: Int = 0
+    var i = 0
+    
+    for num in nums {
         
-        var i = 0
+        i += 1
         
-        for num in nums {
-            
-            i += 1
-            
-            if (num < minValue) {
-                minValue = num
-                minIndex = i
-            }
-            
+        if (num < minValue) {
+            minValue = num
+            minIndex = i
         }
         
-        return minIndex
-        
     }
     
+    return minIndex
+    
+}
+
+func distanceBetween(loc1: [CGFloat], _ loc2: [CGFloat]) -> CGFloat {
+    return sqrt(pow(loc1[0] - loc2[0], 2) + pow(loc1[1] - loc2[1], 2))
 }

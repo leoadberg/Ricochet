@@ -53,6 +53,51 @@ class Obstacle: SKShapeNode {
         }
     }
     
+    func move(touch: CGPoint, inout _ currentLevel: Level) {
+        
+        switch (shapeID) {
+            
+        case 0:
+            let touchLoc: [CGFloat] = [touch.x, touch.y]
+            
+            let newActiveWall = minimum(distanceBetween(touchLoc, TOP_CENTER),
+                                        distanceBetween(touchLoc, RIGHT_CENTER),
+                                        distanceBetween(touchLoc, BOTTOM_CENTER),
+                                        distanceBetween(touchLoc, LEFT_CENTER))
+            
+            currentLevel.activeWalls = [false, false, false, false]
+            currentLevel.activeWalls[newActiveWall] = true
+            
+            switch (newActiveWall) {
+                
+            case Wall.Top.rawValue:
+                super.position = CGPoint(x: self.length / 2, y: self.length * 1.5 - wallThickness)
+                
+            case Wall.Right.rawValue:
+                super.position = CGPoint(x: SCREEN_WIDTH + self.length / 2 - wallThickness, y: self.length / 2)
+                
+            case Wall.Bottom.rawValue:
+                super.position = CGPoint(x: self.length / 2, y: self.length / -2 + wallThickness)
+                
+            case Wall.Left.rawValue:
+                super.position = CGPoint(x: self.length / -2 + wallThickness, y: self.length / 2)
+                
+            default:
+                super.position = CGPoint(x: -3 * self.length, y: -3 * self.length)
+                
+            }
+            
+        case 1,
+             2:
+            super.position = CGPoint(x: touch.x, y: touch.y)
+            
+        default:
+            return
+            
+        }
+        
+    }
+    
     func update(timeSinceLastUpdate: Double, inout _ ball: Ball) -> Int {
         
         var plus: Int = 0
