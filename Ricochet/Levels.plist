@@ -182,7 +182,7 @@
 		<key>Speed Increase Multiplier</key>
 		<integer>1</integer>
 		<key>Start Speed Multiplier</key>
-		<integer>1</integer>
+		<integer>0</integer>
 		<key>Obstacle Size Multiplier</key>
 		<integer>1</integer>
 		<key>1 Star</key>
@@ -195,24 +195,6 @@
 		<string></string>
 		<key>Effects</key>
 		<array>
-			<dict>
-				<key>EffectID</key>
-				<integer>0</integer>
-				<key>Gravity X</key>
-				<integer>0</integer>
-				<key>Gravity Y</key>
-				<integer>-100</integer>
-			</dict>
-			<dict>
-				<key>EffectID</key>
-				<integer>3</integer>
-				<key>Resize Rate</key>
-				<integer>1</integer>
-				<key>Min Scale</key>
-				<real>0.5</real>
-				<key>Max Scale</key>
-				<integer>2</integer>
-			</dict>
 			<dict>
 				<key>EffectID</key>
 				<integer>2</integer>
