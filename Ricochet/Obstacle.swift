@@ -125,6 +125,36 @@ class Obstacle: SKShapeNode {
                 ball.colliding = false
             }
         case 1:
+            
+            var closestX: CGFloat = 0.0
+            if (ball.position.x < (super.position.x - (self.length / 2))) {
+                closestX = super.position.x - (self.length / 2)
+            }
+            else if (ball.position.x > (super.position.x + (self.length / 2))) {
+                closestX = super.position.x + (self.length / 2)
+            }
+            else {
+                closestX = ball.position.x
+            }
+            
+            var closestY: CGFloat = 0.0
+            if (ball.position.y < (super.position.y - (self.length / 2))) {
+                closestY = super.position.y - (self.length / 2)
+            }
+            else if (ball.position.y > (super.position.y + (self.length / 2))) {
+                closestY = super.position.y + (self.length / 2)
+            }
+            else {
+                closestY = ball.position.y
+            }
+            
+            if (distanceBetween([ball.position.x, ball.position.y], [closestX, closestY]) < ball.radius) {
+                // WE HAVE COLLISION BOIS
+            }
+            else {
+                // NO COLLISION RIPERONI
+            }
+            /*
             if (abs(ball.position.y - super.position.y) < (self.length / 2 + ball.radius) && abs(ball.position.x - super.position.x) < (self.length / 2 + ball.radius)){
                 if (!ball.colliding){
                     if (abs(ball.position.y - super.position.y) > abs(ball.position.x - super.position.x)){
@@ -143,6 +173,7 @@ class Obstacle: SKShapeNode {
             else {
                 ball.colliding = false
             }
+            */
         case 2:
             if (pow(Double(ball.position.y - super.position.y), 2.0) + pow(Double(ball.position.x - super.position.x),2.0) < pow(Double(self.length / 2 + ball.radius),2.0)){
                 if (!ball.colliding){

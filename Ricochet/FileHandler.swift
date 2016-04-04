@@ -46,6 +46,7 @@ func CreateLevelWithProperties(levelNumber: Int, dict: NSDictionary) -> Level {
     
     let tempEffects = dict["Effects"] as! NSArray
     for effect in tempEffects {
+        
         switch (effect["EffectID"] as! Int) {
             
         case 0:
@@ -55,11 +56,15 @@ func CreateLevelWithProperties(levelNumber: Int, dict: NSDictionary) -> Level {
             
         case 2:
             tempLevel.effects.append(RotatingObstacle(rate: effect["Rotation Rate"] as! Double))
+            
         case 3:
             tempLevel.effects.append(ResizingObstacle(rate: effect["Resize Rate"] as! Double, maxScale: effect["Max Scale"] as! Double, minScale: effect["Min Scale"] as! Double))
+            
         default:
             break
+            
         }
+        
     }
     
     return tempLevel
