@@ -47,6 +47,8 @@ func CreateLevelWithProperties(levelNumber: Int, dict: NSDictionary) -> Level {
             break;
         case 1:
             tempLevel.effects.append(PointGravity(x: effect["Gravity X"] as! Double, y: effect["Gravity Y"] as! Double, str: effect["Gravity Strength"] as! Double))
+        case 2:
+            tempLevel.effects.append(RotatingObstacle(rate: effect["Rotation Rate"] as! Double))
         default:
             break;
         }
