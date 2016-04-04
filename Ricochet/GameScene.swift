@@ -36,6 +36,8 @@ class GameScene: SKScene {
     let scoreLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
     let requiredScoreLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
     var startTime: Double = 0
+    var obstacles: Int = 0
+    let obstaclesLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
     
     var ball = Ball()
     var obstacle = Obstacle()
@@ -65,6 +67,16 @@ class GameScene: SKScene {
         for effect in effects {
             effect.visualEffect.removeFromParent()
             self.addChild(effect.visualEffect)
+        }
+        
+        obstaclesLabel.fontSize = SCREEN_WIDTH / 6
+        obstaclesLabel.position = CGPoint(x: SCREEN_WIDTH * 9 / 10, y: SCREEN_HEIGHT / 20)
+        obstaclesLabel.fontColor = SKColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 0.5)
+        obstaclesLabel.text = String(currentLevel.startingObstacles)
+        obstaclesLabel.zPosition = -1
+        obstacles = currentLevel.startingObstacles
+        if (currentLevel.startingObstacles != -1) {
+            self.addChild(obstaclesLabel)
         }
         
         hintLabel.text = currentLevel.hint
@@ -153,8 +165,10 @@ class GameScene: SKScene {
         }
         
         if (!lost) {
-            
-            obstacle.move(touchStart, &currentLevel)
+            if (currentLevel.startingObstacles == -1 || obstacles + currentLevel.obstaclesPerSecond * Int(NSDate.timeIntervalSinceReferenceDate() - startTime) > 0) {
+                obstacle.move(touchStart, &currentLevel)
+                obstacles -= 1
+            }
             
         }
     }
@@ -249,11 +263,14 @@ class GameScene: SKScene {
         
         ball.update(timeSinceLastUpdate)
         
+        let temp = obstacle.update(timeSinceLastUpdate, &ball)
+        obstacles += temp * currentLevel.obstaclesPerBounce
+        obstaclesLabel.text = String(obstacles + currentLevel.obstaclesPerSecond * Int(NSDate.timeIntervalSinceReferenceDate() - startTime))
         if (currentLevel.winConditions == 1) {
             score = Int(NSDate.timeIntervalSinceReferenceDate() - startTime)
-            addScore(0*obstacle.update(timeSinceLastUpdate, &ball))
+            addScore(0)
         } else {
-            addScore(obstacle.update(timeSinceLastUpdate, &ball))
+            addScore(temp)
         }
         
         // Right Wall Collision Case
@@ -301,7 +318,6 @@ class GameScene: SKScene {
             }
         }
     }
-    
 }
 
 func minimum(n0: CGFloat, _ nums: CGFloat...) -> Int {

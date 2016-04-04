@@ -28,6 +28,9 @@ class Level: SKShapeNode {
         levelNumber = level
     }
     
+    var startingObstacles = -1
+    var obstaclesPerBounce = 0
+    var obstaclesPerSecond = 0
     var levelNumber = 0
     var winConditions = 0
     var oneStar = 0

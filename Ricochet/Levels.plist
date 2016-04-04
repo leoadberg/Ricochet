@@ -7,6 +7,12 @@
 		<integer>0</integer>
 		<key>Win Conditions</key>
 		<integer>1</integer>
+		<key>Starting Obstacles</key>
+		<integer>-1</integer>
+		<key>Obstacles per second</key>
+		<integer>0</integer>
+		<key>Obstacles per bounce</key>
+		<integer>0</integer>
 		<key>Ball Radius Multiplier</key>
 		<integer>1</integer>
 		<key>Max Speed Multiplier</key>
@@ -41,6 +47,12 @@
 		<key>Game Mode</key>
 		<integer>2</integer>
 		<key>Win Conditions</key>
+		<integer>0</integer>
+		<key>Starting Obstacles</key>
+		<integer>-1</integer>
+		<key>Obstacles per second</key>
+		<integer>0</integer>
+		<key>Obstacles per bounce</key>
 		<integer>0</integer>
 		<key>Ball Radius Multiplier</key>
 		<real>0.5</real>
@@ -109,6 +121,12 @@
 		<integer>2</integer>
 		<key>Win Conditions</key>
 		<integer>0</integer>
+		<key>Starting Obstacles</key>
+		<integer>3</integer>
+		<key>Obstacles per second</key>
+		<integer>0</integer>
+		<key>Obstacles per bounce</key>
+		<integer>2</integer>
 		<key>Ball Radius Multiplier</key>
 		<integer>1</integer>
 		<key>Max Speed Multiplier</key>
@@ -116,7 +134,7 @@
 		<key>Speed Increase Multiplier</key>
 		<integer>1</integer>
 		<key>Start Speed Multiplier</key>
-		<integer>3</integer>
+		<integer>1</integer>
 		<key>Obstacle Size Multiplier</key>
 		<integer>1</integer>
 		<key>1 Star</key>
@@ -133,7 +151,7 @@
 				<key>EffectID</key>
 				<integer>0</integer>
 				<key>Gravity X</key>
-				<integer>-200</integer>
+				<integer>-100</integer>
 				<key>Gravity Y</key>
 				<integer>-200</integer>
 			</dict>
@@ -143,6 +161,12 @@
 		<key>Game Mode</key>
 		<integer>1</integer>
 		<key>Win Conditions</key>
+		<integer>0</integer>
+		<key>Starting Obstacles</key>
+		<integer>-1</integer>
+		<key>Obstacles per second</key>
+		<integer>0</integer>
+		<key>Obstacles per bounce</key>
 		<integer>0</integer>
 		<key>Ball Radius Multiplier</key>
 		<integer>1</integer>
@@ -184,6 +208,12 @@
 		<key>Game Mode</key>
 		<integer>1</integer>
 		<key>Win Conditions</key>
+		<integer>0</integer>
+		<key>Starting Obstacles</key>
+		<integer>-1</integer>
+		<key>Obstacles per second</key>
+		<integer>0</integer>
+		<key>Obstacles per bounce</key>
 		<integer>0</integer>
 		<key>Ball Radius Multiplier</key>
 		<integer>1</integer>
