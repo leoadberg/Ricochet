@@ -42,7 +42,7 @@ class Obstacle: SKShapeNode {
             
         case 0,
              1:
-            super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -length / 2, y: -length / 2), size: CGSize(width: length, height: length)), nil)
+            super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -SCREEN_WIDTH / 2, y: -length / 2), size: CGSize(width: SCREEN_WIDTH, height: length)), nil)
             
         case 2:
             super.path = CGPathCreateWithEllipseInRect(CGRectMake(-length / 2, -length / 2, length, length), nil)
@@ -71,16 +71,16 @@ class Obstacle: SKShapeNode {
             switch (newActiveWall) {
                 
             case Wall.Top.rawValue:
-                super.position = CGPoint(x: self.length / 2, y: self.length * 1.5 - wallThickness)
+                super.position = CGPoint(x: SCREEN_WIDTH / 2, y: self.length * 1.5 - wallThickness)
                 
             case Wall.Right.rawValue:
-                super.position = CGPoint(x: SCREEN_WIDTH + self.length / 2 - wallThickness, y: self.length / 2)
+                super.position = CGPoint(x: SCREEN_WIDTH * 3 / 2 - wallThickness, y: self.length / 2)
                 
             case Wall.Bottom.rawValue:
-                super.position = CGPoint(x: self.length / 2, y: self.length / -2 + wallThickness)
+                super.position = CGPoint(x: SCREEN_WIDTH / 2, y: self.length / -2 + wallThickness)
                 
             case Wall.Left.rawValue:
-                super.position = CGPoint(x: self.length / -2 + wallThickness, y: self.length / 2)
+                super.position = CGPoint(x: SCREEN_WIDTH / -2 + wallThickness, y: self.length / 2)
                 
             default:
                 super.position = CGPoint(x: -3 * self.length, y: -3 * self.length)
@@ -104,8 +104,26 @@ class Obstacle: SKShapeNode {
         
         switch (self.shapeID) {
             
-        case 0,
-             1:
+        case 0:
+            if (abs(ball.position.y - super.position.y) < (self.length / 2 + ball.radius) && abs(ball.position.x - super.position.x) < (SCREEN_WIDTH / 2 + ball.radius)) {
+                if (!ball.colliding) {
+                    if (abs(ball.position.y - super.position.y) > abs(ball.position.x - super.position.x) * SCREEN_HEIGHT / SCREEN_WIDTH){
+                        ball.ySpeed = ball.position.y >= super.position.y ? abs(ball.ySpeed) : abs(ball.ySpeed) * -1
+                    }
+                    else {
+                        ball.xSpeed = ball.position.x >= super.position.x ? abs(ball.xSpeed) : abs(ball.xSpeed) * -1
+                    }
+                    
+                    ball.updatePolar()
+                    ball.speedUp()
+                    plus = 1
+                }
+                ball.colliding = true
+            }
+            else {
+                ball.colliding = false
+            }
+        case 1:
             if (abs(ball.position.y - super.position.y) < (self.length / 2 + ball.radius) && abs(ball.position.x - super.position.x) < (self.length / 2 + ball.radius)){
                 if (!ball.colliding){
                     if (abs(ball.position.y - super.position.y) > abs(ball.position.x - super.position.x)){
@@ -124,7 +142,6 @@ class Obstacle: SKShapeNode {
             else {
                 ball.colliding = false
             }
-        
         case 2:
             if (pow(Double(ball.position.y - super.position.y), 2.0) + pow(Double(ball.position.x - super.position.x),2.0) < pow(Double(self.length / 2 + ball.radius),2.0)){
                 if (!ball.colliding){
