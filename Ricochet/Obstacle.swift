@@ -32,7 +32,7 @@ class Obstacle: SKShapeNode {
         switch(shapeID) {
             
         case 0:
-            super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -SCREEN_HEIGHT / 2, y: -SCREEN_HEIGHT / 2), size: CGSize(width: SCREEN_HEIGHT, height: SCREEN_HEIGHT)), nil)
+            super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -SCREEN_WIDTH / 2, y: -length / 2), size: CGSize(width: SCREEN_WIDTH, height: length)), nil)
             
         case 1:
             super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -length / 2, y: -length / 2), size: CGSize(width: length, height: length)), nil)
