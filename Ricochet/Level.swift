@@ -29,6 +29,7 @@ class Level: SKShapeNode {
     }
     
     var levelNumber = 0
+    var winConditions = 0
     var oneStar = 0
     var twoStar = 0
     var threeStar = 0

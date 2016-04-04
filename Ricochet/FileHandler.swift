@@ -33,6 +33,7 @@ func CreateArrayFromPlist(plist: String, userDomain: Bool) -> NSMutableArray {
 func CreateLevelWithProperties(levelNumber: Int, dict: NSDictionary) -> Level {
     
     let tempLevel = Level(level: levelNumber)
+    tempLevel.winConditions = dict["Win Conditions"] as! Int
     tempLevel.hint = dict["Hint"] as! String
     tempLevel.mode = dict["Game Mode"] as! Int
     tempLevel.oneStar = dict["1 Star"] as! Int

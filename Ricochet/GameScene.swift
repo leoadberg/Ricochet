@@ -35,6 +35,7 @@ class GameScene: SKScene {
     var score = 0
     let scoreLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
     let requiredScoreLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
+    var startTime: Double = 0
     
     var ball = Ball()
     var obstacle = Obstacle()
@@ -145,6 +146,7 @@ class GameScene: SKScene {
         
         if (first || lost) {
             first = false
+            startTime = NSDate.timeIntervalSinceReferenceDate()
             let disappear = SKAction.fadeOutWithDuration(0.5)
             hintLabel.runAction(disappear)
             return
@@ -247,7 +249,12 @@ class GameScene: SKScene {
         
         ball.update(timeSinceLastUpdate)
         
-        addScore(obstacle.update(timeSinceLastUpdate, &ball))
+        if (currentLevel.winConditions == 1) {
+            score = Int(NSDate.timeIntervalSinceReferenceDate() - startTime)
+            addScore(0*obstacle.update(timeSinceLastUpdate, &ball))
+        } else {
+            addScore(obstacle.update(timeSinceLastUpdate, &ball))
+        }
         
         // Right Wall Collision Case
         if (abs(ball.position.x - SCREEN_WIDTH) <= ball.radius && !currentLevel.activeWalls[Wall.Right.rawValue]) {

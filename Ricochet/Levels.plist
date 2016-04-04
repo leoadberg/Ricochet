@@ -5,6 +5,8 @@
 	<dict>
 		<key>Game Mode</key>
 		<integer>0</integer>
+		<key>Win Conditions</key>
+		<integer>1</integer>
 		<key>Ball Radius Multiplier</key>
 		<integer>1</integer>
 		<key>Max Speed Multiplier</key>
@@ -38,6 +40,8 @@
 	<dict>
 		<key>Game Mode</key>
 		<integer>2</integer>
+		<key>Win Conditions</key>
+		<integer>0</integer>
 		<key>Ball Radius Multiplier</key>
 		<real>0.5</real>
 		<key>Max Speed Multiplier</key>
@@ -103,6 +107,8 @@
 	<dict>
 		<key>Game Mode</key>
 		<integer>2</integer>
+		<key>Win Conditions</key>
+		<integer>0</integer>
 		<key>Ball Radius Multiplier</key>
 		<integer>1</integer>
 		<key>Max Speed Multiplier</key>
@@ -136,6 +142,8 @@
 	<dict>
 		<key>Game Mode</key>
 		<integer>1</integer>
+		<key>Win Conditions</key>
+		<integer>0</integer>
 		<key>Ball Radius Multiplier</key>
 		<integer>1</integer>
 		<key>Max Speed Multiplier</key>
@@ -175,6 +183,8 @@
 	<dict>
 		<key>Game Mode</key>
 		<integer>1</integer>
+		<key>Win Conditions</key>
+		<integer>0</integer>
 		<key>Ball Radius Multiplier</key>
 		<integer>1</integer>
 		<key>Max Speed Multiplier</key>
