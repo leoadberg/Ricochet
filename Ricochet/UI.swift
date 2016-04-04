@@ -107,7 +107,7 @@ func MoveInLevels(inout levels: [Level], _ levelSelector: LevelSelector) {
     
     for tempLevel in levels {
         
-        if (UNLOCKED_LEVELS > tempLevel.levelNumber + 1) {
+        if (min(UNLOCKED_LEVELS, GAME_LEVELS.count - 2) > tempLevel.levelNumber + 1) {
             tempLevel.position = CGPoint(x: -SCREEN_WIDTH, y: levelSelector.position.y)
         }
         else {
