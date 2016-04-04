@@ -158,18 +158,18 @@ class Obstacle: SKShapeNode {
                 
                 if (!ball.colliding){
                     
-                    var ballPseudoXSpeed: Double = Double(ball.speed * cos(angle - self.zRotation))
-                    var ballPseudoYSpeed: Double = Double(ball.speed * sin(angle - self.zRotation))
+                    var ballPseudoXSpeed: Double = Double(ball.speed * cos(CGFloat(ball.angle) - self.zRotation))
+                    var ballPseudoYSpeed: Double = Double(ball.speed * sin(CGFloat(ball.angle) - self.zRotation))
                     
                     if (abs(ballPseudoY - super.position.y) > abs(ballPseudoX - super.position.x)){
-                        ballPseudoYSpeed = ball.position.y >= super.position.y ? abs(ballPseudoYSpeed) : abs(ballPseudoYSpeed) * -1
+                        ballPseudoYSpeed = ballPseudoY >= super.position.y ? abs(ballPseudoYSpeed) : abs(ballPseudoYSpeed) * -1
                     }
                     else {
-                        ballPseudoXSpeed = ball.position.x >= super.position.x ? abs(ballPseudoXSpeed) : abs(ballPseudoXSpeed) * -1
+                        ballPseudoXSpeed = ballPseudoX >= super.position.x ? abs(ballPseudoXSpeed) : abs(ballPseudoXSpeed) * -1
                     }
                     
                     ball.speed = CGFloat(sqrt(ballPseudoXSpeed * ballPseudoXSpeed + ballPseudoYSpeed * ballPseudoYSpeed))
-                    ball.angle = atan2(ballPseudoYSpeed, ballPseudoXSpeed) - Double(self.zRotation)
+                    ball.angle = atan2(ballPseudoYSpeed, ballPseudoXSpeed) + Double(self.zRotation)
                     
                     ball.updateCartesian()
                     ball.speedUp()
