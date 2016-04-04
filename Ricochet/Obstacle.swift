@@ -106,6 +106,7 @@ class Obstacle: SKShapeNode {
         switch (self.shapeID) {
             
         case 0:
+            
             if (abs(ball.position.y - super.position.y) < (self.length / 2 + ball.radius) && abs(ball.position.x - super.position.x) < (SCREEN_WIDTH / 2 + ball.radius)) {
                 if (!ball.colliding) {
                     if (abs(ball.position.y - super.position.y) > abs(ball.position.x - super.position.x) * SCREEN_HEIGHT / SCREEN_WIDTH){
@@ -124,6 +125,7 @@ class Obstacle: SKShapeNode {
             else {
                 ball.colliding = false
             }
+            
         case 1:
             
             let dist = distanceBetween([ball.position.x, ball.position.y], [self.position.x, self.position.y])
@@ -184,27 +186,9 @@ class Obstacle: SKShapeNode {
                 ball.colliding = false
                 
             }
-            /*
-            if (abs(ball.position.y - super.position.y) < (self.length / 2 + ball.radius) && abs(ball.position.x - super.position.x) < (self.length / 2 + ball.radius)){
-                if (!ball.colliding){
-                    if (abs(ball.position.y - super.position.y) > abs(ball.position.x - super.position.x)){
-                        ball.ySpeed = ball.position.y >= super.position.y ? abs(ball.ySpeed) : abs(ball.ySpeed) * -1
-                    }
-                    else {
-                        ball.xSpeed = ball.position.x >= super.position.x ? abs(ball.xSpeed) : abs(ball.xSpeed) * -1
-                    }
-                    
-                    ball.updatePolar()
-                    ball.speedUp()
-                    plus = 1
-                }
-                ball.colliding = true
-            }
-            else {
-                ball.colliding = false
-            }
-            */
+            
         case 2:
+            
             if (pow(Double(ball.position.y - super.position.y), 2.0) + pow(Double(ball.position.x - super.position.x),2.0) < pow(Double(self.length / 2 + ball.radius),2.0)){
                 if (!ball.colliding){
                     let nx = Double(ball.position.x - super.position.x)
@@ -230,7 +214,9 @@ class Obstacle: SKShapeNode {
             }
             
         default:
+            
             return 0
+            
         }
         
         return plus
