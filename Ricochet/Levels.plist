@@ -199,7 +199,7 @@
 				<key>EffectID</key>
 				<integer>2</integer>
 				<key>Rotation Rate</key>
-				<integer>2</integer>
+				<real>0.5</real>
 			</dict>
 		</array>
 	</dict>
