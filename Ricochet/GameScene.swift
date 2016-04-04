@@ -39,9 +39,13 @@ class GameScene: SKScene {
     var ball = Ball()
     var obstacle = Obstacle()
     
-    let restartButton = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6))
-    let menuButton = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6))
-    let nextLevelButton = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6))
+    //let restartButton = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6))
+    //let menuButton = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6))
+    //let nextLevelButton = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6))
+    let restartButton = MenuButton2("Restart")
+    let menuButton = MenuButton2("Menu")
+    let nextLevelButton = MenuButton2("Next Level")
+    
     var touchStart = CGPoint(x: 0, y: 0)
     
     var hintLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
@@ -274,7 +278,7 @@ class GameScene: SKScene {
             fade.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / 2)
             fade.zPosition = 2
             self.addChild(fade)
-            
+            /*
             let restartLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
             restartLabel.text = "Restart"
             restartLabel.fontSize = SCREEN_WIDTH / 9;
@@ -300,11 +304,18 @@ class GameScene: SKScene {
             menuButton.zPosition = 3
             menuButton.strokeColor = COLOR_TRANSPARENT
             self.addChild(menuButton)
+            */
+            restartButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 7 / 40)
+            menuButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 2 / 40)
+            nextLevelButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 12 / 40)
+            self.addChild(restartButton)
+            self.addChild(menuButton)
+            //self.addChild(nextLevelButton)
             
             if (GAME_LEVELS.count > currentLevel.levelNumber + 1 && (score >= currentLevel.oneStar || UNLOCKED_LEVELS > currentLevel.levelNumber)) {
                 UNLOCKED_LEVELS = max(UNLOCKED_LEVELS, currentLevel.levelNumber + 1)
                 DEFAULTS.setInteger(UNLOCKED_LEVELS, forKey: "Unlocked Levels")
-                let nextLevelLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
+                /*let nextLevelLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
                 nextLevelLabel.text = "Next Level"
                 nextLevelLabel.fontSize = SCREEN_WIDTH / 9;
                 nextLevelLabel.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 3 / 10)
@@ -314,7 +325,7 @@ class GameScene: SKScene {
                 nextLevelButton.position = CGPoint(x: nextLevelLabel.position.x, y: nextLevelLabel.position.y + SCREEN_WIDTH / 27)
                 nextLevelButton.lineWidth = 4
                 nextLevelButton.zPosition = 3
-                nextLevelButton.strokeColor = COLOR_TRANSPARENT
+                nextLevelButton.strokeColor = COLOR_TRANSPARENT*/
                 self.addChild(nextLevelButton)
             }
             
