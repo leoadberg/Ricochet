@@ -12,7 +12,7 @@ import SpriteKit
 
 class MenuButton2: SKShapeNode {
     
-    init(buttonName: String) {
+    init(_ buttonName: String) {
         
         super.init()
         super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -SCREEN_WIDTH / 5, y: -SCREEN_WIDTH / 12), size: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6)), nil)

@@ -156,9 +156,11 @@ class Obstacle: SKShapeNode {
             
             if (distanceBetween([ballPseudoX, ballPseudoY], [closestX, closestY]) < ball.radius) {
                 // WE HAVE COLLISION BOIS
+                print("jack")
             }
             else {
                 // NO COLLISION RIPERONI
+                print("jeremiah")
             }
             /*
             if (abs(ball.position.y - super.position.y) < (self.length / 2 + ball.radius) && abs(ball.position.x - super.position.x) < (self.length / 2 + ball.radius)){
