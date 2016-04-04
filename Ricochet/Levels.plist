@@ -203,6 +203,22 @@
 				<key>Gravity Y</key>
 				<integer>-100</integer>
 			</dict>
+			<dict>
+				<key>EffectID</key>
+				<integer>3</integer>
+				<key>Resize Rate</key>
+				<integer>1</integer>
+				<key>Min Scale</key>
+				<real>0.5</real>
+				<key>Max Scale</key>
+				<integer>2</integer>
+			</dict>
+			<dict>
+				<key>EffectID</key>
+				<integer>2</integer>
+				<key>Rotation Rate</key>
+				<integer>2</integer>
+			</dict>
 		</array>
 	</dict>
 </array>
