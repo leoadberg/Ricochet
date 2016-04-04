@@ -1,5 +1,5 @@
 //
-//  self.swift
+//  Obstacle.swift
 //  Ricochet
 //
 //  Created by Brandon on 4/3/16.
@@ -13,6 +13,7 @@ class Obstacle: SKShapeNode {
     
     var shapeID: Int = -1
     var length: CGFloat = 0.0
+    var startLength: CGFloat = 0.0
     
     init(shapeID: Int = -1, length: CGFloat = SCREEN_WIDTH / 5) {
         
@@ -20,6 +21,7 @@ class Obstacle: SKShapeNode {
         
         self.shapeID = shapeID
         self.length = length
+        self.startLength = self.length
         
         super.position = CGPoint(x: SCREEN_HEIGHT * -3, y: SCREEN_HEIGHT * -3)
         super.zPosition = 1

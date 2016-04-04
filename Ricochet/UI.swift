@@ -11,18 +11,22 @@ import UIKit
 import SpriteKit
 
 class MenuButton2: SKShapeNode {
-    init(_ buttonName: String) {
+    
+    init(buttonName: String) {
+        
         super.init()
         super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -SCREEN_WIDTH / 5, y: -SCREEN_WIDTH / 12), size: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6)), nil)
         super.lineWidth = 0
         buttonLabel.text = buttonName
         self.addChild(buttonLabel)
         super.zPosition = 4
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     let buttonLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
 }
 
@@ -80,10 +84,12 @@ class LevelSelector: SKShapeNode {
     var scrollSpeed: CGFloat = 0
     
     func moveIn() {
+        
         position.x = SCREEN_WIDTH * 2
         let modeSelectorMove = SKAction.moveToX(SCREEN_WIDTH / 2, duration: 0.5)
         modeSelectorMove.timingMode = .EaseInEaseOut
         runAction(modeSelectorMove)
+        
     }
     
     func moveOut() {
@@ -98,23 +104,29 @@ class LevelSelector: SKShapeNode {
 }
 
 func MoveInLevels(inout levels: [Level], _ levelSelector: LevelSelector) {
+    
     for tempLevel in levels {
+        
         if (UNLOCKED_LEVELS > tempLevel.levelNumber + 1) {
             tempLevel.position = CGPoint(x: -SCREEN_WIDTH, y: levelSelector.position.y)
         }
         else {
             tempLevel.position = CGPoint(x: 2 * SCREEN_WIDTH, y: levelSelector.position.y)
         }
+        
         let tempLevelMove = SKAction.moveToX(SCREEN_WIDTH * (CGFloat(tempLevel.levelNumber) + 0.5) / 3 + levelSelector.scroll, duration: 0.5)
         tempLevel.runAction(tempLevelMove)
     }
+    
 }
 
 func MoveOutLevels(inout levels: [Level], _ levelSelector: LevelSelector) {
+    
     for tempLevel in levels {
         let tempLevelMove = SKAction.moveToX(-SCREEN_WIDTH, duration: 0.5)
         tempLevel.runAction(tempLevelMove)
     }
+    
 }
 
 
