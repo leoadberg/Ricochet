@@ -11,6 +11,10 @@ import SpriteKit
 
 class LevelEffect {
     
+    init(){}
+    
     func update(timeSinceLastUpdate: Double, inout _ ball: Ball, inout _ obstacle: Obstacle) {}
+    
+    var visualEffect: SKNode = SKNode()
     
 }

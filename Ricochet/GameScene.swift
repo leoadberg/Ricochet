@@ -59,7 +59,12 @@ class GameScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
+        
         effects = currentLevel.effects
+        for effect in effects {
+            effect.visualEffect.removeFromParent()
+            self.addChild(effect.visualEffect)
+        }
         
         hintLabel.text = currentLevel.hint
         hintLabel.fontColor = SKColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 0.5)
@@ -157,23 +162,24 @@ class GameScene: SKScene {
         let location = touches.first!.locationInNode(self)
         
         if (restartButton.containsPoint(location) && restartButton.containsPoint(touchStart)) {
+            //self.removeAllChildren()
             let game_scene = GameScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
-            
             game_scene.scaleMode = .AspectFill
             game_scene.currentLevel = currentLevel
             let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
             self.scene!.view!.presentScene(game_scene, transition: transition)
         }
         else if (menuButton.containsPoint(location) && menuButton.containsPoint(touchStart)) {
+            //self.removeAllChildren()
             let menu_scene = MenuScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
-            
             menu_scene.scaleMode = .AspectFill
             let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
             self.scene!.view!.presentScene(menu_scene, transition: transition)
         }
         else if (nextLevelButton.containsPoint(location) && nextLevelButton.containsPoint(touchStart)) {
-            let game_scene = GameScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
             
+            //self.removeAllChildren()
+            let game_scene = GameScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
             game_scene.scaleMode = .AspectFill
             game_scene.currentLevel = GAME_LEVELS[currentLevel.levelNumber+1]
             let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))

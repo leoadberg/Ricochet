@@ -60,11 +60,43 @@
 		<array>
 			<dict>
 				<key>EffectID</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>Gravity X</key>
-				<integer>0</integer>
+				<real>0.5</real>
 				<key>Gravity Y</key>
-				<integer>-100</integer>
+				<real>0.75</real>
+				<key>Gravity Strength</key>
+				<real>-100000</real>
+			</dict>
+			<dict>
+				<key>EffectID</key>
+				<integer>1</integer>
+				<key>Gravity X</key>
+				<real>0.5</real>
+				<key>Gravity Y</key>
+				<real>0.25</real>
+				<key>Gravity Strength</key>
+				<real>-100000</real>
+			</dict>
+			<dict>
+				<key>EffectID</key>
+				<integer>1</integer>
+				<key>Gravity X</key>
+				<real>0.15</real>
+				<key>Gravity Y</key>
+				<real>0.5</real>
+				<key>Gravity Strength</key>
+				<real>-100000</real>
+			</dict>
+			<dict>
+				<key>EffectID</key>
+				<integer>1</integer>
+				<key>Gravity X</key>
+				<real>0.85</real>
+				<key>Gravity Y</key>
+				<real>0.5</real>
+				<key>Gravity Strength</key>
+				<real>-100000</real>
 			</dict>
 		</array>
 	</dict>
@@ -95,9 +127,9 @@
 				<key>EffectID</key>
 				<integer>0</integer>
 				<key>Gravity X</key>
-				<integer>0</integer>
+				<integer>-200</integer>
 				<key>Gravity Y</key>
-				<integer>-100</integer>
+				<integer>-200</integer>
 			</dict>
 		</array>
 	</dict>

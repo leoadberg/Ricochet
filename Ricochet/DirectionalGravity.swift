@@ -15,9 +15,19 @@ class DirectionalGravity: LevelEffect {
     var yMagnitude: Double = 0.0
     
     init(x: Double, y: Double) {
-        
+        super.init()
         self.xMagnitude = x
         self.yMagnitude = y
+        
+        let gravityLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
+        gravityLabel.text = "→"
+        gravityLabel.verticalAlignmentMode = .Center
+        gravityLabel.fontColor = SKColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 0.5)
+        gravityLabel.fontSize = SCREEN_WIDTH / 6
+        gravityLabel.zRotation = atan2(-CGFloat(x),CGFloat(y)) + CGFloat(M_PI / 2)
+        visualEffect.addChild(gravityLabel)
+        visualEffect.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / 5)
+        visualEffect.zPosition = -2
         
     }
     
