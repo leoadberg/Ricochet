@@ -13,27 +13,18 @@ class Obstacle: SKShapeNode {
     
     var shapeID: Int = -1
     var length: CGFloat = 0.0
-    var rotateSpeed: CGFloat = 0.0
-    var resizeSpeed: CGFloat = 0.0
-    var minScale: Double = -1.0
-    var maxScale: Double = -1.0
     
-    init(shapeID: Int = -1, length: CGFloat = SCREEN_WIDTH / 5, rotateSpeed: CGFloat = 0.0, resizeSpeed: CGFloat = 0.0, minScale: Double = -1.0, maxScale: Double = -1.0) {
+    init(shapeID: Int = -1, length: CGFloat = SCREEN_WIDTH / 5) {
         
         super.init()
         
         self.shapeID = shapeID
         self.length = length
-        self.rotateSpeed = rotateSpeed
-        self.resizeSpeed = resizeSpeed
-        self.minScale = minScale
-        self.maxScale = maxScale
         
         super.position = CGPoint(x: SCREEN_HEIGHT * -3, y: SCREEN_HEIGHT * -3)
         super.zPosition = 1
         super.fillColor = COLOR_FADED_RED
         super.lineWidth = 4
-        
     }
     
     func draw() {
@@ -100,6 +91,12 @@ class Obstacle: SKShapeNode {
     
     func update(timeSinceLastUpdate: Double, inout _ ball: Ball) -> Int {
         
+        return self.checkBallCollision(timeSinceLastUpdate, &ball)
+        
+    }
+    
+    func checkBallCollision(timeSinceLastUpdate: Double, inout _ ball: Ball) -> Int {
+        
         var plus: Int = 0
         
         switch (self.shapeID) {
@@ -156,7 +153,7 @@ class Obstacle: SKShapeNode {
                     let wy = Double(ball.ySpeed) - uy
                     ball.xSpeed = CGFloat(wx - ux)
                     ball.ySpeed = CGFloat(wy - uy)
-                
+                    
                     ball.updatePolar()
                     ball.speedUp()
                     plus = 1
@@ -166,7 +163,7 @@ class Obstacle: SKShapeNode {
             else {
                 ball.colliding = false
             }
-        
+            
         default:
             return 0
         }

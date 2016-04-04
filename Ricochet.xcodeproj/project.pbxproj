@@ -24,6 +24,8 @@
 		0EE51D7E1CB07C7B00D2AC9F /* FileHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE51D7D1CB07C7B00D2AC9F /* FileHandler.swift */; };
 		CA6B7DA11CB102C200C8C117 /* DirectionalGravity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6B7DA01CB102C200C8C117 /* DirectionalGravity.swift */; };
 		CA6B7DA31CB116CF00C8C117 /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6B7DA21CB116CF00C8C117 /* Ball.swift */; };
+		CA961A221CB22FAA00FEAD01 /* RotatingObstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA961A211CB22FAA00FEAD01 /* RotatingObstacle.swift */; };
+		CA961A241CB2302300FEAD01 /* ResizingObstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA961A231CB2302300FEAD01 /* ResizingObstacle.swift */; };
 		CAB2E2BD1CB1CE1D003690E8 /* PointGravity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB2E2BC1CB1CE1D003690E8 /* PointGravity.swift */; };
 		CAB2E2BF1CB1D02D003690E8 /* Obstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB2E2BE1CB1D02D003690E8 /* Obstacle.swift */; };
 /* End PBXBuildFile section */
@@ -69,6 +71,8 @@
 		0EE51D7D1CB07C7B00D2AC9F /* FileHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileHandler.swift; sourceTree = "<group>"; };
 		CA6B7DA01CB102C200C8C117 /* DirectionalGravity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectionalGravity.swift; sourceTree = "<group>"; };
 		CA6B7DA21CB116CF00C8C117 /* Ball.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
+		CA961A211CB22FAA00FEAD01 /* RotatingObstacle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RotatingObstacle.swift; sourceTree = "<group>"; };
+		CA961A231CB2302300FEAD01 /* ResizingObstacle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizingObstacle.swift; sourceTree = "<group>"; };
 		CAB2E2BC1CB1CE1D003690E8 /* PointGravity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointGravity.swift; sourceTree = "<group>"; };
 		CAB2E2BE1CB1D02D003690E8 /* Obstacle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Obstacle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,6 +134,8 @@
 				0E602B221CB1002F00A029BA /* LevelEffect.swift */,
 				CAB2E2BC1CB1CE1D003690E8 /* PointGravity.swift */,
 				CAB2E2BE1CB1D02D003690E8 /* Obstacle.swift */,
+				CA961A211CB22FAA00FEAD01 /* RotatingObstacle.swift */,
+				CA961A231CB2302300FEAD01 /* ResizingObstacle.swift */,
 				CA6B7DA01CB102C200C8C117 /* DirectionalGravity.swift */,
 				0E6CA8421CA7B3D8008D0E9F /* MenuScene.swift */,
 				0E602B241CB102D400A029BA /* UI.swift */,
@@ -295,9 +301,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA961A221CB22FAA00FEAD01 /* RotatingObstacle.swift in Sources */,
 				CA6B7DA31CB116CF00C8C117 /* Ball.swift in Sources */,
 				0EBEA5701CA9C635008E1095 /* Level.swift in Sources */,
 				CA6B7DA11CB102C200C8C117 /* DirectionalGravity.swift in Sources */,
+				CA961A241CB2302300FEAD01 /* ResizingObstacle.swift in Sources */,
 				0E602B231CB1002F00A029BA /* LevelEffect.swift in Sources */,
 				0E602B251CB102D400A029BA /* UI.swift in Sources */,
 				CAB2E2BF1CB1D02D003690E8 /* Obstacle.swift in Sources */,
