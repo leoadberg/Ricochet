@@ -126,29 +126,35 @@ class Obstacle: SKShapeNode {
             }
         case 1:
             
+            let dist = distanceBetween([ball.position.x, ball.position.y], [self.position.x, self.position.y])
+            let angle = atan2(ball.position.y - self.position.y, ball.position.x - self.position.x)
+            
+            let ballPseudoX = self.position.x + dist * cos(angle - self.zRotation)
+            let ballPseudoY = self.position.y + dist * sin(angle - self.zRotation)
+            
             var closestX: CGFloat = 0.0
-            if (ball.position.x < (super.position.x - (self.length / 2))) {
+            if (ballPseudoX < (super.position.x - (self.length / 2))) {
                 closestX = super.position.x - (self.length / 2)
             }
-            else if (ball.position.x > (super.position.x + (self.length / 2))) {
+            else if (ballPseudoX > (super.position.x + (self.length / 2))) {
                 closestX = super.position.x + (self.length / 2)
             }
             else {
-                closestX = ball.position.x
+                closestX = ballPseudoX
             }
             
             var closestY: CGFloat = 0.0
-            if (ball.position.y < (super.position.y - (self.length / 2))) {
+            if (ballPseudoY < (super.position.y - (self.length / 2))) {
                 closestY = super.position.y - (self.length / 2)
             }
-            else if (ball.position.y > (super.position.y + (self.length / 2))) {
+            else if (ballPseudoY > (super.position.y + (self.length / 2))) {
                 closestY = super.position.y + (self.length / 2)
             }
             else {
-                closestY = ball.position.y
+                closestY = ballPseudoY
             }
             
-            if (distanceBetween([ball.position.x, ball.position.y], [closestX, closestY]) < ball.radius) {
+            if (distanceBetween([ballPseudoX, ballPseudoY], [closestX, closestY]) < ball.radius) {
                 // WE HAVE COLLISION BOIS
             }
             else {
