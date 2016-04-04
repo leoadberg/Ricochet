@@ -28,7 +28,7 @@ class ResizingObstacle: LevelEffect {
         
         scale += self.rate * timeSinceLastUpdate
         obstacle.setScale(CGFloat(self.scale))
-        obstacle.length = (obstacle.startLength * scale)
+        obstacle.length = (obstacle.startLength * CGFloat(self.scale))
         
         if (rate > 0 && self.scale > self.maxScale || rate < 0 && self.scale < self.minScale) {
             rate *= -1
