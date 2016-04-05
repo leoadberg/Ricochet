@@ -16,7 +16,7 @@ class LimitedObstacles: LevelEffect {
     
     var numPerBounce: Int = 0
     
-    init(numPerSecond: Double = 0.0, _ numPerBounce: Int = 0) {
+    init(numPerSecond: Double = 0.0, numPerBounce: Int = 0) {
         
         self.numPerSecond = numPerSecond
         self.numPerBounce = numPerBounce
