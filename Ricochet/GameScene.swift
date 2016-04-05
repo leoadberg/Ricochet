@@ -75,7 +75,7 @@ class GameScene: SKScene {
         obstaclesLabel.zPosition = -1
         obstacle.numAvailable = currentLevel.startingObstacles
         obstacle.numPerSecond = currentLevel.obstaclesPerSecond
-        obstacle.numPerBounce = currentLevel.obstaclesPerBounce
+        
         if (currentLevel.startingObstacles != -1) {
             self.addChild(obstaclesLabel)
         }
@@ -150,6 +150,12 @@ class GameScene: SKScene {
         self.addChild(obstacle)
         
         self.scene?.backgroundColor = COLOR_FADED_BLUE
+        
+        for effect in effects {
+            
+            effect.initialize(&ball, &obstacle)
+            
+        }
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -262,9 +268,12 @@ class GameScene: SKScene {
         
         ball.update(timeSinceLastUpdate)
         
-        let temp = obstacle.update(timeSinceLastUpdate, &ball)
-        obstacles += temp * currentLevel.obstaclesPerBounce
-        obstaclesLabel.text = String(obstacles + currentLevel.obstaclesPerSecond * Int(NSDate.timeIntervalSinceReferenceDate() - startTime))
+        //let temp = obstacle.update(timeSinceLastUpdate, &ball)
+        //obstacles += temp * currentLevel.obstaclesPerBounce
+        //obstaclesLabel.text = String(obstacles + currentLevel.obstaclesPerSecond * Int(NSDate.timeIntervalSinceReferenceDate() - startTime))
+        
+        obstaclesLabel.text = String(obstacle.numAvailable)
+        
         if (currentLevel.winConditions == 1) {
             score = Int(NSDate.timeIntervalSinceReferenceDate() - startTime)
             addScore(0)

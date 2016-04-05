@@ -14,9 +14,12 @@ class LimitedObstacles: LevelEffect {
     var numPerSecond: Double = 0.0
     var timeSinceLastAddition: Double = 0.0
     
-    init(numPerSecond: Double) {
+    var numPerBounce: Int = 0
+    
+    init(numPerSecond: Double = 0.0, _ numPerBounce: Int = 0) {
         
         self.numPerSecond = numPerSecond
+        self.numPerBounce = numPerBounce
         
     }
     
@@ -30,6 +33,12 @@ class LimitedObstacles: LevelEffect {
             timeSinceLastAddition -= 1 / numPerSecond
             
         }
+        
+    }
+    
+    func initialize(inout obstacle: Obstacle) {
+        
+        obstacle.numPerBounce = self.numPerBounce
         
     }
     
