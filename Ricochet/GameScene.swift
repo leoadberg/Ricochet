@@ -139,17 +139,7 @@ class GameScene: SKScene {
         
         self.scene?.backgroundColor = COLOR_FADED_BLUE
         
-        for effect in effects {
-            
-            effect.initialize(&ball, &obstacle)
-            
-        }
-        
-        obstaclesLabel.fontSize = SCREEN_WIDTH / 6
-        obstaclesLabel.position = CGPoint(x: SCREEN_WIDTH * 9 / 10, y: SCREEN_HEIGHT / 20)
-        obstaclesLabel.fontColor = SKColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 0.5)
-        obstaclesLabel.text = String(obstacle.numAvailable)
-        obstaclesLabel.zPosition = -1
+        initializeEffects()
         
         if (obstacle.numAvailable != -1) {
             
@@ -262,9 +252,7 @@ class GameScene: SKScene {
         let timeSinceLastUpdate: Double = min(currentTime - lastUpdateTime, 1 / MIN_FRAMERATE)
         lastUpdateTime = currentTime
         
-        for effect in effects {
-            effect.update(timeSinceLastUpdate, &ball, &obstacle)
-        }
+        updateEffects(timeSinceLastUpdate)
         
         ball.update(timeSinceLastUpdate)
         
@@ -275,11 +263,16 @@ class GameScene: SKScene {
         obstaclesLabel.text = String(obstacle.numAvailable)
         
         if (currentLevel.winConditions == 1) {
+            
             score = Int(NSDate.timeIntervalSinceReferenceDate() - startTime)
             obstacle.update(timeSinceLastUpdate, &ball)
             addScore(0)
-        } else {
+            
+        }
+        else {
+            
             addScore(obstacle.update(timeSinceLastUpdate, &ball))
+            
         }
         
         // Right Wall Collision Case
@@ -326,6 +319,26 @@ class GameScene: SKScene {
                 requiredScoreLabel.text = "\(currentLevel.twoStar) to ★★";
             }
         }
+    }
+    
+    func initializeEffects() {
+        
+        for effect in effects {
+            
+            effect.initialize(&ball, &obstacle)
+            
+        }
+        
+    }
+    
+    func updateEffects(timeSinceLastUpdate: Double) {
+        
+        for effect in effects {
+            
+            effect.update(timeSinceLastUpdate, &ball, &obstacle)
+            
+        }
+        
     }
 }
 
