@@ -34,7 +34,7 @@ func CreateLevelWithProperties(levelNumber: Int, dict: NSDictionary) -> Level {
     
     let tempLevel = Level(level: levelNumber)
     tempLevel.winConditions = dict["Win Conditions"] as! Int
-    tempLevel.startingObstacles = dict["Starting Obstacles"] as! Int
+    //tempLevel.startingObstacles = dict["Starting Obstacles"] as! Int
     //tempLevel.obstaclesPerBounce = dict["Obstacles per bounce"] as! Int
     //tempLevel.obstaclesPerSecond = dict["Obstacles per second"] as! Int
     tempLevel.hint = dict["Hint"] as! String
@@ -64,7 +64,7 @@ func CreateLevelWithProperties(levelNumber: Int, dict: NSDictionary) -> Level {
         case 3:
             tempLevel.effects.append(ResizingObstacle(rate: effect["Resize Rate"] as! Double, maxScale: effect["Max Scale"] as! Double, minScale: effect["Min Scale"] as! Double))
         case 4:
-            tempLevel.effects.append(LimitedObstacles(numPerSecond: effect["Obstacles per second"], numPerBounce: effect["Obstacles per bounce"]))
+            tempLevel.effects.append(LimitedObstacles(numPerSecond: effect["Obstacles per second"] as! Double, numPerBounce: effect["Obstacles per bounce"] as! Int, startingNum: effect["Starting Obstacles"] as! Int))
         default:
             break
             
