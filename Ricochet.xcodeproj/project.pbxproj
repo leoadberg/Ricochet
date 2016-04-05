@@ -18,6 +18,7 @@
 		0E63D70B1CA75CA30072A37D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E63D7091CA75CA30072A37D /* LaunchScreen.storyboard */; };
 		0E63D7161CA75CA40072A37D /* RicochetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E63D7151CA75CA40072A37D /* RicochetTests.swift */; };
 		0E63D7211CA75CA40072A37D /* RicochetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E63D7201CA75CA40072A37D /* RicochetUITests.swift */; };
+		0E6A3CF01CB3A9F700C36720 /* LevelEditorScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6A3CEF1CB3A9F700C36720 /* LevelEditorScene.swift */; };
 		0E6CA8431CA7B3D8008D0E9F /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6CA8421CA7B3D8008D0E9F /* MenuScene.swift */; };
 		0E6CA8471CA86821008D0E9F /* ScoresScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6CA8461CA86821008D0E9F /* ScoresScene.swift */; };
 		0EBEA5701CA9C635008E1095 /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EBEA56F1CA9C635008E1095 /* Level.swift */; };
@@ -66,6 +67,7 @@
 		0E63D71C1CA75CA40072A37D /* RicochetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RicochetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E63D7201CA75CA40072A37D /* RicochetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RicochetUITests.swift; sourceTree = "<group>"; };
 		0E63D7221CA75CA40072A37D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0E6A3CEF1CB3A9F700C36720 /* LevelEditorScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelEditorScene.swift; sourceTree = "<group>"; };
 		0E6CA8421CA7B3D8008D0E9F /* MenuScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		0E6CA8461CA86821008D0E9F /* ScoresScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoresScene.swift; sourceTree = "<group>"; };
 		0EBEA56F1CA9C635008E1095 /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 				CA961A231CB2302300FEAD01 /* ResizingObstacle.swift */,
 				CA6B7DA01CB102C200C8C117 /* DirectionalGravity.swift */,
 				0E6CA8421CA7B3D8008D0E9F /* MenuScene.swift */,
+				0E6A3CEF1CB3A9F700C36720 /* LevelEditorScene.swift */,
 				0E602B241CB102D400A029BA /* UI.swift */,
 				0E534F4F1CA8D15500E27223 /* Levels.plist */,
 				0E63D7021CA75CA30072A37D /* GameViewController.swift */,
@@ -311,6 +314,7 @@
 				CA961A241CB2302300FEAD01 /* ResizingObstacle.swift in Sources */,
 				0E602B231CB1002F00A029BA /* LevelEffect.swift in Sources */,
 				0E602B251CB102D400A029BA /* UI.swift in Sources */,
+				0E6A3CF01CB3A9F700C36720 /* LevelEditorScene.swift in Sources */,
 				CAB2E2BF1CB1D02D003690E8 /* Obstacle.swift in Sources */,
 				CAB2E2BD1CB1CE1D003690E8 /* PointGravity.swift in Sources */,
 				CA6ED3FC1CB34B6B002467CB /* LimitedObstacles.swift in Sources */,

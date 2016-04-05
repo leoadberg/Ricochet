@@ -9,7 +9,7 @@
 import UIKit
 
 var GAME_LEVELS: [Level] = []
-var CUSTOM_LEVELS: [Level] = []
+var CUSTOM_LEVELS: [CustomLevel] = []
 let DEFAULTS = NSUserDefaults.standardUserDefaults()
 var UNLOCKED_LEVELS = 0
 let FILEMANAGER = NSFileManager.defaultManager()
@@ -34,10 +34,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let customLevelArray = CreateArrayFromPlist("CustomLevels", userDomain: true)
         for (_, item) in customLevelArray.enumerate() {
-            let tempLevel = CreateLevelWithProperties(1, dict: item as! NSDictionary)
-            CUSTOM_LEVELS.append(tempLevel)
+            let tempCustomLevel = CreateCustomLevelWithProperties(item as! NSDictionary)
+            CUSTOM_LEVELS.append(tempCustomLevel)
         }
-
+        
         return true
     }
 

@@ -23,6 +23,7 @@ var wallThickness: CGFloat = SCREEN_WIDTH / 10
 class GameScene: SKScene {
     
     var currentLevel = Level(level: 0)
+    var inCustomLevel = false
     
     var effects: [LevelEffect] = []
     
@@ -187,7 +188,7 @@ class GameScene: SKScene {
             let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
             self.scene!.view!.presentScene(menu_scene, transition: transition)
         }
-        else if (nextLevelButton.containsPoint(location) && nextLevelButton.containsPoint(touchStart)) {
+        else if (!inCustomLevel && nextLevelButton.containsPoint(location) && nextLevelButton.containsPoint(touchStart)) {
             
             //self.removeAllChildren()
             let game_scene = GameScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
@@ -239,7 +240,7 @@ class GameScene: SKScene {
             self.addChild(restartButton)
             self.addChild(menuButton)
             
-            if (GAME_LEVELS.count > currentLevel.levelNumber + 1 && (score >= currentLevel.oneStar || UNLOCKED_LEVELS > currentLevel.levelNumber)) {
+            if (!inCustomLevel && GAME_LEVELS.count > currentLevel.levelNumber + 1 && (score >= currentLevel.oneStar || UNLOCKED_LEVELS > currentLevel.levelNumber)) {
                 UNLOCKED_LEVELS = max(UNLOCKED_LEVELS, currentLevel.levelNumber + 1)
                 DEFAULTS.setInteger(UNLOCKED_LEVELS, forKey: "Unlocked Levels")
                 self.addChild(nextLevelButton)

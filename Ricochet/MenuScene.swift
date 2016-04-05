@@ -37,6 +37,7 @@ class MenuScene: SKScene {
     let playButton = MenuButton("Play")
     let customButton = MenuButton("Custom")
     let scoresButton = MenuButton("Scores")
+    let newCustomLevel = Level(level: -1)
     let nameLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
     
     //let levelSelector = SKShapeNode(rectOfSize: CGSize(width: SCREEN_WIDTH * 1.1, height: SCREEN_WIDTH / 3))
@@ -53,10 +54,6 @@ class MenuScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
-        
-        let testCustomLevel = CustomLevel()
-        testCustomLevel.position = CGPoint (x: SCREEN_WIDTH / 5, y: SCREEN_HEIGHT / 10)
-        self.addChild(testCustomLevel)
         
         for tempLevel in GAME_LEVELS {
             self.addChild(tempLevel)
@@ -91,12 +88,23 @@ class MenuScene: SKScene {
         self.addChild(levelSelector)
         customLevelSelector.position = CGPoint(x: SCREEN_WIDTH * 2, y: SCREEN_HEIGHT / 3)
         self.addChild(customLevelSelector)
+        newCustomLevel.label.text = "+"
+        newCustomLevel.unlock()
+        newCustomLevel.label.position.y = 0
+        newCustomLevel.label.verticalAlignmentMode = .Center
+        newCustomLevel.position = CGPoint(x: SCREEN_WIDTH * 2, y: SCREEN_HEIGHT / 3)
+        self.addChild(newCustomLevel)
         
         for tempLevel in GAME_LEVELS {
             if (!levelSelector.active) {
                 tempLevel.position.x = SCREEN_WIDTH * 2
                 tempLevel.update()
             }
+        }
+        
+        for tempLevel in CUSTOM_LEVELS {
+            tempLevel.position = CGPoint(x: SCREEN_WIDTH * 2, y: SCREEN_HEIGHT / 3)
+            self.addChild(tempLevel)
         }
     }
     
@@ -119,6 +127,21 @@ class MenuScene: SKScene {
             }
         }
         
+        for tempLevel in CUSTOM_LEVELS {
+            if (!customLevelSelector.active) {
+                tempLevel.position.x = SCREEN_WIDTH * 2
+            }
+            if (tempLevel.editButton.containsPoint(CGPoint(x: location.x - tempLevel.position.x, y: location.y - tempLevel.position.y))) {
+                tempLevel.selectEdit()
+            }
+            else if (tempLevel.deleteButton.containsPoint(CGPoint(x: location.x - tempLevel.position.x, y: location.y - tempLevel.position.y))) {
+                tempLevel.selectDelete()
+            }
+            else if (tempLevel.containsPoint(location)) {
+                tempLevel.select()
+            }
+        }
+        
         if (playButton.containsPoint(location)) {
             playButton.select()
         }
@@ -129,6 +152,10 @@ class MenuScene: SKScene {
         
         if (customButton.containsPoint(location)) {
             customButton.select()
+        }
+        
+        if (newCustomLevel.containsPoint(location)) {
+            newCustomLevel.select()
         }
     }
     
@@ -148,12 +175,40 @@ class MenuScene: SKScene {
             }
         }
         
+        for tempLevel in CUSTOM_LEVELS {
+            tempLevel.deselect()
+            if (tempLevel.editButton.containsPoint(CGPoint(x: location.x - tempLevel.position.x, y: location.y - tempLevel.position.y)) && tempLevel.editButton.containsPoint(CGPoint(x: touchStart.x - tempLevel.position.x, y: touchStart.y - tempLevel.position.y))) {
+                //Edit code
+                let editor_scene = LevelEditorScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
+                editor_scene.scaleMode = .AspectFill
+                editor_scene.currentLevel = tempLevel
+                let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
+                self.scene!.view!.presentScene(editor_scene, transition: transition)
+            }
+            else if (tempLevel.deleteButton.containsPoint(CGPoint(x: location.x - tempLevel.position.x, y: location.y - tempLevel.position.y)) && tempLevel.deleteButton.containsPoint(CGPoint(x: touchStart.x - tempLevel.position.x, y: touchStart.y - tempLevel.position.y))) {
+                //Delete code
+            }
+            else if (tempLevel.containsPoint(location) && tempLevel.containsPoint(touchStart)) {
+                let game_scene = GameScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
+                game_scene.scaleMode = .AspectFill
+                game_scene.currentLevel = tempLevel
+                game_scene.inCustomLevel = true
+                let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
+                self.scene!.view!.presentScene(game_scene, transition: transition)
+            }
+        }
+        
         if (playButton.containsPoint(location) && playButton.containsPoint(touchStart)) {
             if (customLevelSelector.active) {
                 //MoveOutLevels(&GAME_LEVELS, levelSelector)
                 customLevelSelector.moveOut()
                 customButton.moveIn()
                 customLevelSelector.active = false
+                let levelAction = SKAction.moveToX(-SCREEN_WIDTH, duration: 0.5)
+                newCustomLevel.runAction(levelAction)
+                for tempLevel in CUSTOM_LEVELS {
+                    tempLevel.runAction(levelAction)
+                }
             }
             playButton.moveOut()
             levelSelector.moveIn()
@@ -171,6 +226,18 @@ class MenuScene: SKScene {
             customButton.moveOut()
             customLevelSelector.moveIn()
             customLevelSelector.active = true
+            newCustomLevel.position.x = SCREEN_WIDTH * 2
+            if (CUSTOM_LEVELS.count < 3) {
+                let addLevelAction = SKAction.moveToX((CGFloat(CUSTOM_LEVELS.count) + 0.5) / 3 * SCREEN_WIDTH, duration: 0.5)
+                newCustomLevel.runAction(addLevelAction)
+            }
+            for (i, tempLevel) in CUSTOM_LEVELS.enumerate() {
+                tempLevel.position.x = SCREEN_WIDTH * 2
+                if i < 3 {
+                    let levelAction = SKAction.moveToX((CGFloat(i) + 0.5) / 3 * SCREEN_WIDTH, duration: 0.5)
+                    tempLevel.runAction(levelAction)
+                }
+            }
         }
         else if (scoresButton.containsPoint(location) && scoresButton.containsPoint(touchStart)) {
             let scores_scene = ScoresScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
@@ -182,7 +249,7 @@ class MenuScene: SKScene {
         scoresButton.deselect()
         playButton.deselect()
         customButton.deselect()
-        
+        newCustomLevel.deselect()
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -194,6 +261,10 @@ class MenuScene: SKScene {
         if (levelSelector.active && touchStart.y < SCREEN_HEIGHT / 2 + SCREEN_WIDTH / 6 && touchStart.y > SCREEN_HEIGHT / 2 - SCREEN_WIDTH / 6) {
             levelSelector.scroll += translation.x
             levelSelector.scrollSpeed = translation.x
+        }
+        if (customLevelSelector.active && touchStart.y < SCREEN_HEIGHT / 3 + SCREEN_WIDTH / 6 && touchStart.y > SCREEN_HEIGHT / 3 - SCREEN_WIDTH / 6) {
+            customLevelSelector.scroll += translation.x
+            customLevelSelector.scrollSpeed = translation.x
         }
     }
     
@@ -211,6 +282,22 @@ class MenuScene: SKScene {
                 for tempLevel in GAME_LEVELS {
                     tempLevel.position.x = SCREEN_WIDTH * (CGFloat(tempLevel.levelNumber) + 0.5) / 3 + levelSelector.scroll
                 }
+            }
+        }
+        if (customLevelSelector.active && !(CUSTOM_LEVELS.first?.hasActions())!) {
+            if (!touching) {
+                customLevelSelector.scroll += customLevelSelector.scrollSpeed
+                customLevelSelector.scrollSpeed = customLevelSelector.scrollSpeed * 0.9
+                if (abs(customLevelSelector.scrollSpeed) < 2) {
+                    customLevelSelector.scrollSpeed = 0
+                }
+            }
+            if (customLevelSelector.scroll != 0) {
+                customLevelSelector.scroll = max(min(0,customLevelSelector.scroll), -SCREEN_WIDTH * (CGFloat(CUSTOM_LEVELS.count) - 2) / 3)
+                for (i, tempLevel) in CUSTOM_LEVELS.enumerate() {
+                    tempLevel.position.x = SCREEN_WIDTH * (CGFloat(i) + 0.5) / 3 + customLevelSelector.scroll
+                }
+                newCustomLevel.position.x = SCREEN_WIDTH * (CGFloat(CUSTOM_LEVELS.count) + 0.5) / 3 + customLevelSelector.scroll
             }
         }
     }

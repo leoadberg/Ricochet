@@ -14,7 +14,7 @@ func CreateArrayFromPlist(plist: String, userDomain: Bool) -> NSMutableArray {
     var path: String = ""
     
     if (userDomain) {
-        path = (NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String).stringByAppendingString(plist+".plist")
+        path = (NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String).stringByAppendingString("/\(plist).plist")
     }
     else {
         path = NSBundle.mainBundle().pathForResource(plist, ofType: "plist")!
@@ -34,9 +34,6 @@ func CreateLevelWithProperties(levelNumber: Int, dict: NSDictionary) -> Level {
     
     let tempLevel = Level(level: levelNumber)
     tempLevel.winConditions = dict["Win Conditions"] as! Int
-    //tempLevel.startingObstacles = dict["Starting Obstacles"] as! Int
-    //tempLevel.obstaclesPerBounce = dict["Obstacles per bounce"] as! Int
-    //tempLevel.obstaclesPerSecond = dict["Obstacles per second"] as! Int
     tempLevel.hint = dict["Hint"] as! String
     tempLevel.mode = dict["Game Mode"] as! Int
     tempLevel.oneStar = dict["1 Star"] as! Int
@@ -50,9 +47,7 @@ func CreateLevelWithProperties(levelNumber: Int, dict: NSDictionary) -> Level {
     
     let tempEffects = dict["Effects"] as! NSArray
     for effect in tempEffects {
-        
         switch (effect["EffectID"] as! Int) {
-            
         case 0:
             tempLevel.effects.append(DirectionalGravity(x: effect["Gravity X"] as! Double, y: effect["Gravity Y"] as! Double))
         case 1:
@@ -67,10 +62,45 @@ func CreateLevelWithProperties(levelNumber: Int, dict: NSDictionary) -> Level {
             tempLevel.effects.append(LimitedObstacles(numPerSecond: effect["Obstacles per second"] as! Double, numPerBounce: effect["Obstacles per bounce"] as! Int, startingNum: effect["Starting Obstacles"] as! Int))
         default:
             break
-            
         }
-        
     }
+    return tempLevel
+}
+
+func CreateCustomLevelWithProperties(dict: NSDictionary) -> CustomLevel {
     
+    let tempLevel = CustomLevel()
+    tempLevel.label.text = dict["Name"] as? String
+    tempLevel.winConditions = dict["Win Conditions"] as! Int
+    tempLevel.hint = dict["Hint"] as! String
+    tempLevel.mode = dict["Game Mode"] as! Int
+    tempLevel.oneStar = dict["1 Star"] as! Int
+    tempLevel.twoStar = dict["2 Star"] as! Int
+    tempLevel.threeStar = dict["3 Star"] as! Int
+    tempLevel.ballMaxSpeedModifier = dict["Max Speed Multiplier"] as! CGFloat
+    tempLevel.ballRadiusModifier = dict["Ball Radius Multiplier"] as! CGFloat
+    tempLevel.ballSpeedMultModifier = dict["Speed Increase Multiplier"] as! CGFloat
+    tempLevel.obsLengthModifier = dict["Obstacle Size Multiplier"] as! CGFloat
+    tempLevel.ballStartSpeedModifier = dict["Start Speed Multiplier"] as! CGFloat
+    
+    let tempEffects = dict["Effects"] as! NSArray
+    for effect in tempEffects {
+        switch (effect["EffectID"] as! Int) {
+        case 0:
+            tempLevel.effects.append(DirectionalGravity(x: effect["Gravity X"] as! Double, y: effect["Gravity Y"] as! Double))
+        case 1:
+            tempLevel.effects.append(PointGravity(x: effect["Gravity X"] as! Double, y: effect["Gravity Y"] as! Double, str: effect["Gravity Strength"] as! Double))
+            
+        case 2:
+            tempLevel.effects.append(RotatingObstacle(rate: effect["Rotation Rate"] as! Double))
+            
+        case 3:
+            tempLevel.effects.append(ResizingObstacle(rate: effect["Resize Rate"] as! Double, maxScale: effect["Max Scale"] as! Double, minScale: effect["Min Scale"] as! Double))
+        case 4:
+            tempLevel.effects.append(LimitedObstacles(numPerSecond: effect["Obstacles per second"] as! Double, numPerBounce: effect["Obstacles per bounce"] as! Int, startingNum: effect["Starting Obstacles"] as! Int))
+        default:
+            break
+        }
+    }
     return tempLevel
 }

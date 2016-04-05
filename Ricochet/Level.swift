@@ -153,6 +153,12 @@ class CustomLevel: Level {
         deleteButton.fillColor = COLOR_FADED_RED_DARKER
     }
     
+    override func deselect() {
+        super.deselect()
+        deselectDelete()
+        deselectEdit()
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
