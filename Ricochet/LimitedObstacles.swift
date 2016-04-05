@@ -38,7 +38,7 @@ class LimitedObstacles: LevelEffect {
         
     }
     
-    func initialize(inout obstacle: Obstacle) {
+    func initialize(inout ball: Ball, inout _ obstacle: Obstacle) {
         
         obstacle.numPerBounce = self.numPerBounce
         obstacle.numAvailable = self.startingNum
