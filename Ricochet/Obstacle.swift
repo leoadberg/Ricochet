@@ -29,6 +29,7 @@ class Obstacle: SKShapeNode {
         super.zPosition = 1
         super.fillColor = COLOR_FADED_RED
         super.lineWidth = 4
+        
     }
     
     func draw() {
