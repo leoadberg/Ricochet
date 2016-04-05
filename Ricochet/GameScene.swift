@@ -36,7 +36,6 @@ class GameScene: SKScene {
     let scoreLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
     let requiredScoreLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
     var startTime: Double = 0
-    var obstacles: Int = 0
     let obstaclesLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
     
     var ball = Ball()
@@ -74,7 +73,9 @@ class GameScene: SKScene {
         obstaclesLabel.fontColor = SKColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 0.5)
         obstaclesLabel.text = String(currentLevel.startingObstacles)
         obstaclesLabel.zPosition = -1
-        obstacles = currentLevel.startingObstacles
+        obstacle.numAvailable = currentLevel.startingObstacles
+        obstacle.numPerSecond = currentLevel.obstaclesPerSecond
+        obstacle.numPerBounce = currentLevel.obstaclesPerBounce
         if (currentLevel.startingObstacles != -1) {
             self.addChild(obstaclesLabel)
         }
@@ -165,10 +166,8 @@ class GameScene: SKScene {
         }
         
         if (!lost) {
-            if (currentLevel.startingObstacles == -1 || obstacles + currentLevel.obstaclesPerSecond * Int(NSDate.timeIntervalSinceReferenceDate() - startTime) > 0) {
-                obstacle.move(touchStart, &currentLevel)
-                obstacles -= 1
-            }
+            
+            obstacle.move(touchStart, &currentLevel)
             
         }
     }

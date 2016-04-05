@@ -14,6 +14,8 @@ class Obstacle: SKShapeNode {
     var shapeID: Int = -1
     var length: CGFloat = 0.0
     var startLength: CGFloat = 0.0
+    var numAvailable: Int = -1
+    var numPerBounce: Int = 0
     
     init(shapeID: Int = -1, length: CGFloat = SCREEN_WIDTH / 5) {
         
@@ -49,6 +51,12 @@ class Obstacle: SKShapeNode {
     }
     
     func move(touch: CGPoint, inout _ currentLevel: Level) {
+        
+        if (self.numAvailable == 0) {
+            return
+        }
+        
+        self.numAvailable -= 1
         
         switch (shapeID) {
             
@@ -120,10 +128,16 @@ class Obstacle: SKShapeNode {
                     ball.speedUp()
                     plus = 1
                 }
+                
+                self.numAvailable += numPerBounce
+                
                 ball.colliding = true
+                
             }
             else {
+                
                 ball.colliding = false
+                
             }
             
         case 1:
@@ -178,6 +192,8 @@ class Obstacle: SKShapeNode {
                     plus = 1
                 }
                 
+                self.numAvailable += numPerBounce
+                
                 ball.colliding = true
                 
             }
@@ -207,10 +223,16 @@ class Obstacle: SKShapeNode {
                     ball.speedUp()
                     plus = 1
                 }
+                
+                self.numAvailable += numPerBounce
+                
                 ball.colliding = true
+            
             }
             else {
+                
                 ball.colliding = false
+                
             }
             
         default:
