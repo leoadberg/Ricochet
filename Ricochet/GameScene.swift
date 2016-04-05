@@ -145,13 +145,13 @@ class GameScene: SKScene {
             
         }
         
-        if (obstacle.numAvailable != -1) {
+        obstaclesLabel.fontSize = SCREEN_WIDTH / 6
+        obstaclesLabel.position = CGPoint(x: SCREEN_WIDTH * 9 / 10, y: SCREEN_HEIGHT / 20)
+        obstaclesLabel.fontColor = SKColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 0.5)
+        obstaclesLabel.text = String(obstacle.numAvailable)
+        obstaclesLabel.zPosition = -1
         
-            obstaclesLabel.fontSize = SCREEN_WIDTH / 6
-            obstaclesLabel.position = CGPoint(x: SCREEN_WIDTH * 9 / 10, y: SCREEN_HEIGHT / 20)
-            obstaclesLabel.fontColor = SKColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 0.5)
-            obstaclesLabel.text = String(obstacle.numAvailable)
-            obstaclesLabel.zPosition = -1
+        if (obstacle.numAvailable != -1) {
             
             self.addChild(obstaclesLabel)
         }
