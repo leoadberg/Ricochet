@@ -14,6 +14,7 @@ class Obstacle: SKShapeNode {
     var shapeID: Int = -1
     var length: CGFloat = 0.0
     var startLength: CGFloat = 0.0
+    var limited: Bool = false
     var numAvailable: Int = -1
     var numPerBounce: Int = 0
     
@@ -53,7 +54,7 @@ class Obstacle: SKShapeNode {
     
     func move(touch: CGPoint, inout _ currentLevel: Level) {
         
-        if (self.numAvailable == 0) {
+        if (limited && self.numAvailable < 1) {
             return
         }
         
