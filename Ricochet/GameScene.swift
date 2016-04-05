@@ -74,7 +74,6 @@ class GameScene: SKScene {
         obstaclesLabel.text = String(currentLevel.startingObstacles)
         obstaclesLabel.zPosition = -1
         obstacle.numAvailable = currentLevel.startingObstacles
-        obstacle.numPerSecond = currentLevel.obstaclesPerSecond
         
         if (currentLevel.startingObstacles != -1) {
             self.addChild(obstaclesLabel)
@@ -276,9 +275,10 @@ class GameScene: SKScene {
         
         if (currentLevel.winConditions == 1) {
             score = Int(NSDate.timeIntervalSinceReferenceDate() - startTime)
+            obstacle.update(timeSinceLastUpdate, &ball)
             addScore(0)
         } else {
-            addScore(temp)
+            addScore(obstacle.update(timeSinceLastUpdate, &ball))
         }
         
         // Right Wall Collision Case
