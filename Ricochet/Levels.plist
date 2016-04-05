@@ -149,6 +149,16 @@
 		<array>
 			<dict>
 				<key>EffectID</key>
+				<integer>4</integer>
+				<key>Starting Obstacles</key>
+				<integer>3</integer>
+				<key>Obstacles per second</key>
+				<real>0.5</real>
+				<key>Obstacles per bounce</key>
+				<integer>2</integer>
+			</dict>
+			<dict>
+				<key>EffectID</key>
 				<integer>0</integer>
 				<key>Gravity X</key>
 				<integer>-100</integer>
