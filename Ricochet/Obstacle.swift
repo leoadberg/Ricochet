@@ -129,9 +129,9 @@ class Obstacle: SKShapeNode {
                     ball.updatePolar()
                     ball.speedUp()
                     plus = 1
+                    
+                    self.numAvailable += numPerBounce
                 }
-                
-                self.numAvailable += numPerBounce
                 
                 ball.colliding = true
                 
@@ -192,9 +192,9 @@ class Obstacle: SKShapeNode {
                     ball.updateCartesian()
                     ball.speedUp()
                     plus = 1
+                    
+                    self.numAvailable += numPerBounce
                 }
-                
-                self.numAvailable += numPerBounce
                 
                 ball.colliding = true
                 
@@ -224,9 +224,9 @@ class Obstacle: SKShapeNode {
                     ball.updatePolar()
                     ball.speedUp()
                     plus = 1
+                    
+                    self.numAvailable += numPerBounce
                 }
-                
-                self.numAvailable += numPerBounce
                 
                 ball.colliding = true
             
