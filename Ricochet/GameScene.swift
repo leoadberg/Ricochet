@@ -68,17 +68,6 @@ class GameScene: SKScene {
             self.addChild(effect.visualEffect)
         }
         
-        obstaclesLabel.fontSize = SCREEN_WIDTH / 6
-        obstaclesLabel.position = CGPoint(x: SCREEN_WIDTH * 9 / 10, y: SCREEN_HEIGHT / 20)
-        obstaclesLabel.fontColor = SKColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 0.5)
-        obstaclesLabel.text = String(currentLevel.startingObstacles)
-        obstaclesLabel.zPosition = -1
-        obstacle.numAvailable = currentLevel.startingObstacles
-        
-        if (currentLevel.startingObstacles != -1) {
-            self.addChild(obstaclesLabel)
-        }
-        
         hintLabel.text = currentLevel.hint
         hintLabel.fontColor = SKColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 0.5)
         hintLabel.fontSize = SCREEN_WIDTH / 10
@@ -155,6 +144,18 @@ class GameScene: SKScene {
             effect.initialize(&ball, &obstacle)
             
         }
+        
+        if (obstacle.numAvailable != -1) {
+        
+            obstaclesLabel.fontSize = SCREEN_WIDTH / 6
+            obstaclesLabel.position = CGPoint(x: SCREEN_WIDTH * 9 / 10, y: SCREEN_HEIGHT / 20)
+            obstaclesLabel.fontColor = SKColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 0.5)
+            obstaclesLabel.text = String(obstacle.numAvailable)
+            obstaclesLabel.zPosition = -1
+            
+            self.addChild(obstaclesLabel)
+        }
+        
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
