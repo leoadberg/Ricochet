@@ -46,5 +46,19 @@ class LimitedObstacles: LevelEffect {
         
     }
     
+    override func getID() -> Int {
+        return 4
+    }
+    
+    override func getArg1() -> CGFloat {
+        return CGFloat(numPerSecond)
+    }
+    override func getArg2() -> CGFloat {
+        return CGFloat(numPerBounce)
+    }
+    override func getArg3() -> CGFloat {
+        return CGFloat(startingNum)
+    }
+    
 }
 

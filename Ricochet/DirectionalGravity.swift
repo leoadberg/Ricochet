@@ -38,4 +38,15 @@ class DirectionalGravity: LevelEffect {
         
     }
     
+    override func getID() -> Int {
+        return 0
+    }
+    
+    override func getArg1() -> CGFloat {
+        return CGFloat(xMagnitude)
+    }
+    override func getArg2() -> CGFloat {
+        return CGFloat(yMagnitude)
+    }
+    
 }

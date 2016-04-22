@@ -36,4 +36,18 @@ class ResizingObstacle: LevelEffect {
         
     }
     
+    override func getID() -> Int {
+        return 3
+    }
+    
+    override func getArg1() -> CGFloat {
+        return CGFloat(rate)
+    }
+    override func getArg2() -> CGFloat {
+        return CGFloat(maxScale)
+    }
+    override func getArg3() -> CGFloat {
+        return CGFloat(minScale)
+    }
+    
 }

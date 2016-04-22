@@ -67,9 +67,9 @@ func CreateLevelWithProperties(levelNumber: Int, dict: NSDictionary) -> Level {
     return tempLevel
 }
 
-func CreateCustomLevelWithProperties(dict: NSDictionary) -> CustomLevel {
+func CreateCustomLevelWithProperties(levelNumber: Int, dict: NSDictionary) -> CustomLevel {
     
-    let tempLevel = CustomLevel()
+    let tempLevel = CustomLevel(level: levelNumber)
     tempLevel.label.text = dict["Name"] as? String
     tempLevel.winConditions = dict["Win Conditions"] as! Int
     tempLevel.hint = dict["Hint"] as! String
@@ -103,4 +103,58 @@ func CreateCustomLevelWithProperties(dict: NSDictionary) -> CustomLevel {
         }
     }
     return tempLevel
+}
+
+func SaveCustomLevels() {
+    
+    let path: String = (NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String).stringByAppendingString("/CustomLevels.plist")
+    
+    let plistArray = NSMutableArray()
+    for tempLevel in CUSTOM_LEVELS {
+        let levelDict = NSMutableDictionary()
+        
+        levelDict["Name"] = tempLevel.label.text
+        levelDict["Win Conditions"] = Int(tempLevel.winConditions)
+        levelDict["Hint"] = tempLevel.hint
+        levelDict["Game Mode"] = Int(tempLevel.mode)
+        levelDict["1 Star"] = Int(tempLevel.oneStar)
+        levelDict["2 Star"] = Int(tempLevel.twoStar)
+        levelDict["3 Star"] = Int(tempLevel.threeStar)
+        levelDict["Max Speed Multiplier"] = tempLevel.ballMaxSpeedModifier
+        levelDict["Ball Radius Multiplier"] = tempLevel.ballRadiusModifier
+        levelDict["Speed Increase Multiplier"] = tempLevel.ballSpeedMultModifier
+        levelDict["Obstacle Size Multiplier"] = tempLevel.obsLengthModifier
+        levelDict["Start Speed Multiplier"] = tempLevel.ballStartSpeedModifier
+        
+        let effectsArray = NSMutableArray()
+        
+        levelDict["Effects"] = effectsArray
+        for tempEffect in tempLevel.effects {
+            let tempEffectDict = NSMutableDictionary()
+            switch (tempEffect.getID()) {
+            case 0:
+                tempEffectDict["Effect ID"] = 0
+                break
+            case 1:
+                tempEffectDict["Effect ID"] = 0
+                break
+            case 2:
+                tempEffectDict["Effect ID"] = 0
+                break
+            case 3:
+                tempEffectDict["Effect ID"] = 0
+                break
+            case 4:
+                tempEffectDict["Effect ID"] = 0
+                break
+            default:
+                break
+            }
+        }
+        
+        plistArray.addObject(levelDict)
+    }
+    plistArray.writeToFile(path, atomically: false)
+    print("Custom levels saved")
+    print(plistArray)
 }

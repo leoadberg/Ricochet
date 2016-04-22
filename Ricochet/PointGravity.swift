@@ -59,4 +59,15 @@ class PointGravity: LevelEffect {
         
     }
     
+    override func getID() -> Int {
+        return 1
+    }
+    
+    override func getArg1() -> CGFloat {
+        return CGFloat(xLocation)
+    }
+    override func getArg2() -> CGFloat {
+        return CGFloat(yLocation)
+    }
+    
 }

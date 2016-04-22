@@ -103,6 +103,75 @@ class LevelSelector: SKShapeNode {
     }
 }
 
+class Slider: SKNode {
+    init(text: String, _ lBound: CGFloat, _ uBound: CGFloat, _ i: CGFloat, _ startValue: CGFloat) {
+        super.init()
+        
+        textNode.fontSize = SCREEN_WIDTH / 16
+        textNode.text = text
+        textNode.horizontalAlignmentMode = .Left
+        textNode.verticalAlignmentMode = .Center
+        textNode.position.x = SCREEN_WIDTH / 20
+        
+        valueNode.fontSize = SCREEN_WIDTH / 16
+        valueNode.text = String(sliderValue)
+        //valueNode.horizontalAlignmentMode = .Left
+        valueNode.verticalAlignmentMode = .Center
+        valueNode.position.x = SCREEN_WIDTH / 2
+        
+        sliderBar.position = CGPoint(x: SCREEN_WIDTH * 3 / 5, y: 0)
+        sliderBar.fillColor = SKColor.whiteColor()
+        
+        slider.lineWidth = 4
+        slider.fillColor = COLOR_FADED_GREEN
+        slider.position = sliderBar.position
+        //slider.position.y += SCREEN_WIDTH / 80
+        
+        upperBound = uBound
+        lowerBound = lBound
+        increment = i
+        
+        slider.position.x = min(max(SCREEN_WIDTH * 3 / 5, SCREEN_WIDTH * 3 / 5 + SCREEN_WIDTH / 3 *  ((startValue - lowerBound + 0.0001) / (upperBound - lowerBound))), SCREEN_WIDTH * 3 / 5 + SCREEN_WIDTH / 3)
+        updateValue()
+        
+        self.addChild(sliderBar)
+        self.addChild(textNode)
+        self.addChild(valueNode)
+        self.addChild(slider)
+    }
+    
+    var selected = false
+    var sliderValue: CGFloat = 0
+    var lowerBound: CGFloat = 0
+    var upperBound: CGFloat = 0
+    var increment: CGFloat = 0
+    let textNode = SKLabelNode(fontNamed:"DINAlternate-Bold")
+    let valueNode = SKLabelNode(fontNamed:"DINAlternate-Bold")
+    let sliderBar = SKShapeNode(path: CGPathCreateWithRoundedRect(CGRect(x: 0, y: -SCREEN_WIDTH / 80, width: SCREEN_WIDTH / 3, height: SCREEN_WIDTH / 40), SCREEN_WIDTH / 100, SCREEN_WIDTH / 100, nil))
+    let slider = SKShapeNode(circleOfRadius: SCREEN_WIDTH / 30)
+    
+    func updateSlider(touch: UITouch) {
+        slider.position.x = min(max(SCREEN_WIDTH * 3 / 5, touch.locationInNode(self).x), SCREEN_WIDTH * 3 / 5 + SCREEN_WIDTH / 3)
+        updateValue()
+    }
+    
+    func updateValue() {
+        sliderValue = (slider.position.x - SCREEN_WIDTH * 3 / 5) / (SCREEN_WIDTH / 3) * (upperBound - lowerBound) + lowerBound
+        sliderValue = CGFloat(Int(sliderValue / increment)) * increment
+        valueNode.text = String(sliderValue)
+    }
+    
+    func setValue(value: CGFloat) {
+        sliderValue = value
+        slider.position.x = (sliderValue - lowerBound) / (upperBound - lowerBound) * SCREEN_WIDTH / 3 + SCREEN_WIDTH * 3 / 5
+        valueNode.text = String(sliderValue)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 func MoveInLevels(inout levels: [Level], _ levelSelector: LevelSelector) {
     
     for tempLevel in levels {
@@ -129,5 +198,7 @@ func MoveOutLevels(inout levels: [Level], _ levelSelector: LevelSelector) {
     
 }
 
-
+func AddPoints(firstPoint: CGPoint, _ secondPoint: CGPoint) -> CGPoint {
+    return CGPoint(x: firstPoint.x + secondPoint.x, y: firstPoint.y + secondPoint.y)
+}
 

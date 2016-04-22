@@ -24,6 +24,7 @@ class GameScene: SKScene {
     
     var currentLevel = Level(level: 0)
     var inCustomLevel = false
+    var inEditor = false
     
     var effects: [LevelEffect] = []
     
@@ -44,6 +45,7 @@ class GameScene: SKScene {
     
     let restartButton = MenuButton2("Restart")
     let menuButton = MenuButton2("Menu")
+    let returnToEditorButton = MenuButton2("Menu")
     let nextLevelButton = MenuButton2("Next Level")
     
     var touchStart = CGPoint(x: 0, y: 0)
@@ -181,12 +183,19 @@ class GameScene: SKScene {
             let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
             self.scene!.view!.presentScene(game_scene, transition: transition)
         }
-        else if (menuButton.containsPoint(location) && menuButton.containsPoint(touchStart)) {
+        else if (menuButton.containsPoint(location) && menuButton.containsPoint(touchStart) && !inEditor) {
             //self.removeAllChildren()
             let menu_scene = MenuScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
             menu_scene.scaleMode = .AspectFill
             let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
             self.scene!.view!.presentScene(menu_scene, transition: transition)
+        }
+        else if (returnToEditorButton.containsPoint(location) && returnToEditorButton.containsPoint(touchStart) && inEditor) {
+            //self.removeAllChildren()
+            let editor_scene = MenuScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
+            editor_scene.scaleMode = .AspectFill
+            let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
+            self.scene!.view!.presentScene(editor_scene, transition: transition)
         }
         else if (!inCustomLevel && nextLevelButton.containsPoint(location) && nextLevelButton.containsPoint(touchStart)) {
             
@@ -236,9 +245,15 @@ class GameScene: SKScene {
             
             restartButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 7 / 40)
             menuButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 2 / 40)
+            returnToEditorButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 2 / 40)
             nextLevelButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 12 / 40)
             self.addChild(restartButton)
-            self.addChild(menuButton)
+            if (inEditor) {
+                self.addChild(returnToEditorButton)
+            }
+            else {
+                self.addChild(menuButton)
+            }
             
             if (!inCustomLevel && GAME_LEVELS.count > currentLevel.levelNumber + 1 && (score >= currentLevel.oneStar || UNLOCKED_LEVELS > currentLevel.levelNumber)) {
                 UNLOCKED_LEVELS = max(UNLOCKED_LEVELS, currentLevel.levelNumber + 1)

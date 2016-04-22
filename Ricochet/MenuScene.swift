@@ -14,6 +14,7 @@ let SCREEN_WIDTH = SCREEN.width
 let SCREEN_HEIGHT = SCREEN.height
 
 let COLOR_FADED_GREEN = SKColor(colorLiteralRed: 161 / 255, green: 212 / 255, blue: 144 / 255, alpha: 1)
+let COLOR_FADED_GREEN_DARKER = SKColor(colorLiteralRed: 141 / 255, green: 191 / 255, blue: 124 / 255, alpha: 1)
 let COLOR_FADED_RED = SKColor(colorLiteralRed: 212 / 255, green: 161 / 255, blue: 144 / 255, alpha: 1)
 let COLOR_FADED_RED_DARKER = SKColor(colorLiteralRed: 207 / 255, green: 129 / 255, blue: 103 / 255, alpha: 1)
 let COLOR_FADED_RED_EVEN_DARKER = SKColor(colorLiteralRed: 201 / 255, green: 64 / 255, blue: 99 / 255, alpha: 1)

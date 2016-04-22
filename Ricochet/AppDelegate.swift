@@ -33,8 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         let customLevelArray = CreateArrayFromPlist("CustomLevels", userDomain: true)
-        for (_, item) in customLevelArray.enumerate() {
-            let tempCustomLevel = CreateCustomLevelWithProperties(item as! NSDictionary)
+        for (i, item) in customLevelArray.enumerate() {
+            let tempCustomLevel = CreateCustomLevelWithProperties(i, dict: item as! NSDictionary)
             CUSTOM_LEVELS.append(tempCustomLevel)
         }
         

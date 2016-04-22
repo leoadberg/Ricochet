@@ -25,4 +25,12 @@ class RotatingObstacle: LevelEffect {
         
     }
     
+    override func getID() -> Int {
+        return 2
+    }
+    
+    override func getArg1() -> CGFloat {
+        return CGFloat(rate)
+    }
+    
 }

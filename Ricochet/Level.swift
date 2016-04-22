@@ -103,8 +103,8 @@ class Level: SKShapeNode {
 }
 
 class CustomLevel: Level {
-    init() {
-        super.init(level: 1)
+    override init(level: Int) {
+        super.init(level: level)
         editButton.lineWidth = 4
         editButton.fillColor = COLOR_FADED_YELLOW
         editText.text = "Edit"
