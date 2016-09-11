@@ -17,10 +17,10 @@ class LevelEffect {
     
     func update(timeSinceLastUpdate: Double, inout _ ball: Ball, inout _ obstacle: Obstacle) {}
     
-    func getID() -> Int {}
-    func getArg1() -> CGFloat {}
-    func getArg2() -> CGFloat {}
-    func getArg3() -> CGFloat {}
+    func getID() -> Int {return 0}
+    func getArg1() -> CGFloat {return 0}
+    func getArg2() -> CGFloat {return 0}
+    func getArg3() -> CGFloat {return 0}
     
     var visualEffect: SKNode = SKNode()
     

@@ -10,8 +10,51 @@ import Foundation
 import SpriteKit
 
 class Level: SKShapeNode {
+    
     init(level: Int) {
         super.init()
+        self.pre_init(level)
+    }
+    
+    init(_ levelNumber: Int, _ dict: NSDictionary) {
+        
+        super.init()
+        self.pre_init(levelNumber)
+        
+        self.winConditions = dict["Win Conditions"] as! Int
+        self.hint = dict["Hint"] as! String
+        self.mode = dict["Game Mode"] as! Int
+        self.oneStar = dict["1 Star"] as! Int
+        self.twoStar = dict["2 Star"] as! Int
+        self.threeStar = dict["3 Star"] as! Int
+        self.ballMaxSpeedModifier = dict["Max Speed Multiplier"] as! CGFloat
+        self.ballRadiusModifier = dict["Ball Radius Multiplier"] as! CGFloat
+        self.ballSpeedMultModifier = dict["Speed Increase Multiplier"] as! CGFloat
+        self.obsLengthModifier = dict["Obstacle Size Multiplier"] as! CGFloat
+        self.ballStartSpeedModifier = dict["Start Speed Multiplier"] as! CGFloat
+        
+        let tempEffects = dict["Effects"] as! [NSDictionary]
+        for effect in tempEffects {
+            switch (effect["EffectID"] as! Int) {
+            case 0:
+                self.effects.append(DirectionalGravity(x: effect["Gravity X"] as! Double, y: effect["Gravity Y"] as! Double))
+            case 1:
+                self.effects.append(PointGravity(x: effect["Gravity X"] as! Double, y: effect["Gravity Y"] as! Double, str: effect["Gravity Strength"] as! Double))
+                
+            case 2:
+                self.effects.append(RotatingObstacle(rate: effect["Rotation Rate"] as! Double))
+                
+            case 3:
+                self.effects.append(ResizingObstacle(rate: effect["Resize Rate"] as! Double, maxScale: effect["Max Scale"] as! Double, minScale: effect["Min Scale"] as! Double))
+            case 4:
+                self.effects.append(LimitedObstacles(numPerSecond: effect["Obstacles per second"] as! Double, numPerBounce: effect["Obstacles per bounce"] as! Int, startingNum: effect["Starting Obstacles"] as! Int))
+            default:
+                break
+            }
+        }
+    }
+    
+    func pre_init(level: Int) {
         super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -SCREEN_WIDTH / 9, y: -SCREEN_WIDTH / 9), size: CGSize(width: SCREEN_WIDTH * 2 / 9, height: SCREEN_WIDTH * 2 / 9)), nil)
         super.fillColor = COLOR_FADED_RED
         super.lineWidth = 4
@@ -103,8 +146,26 @@ class Level: SKShapeNode {
 }
 
 class CustomLevel: Level {
+    
     override init(level: Int) {
+        
         super.init(level: level)
+        
+        self.post_init()
+        
+    }
+    
+    override init(_ levelNumber: Int, _ dict: NSDictionary) {
+        
+        super.init(levelNumber, dict)
+        self.label.text = dict["Name"] as? String
+        
+        self.post_init()
+        
+    }
+    
+    func post_init() {
+    
         editButton.lineWidth = 4
         editButton.fillColor = COLOR_FADED_YELLOW
         editText.text = "Edit"
@@ -114,7 +175,7 @@ class CustomLevel: Level {
         deleteButton.lineWidth = 4
         deleteButton.fillColor = COLOR_FADED_RED_DARKER
         deleteText.text = "×"
-        deleteText.position = CGPoint(x: SCREEN_WIDTH * (1/9-1/24), y: -SCREEN_WIDTH / 10)
+        deleteText.position = CGPoint(x: SCREEN_WIDTH * (0.069444), y: -SCREEN_WIDTH / 10) //0.069444 = 1/9 - 1/24
         deleteText.fontSize = SCREEN_WIDTH / 9
         
         super.addChild(editButton)
@@ -128,6 +189,7 @@ class CustomLevel: Level {
         super.starText.fontSize = SCREEN_WIDTH / 24
         super.starText.text = "★★★"
         super.starText.position.y = -SCREEN_WIDTH / 128
+    
     }
     
     let editButton = SKShapeNode(rect: CGRect(x: -SCREEN_WIDTH / 9, y: -SCREEN_WIDTH / 9, width: SCREEN_WIDTH * (2/9-1/12), height: SCREEN_WIDTH / 12))

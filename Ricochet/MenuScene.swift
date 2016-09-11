@@ -10,24 +10,25 @@ import SpriteKit
 import Darwin
 
 let SCREEN: CGRect = UIScreen.mainScreen().bounds
-let SCREEN_WIDTH = SCREEN.width
-let SCREEN_HEIGHT = SCREEN.height
+let SCREEN_WIDTH: CGFloat = SCREEN.width
+let SCREEN_HEIGHT: CGFloat = SCREEN.height
+let SCREEN_RATIO: CGFloat = SCREEN.height / SCREEN.width
 
-let COLOR_FADED_GREEN = SKColor(colorLiteralRed: 161 / 255, green: 212 / 255, blue: 144 / 255, alpha: 1)
-let COLOR_FADED_GREEN_DARKER = SKColor(colorLiteralRed: 141 / 255, green: 191 / 255, blue: 124 / 255, alpha: 1)
-let COLOR_FADED_RED = SKColor(colorLiteralRed: 212 / 255, green: 161 / 255, blue: 144 / 255, alpha: 1)
-let COLOR_FADED_RED_DARKER = SKColor(colorLiteralRed: 207 / 255, green: 129 / 255, blue: 103 / 255, alpha: 1)
-let COLOR_FADED_RED_EVEN_DARKER = SKColor(colorLiteralRed: 201 / 255, green: 64 / 255, blue: 99 / 255, alpha: 1)
-let COLOR_FADED_BLUE = SKColor(colorLiteralRed: 144 / 255, green: 195 / 255, blue: 212 / 255, alpha: 1)
-let COLOR_FADED_YELLOW = SKColor(colorLiteralRed: 212 / 255, green: 212 / 255, blue: 144 / 255, alpha: 1)
-let COLOR_FADED_YELLOW_DARKER = SKColor(colorLiteralRed: 196 / 255, green: 196 / 255, blue: 134 / 255, alpha: 1)
-let COLOR_TRANSPARENT_BLACK = SKColor(colorLiteralRed: 0 / 255, green: 0 / 255, blue: 0 / 255, alpha: 0.6)
-let COLOR_TRANSPARENT = SKColor(colorLiteralRed: 0 / 255, green: 0 / 255, blue: 0 / 255, alpha: 0)
-let COLOR_GREY = SKColor(colorLiteralRed: 190 / 255, green: 190 / 255, blue: 190 / 255, alpha: 1)
+let COLOR_FADED_GREEN: SKColor = SKColor(colorLiteralRed: 161 / 255, green: 212 / 255, blue: 144 / 255, alpha: 1)
+let COLOR_FADED_GREEN_DARKER: SKColor = SKColor(colorLiteralRed: 141 / 255, green: 191 / 255, blue: 124 / 255, alpha: 1)
+let COLOR_FADED_RED: SKColor = SKColor(colorLiteralRed: 212 / 255, green: 161 / 255, blue: 144 / 255, alpha: 1)
+let COLOR_FADED_RED_DARKER: SKColor = SKColor(colorLiteralRed: 207 / 255, green: 129 / 255, blue: 103 / 255, alpha: 1)
+let COLOR_FADED_RED_EVEN_DARKER: SKColor = SKColor(colorLiteralRed: 201 / 255, green: 64 / 255, blue: 99 / 255, alpha: 1)
+let COLOR_FADED_BLUE: SKColor = SKColor(colorLiteralRed: 144 / 255, green: 195 / 255, blue: 212 / 255, alpha: 1)
+let COLOR_FADED_YELLOW: SKColor = SKColor(colorLiteralRed: 212 / 255, green: 212 / 255, blue: 144 / 255, alpha: 1)
+let COLOR_FADED_YELLOW_DARKER: SKColor = SKColor(colorLiteralRed: 196 / 255, green: 196 / 255, blue: 134 / 255, alpha: 1)
+let COLOR_TRANSPARENT_BLACK: SKColor = SKColor(colorLiteralRed: 0 / 255, green: 0 / 255, blue: 0 / 255, alpha: 0.6)
+let COLOR_TRANSPARENT: SKColor = SKColor(colorLiteralRed: 0 / 255, green: 0 / 255, blue: 0 / 255, alpha: 0)
+let COLOR_GREY: SKColor = SKColor(colorLiteralRed: 190 / 255, green: 190 / 255, blue: 190 / 255, alpha: 1)
 
-let MODE_WALLS = 0
-let MODE_SQUARE = 1
-let MODE_CIRCLE = 2
+let MODE_WALLS: Int = 0
+let MODE_SQUARE: Int = 1
+let MODE_CIRCLE: Int = 2
 
 enum Wall: Int {
     case Top = 0, Right = 1, Bottom = 2, Left = 3
@@ -52,6 +53,8 @@ class MenuScene: SKScene {
     var touchStart = CGPoint(x: 0, y: 0)
     
     let defaults = NSUserDefaults.standardUserDefaults()
+    
+    var inTransition = false;
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
@@ -96,14 +99,14 @@ class MenuScene: SKScene {
         newCustomLevel.position = CGPoint(x: SCREEN_WIDTH * 2, y: SCREEN_HEIGHT / 3)
         self.addChild(newCustomLevel)
         
-        for tempLevel in GAME_LEVELS {
+        for tempLevel: Level in GAME_LEVELS {
             if (!levelSelector.active) {
                 tempLevel.position.x = SCREEN_WIDTH * 2
                 tempLevel.update()
             }
         }
         
-        for tempLevel in CUSTOM_LEVELS {
+        for tempLevel: CustomLevel in CUSTOM_LEVELS {
             tempLevel.position = CGPoint(x: SCREEN_WIDTH * 2, y: SCREEN_HEIGHT / 3)
             self.addChild(tempLevel)
         }
@@ -113,12 +116,12 @@ class MenuScene: SKScene {
         /* Called when a touch begins */
         
         touching = true
-        let location = touches.first!.locationInNode(self)
+        let location: CGPoint = touches.first!.locationInNode(self)
         touchStart = location
         
         //let touchedNode = self.nodeAtPoint(location)
         
-        for tempLevel in GAME_LEVELS {
+        for tempLevel: Level in GAME_LEVELS {
             if (!levelSelector.active) {
                 tempLevel.position.x = SCREEN_WIDTH * 2
                 tempLevel.update()
@@ -128,7 +131,7 @@ class MenuScene: SKScene {
             }
         }
         
-        for tempLevel in CUSTOM_LEVELS {
+        for tempLevel: CustomLevel in CUSTOM_LEVELS {
             if (!customLevelSelector.active) {
                 tempLevel.position.x = SCREEN_WIDTH * 2
             }
@@ -165,6 +168,17 @@ class MenuScene: SKScene {
         touching = false
         let location = touches.first!.locationInNode(self)
         
+        if (newCustomLevel.containsPoint(location) && newCustomLevel.containsPoint(touchStart)) {
+            let editor_scene = LevelEditorScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
+            editor_scene.scaleMode = .AspectFill
+            let newLevel = CustomLevel(level: CUSTOM_LEVELS.count)
+            CUSTOM_LEVELS.append(newLevel)
+            editor_scene.currentLevel = newLevel
+            let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
+            self.scene!.view!.presentScene(editor_scene, transition: transition)
+            inTransition = true;
+        }
+        
         for tempLevel in GAME_LEVELS {
             tempLevel.deselect()
             if (!tempLevel.locked && tempLevel.containsPoint(location) && tempLevel.containsPoint(touchStart)) {
@@ -176,7 +190,7 @@ class MenuScene: SKScene {
             }
         }
         
-        for tempLevel in CUSTOM_LEVELS {
+        for (i, tempLevel) in CUSTOM_LEVELS.enumerate() {
             tempLevel.deselect()
             if (tempLevel.editButton.containsPoint(CGPoint(x: location.x - tempLevel.position.x, y: location.y - tempLevel.position.y)) && tempLevel.editButton.containsPoint(CGPoint(x: touchStart.x - tempLevel.position.x, y: touchStart.y - tempLevel.position.y))) {
                 //Edit code
@@ -187,7 +201,19 @@ class MenuScene: SKScene {
                 self.scene!.view!.presentScene(editor_scene, transition: transition)
             }
             else if (tempLevel.deleteButton.containsPoint(CGPoint(x: location.x - tempLevel.position.x, y: location.y - tempLevel.position.y)) && tempLevel.deleteButton.containsPoint(CGPoint(x: touchStart.x - tempLevel.position.x, y: touchStart.y - tempLevel.position.y))) {
-                //Delete code
+                
+                let alertController = UIAlertController(title: "Level Removal", message: "Are you sure you want to delete this level?", preferredStyle: .Alert)
+                let okAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+                    UIAlertAction in
+                    CUSTOM_LEVELS.removeAtIndex(i)
+                    tempLevel.removeFromParent()
+                }
+                let cancelAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel) {
+                    UIAlertAction in
+                }
+                alertController.addAction(okAction)
+                alertController.addAction(cancelAction)
+                self.view!.window!.rootViewController!.presentViewController(alertController, animated: true, completion: nil)
             }
             else if (tempLevel.containsPoint(location) && tempLevel.containsPoint(touchStart)) {
                 let game_scene = GameScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
@@ -285,7 +311,7 @@ class MenuScene: SKScene {
                 }
             }
         }
-        if (customLevelSelector.active && !(CUSTOM_LEVELS.first?.hasActions())!) {
+        if (customLevelSelector.active && ((CUSTOM_LEVELS.first == nil) || !(CUSTOM_LEVELS.first?.hasActions())!)) {
             if (!touching) {
                 customLevelSelector.scroll += customLevelSelector.scrollSpeed
                 customLevelSelector.scrollSpeed = customLevelSelector.scrollSpeed * 0.9
@@ -293,8 +319,9 @@ class MenuScene: SKScene {
                     customLevelSelector.scrollSpeed = 0
                 }
             }
-            if (customLevelSelector.scroll != 0) {
-                customLevelSelector.scroll = max(min(0,customLevelSelector.scroll), -SCREEN_WIDTH * (CGFloat(CUSTOM_LEVELS.count) - 2) / 3)
+            //if (customLevelSelector.scroll != 0) {
+            if !inTransition && !customLevelSelector.hasActions() {
+                customLevelSelector.scroll = max(min(0,customLevelSelector.scroll), -SCREEN_WIDTH * (CGFloat(CUSTOM_LEVELS.count) - 0 /*2*/) / 3)
                 for (i, tempLevel) in CUSTOM_LEVELS.enumerate() {
                     tempLevel.position.x = SCREEN_WIDTH * (CGFloat(i) + 0.5) / 3 + customLevelSelector.scroll
                 }
@@ -302,7 +329,6 @@ class MenuScene: SKScene {
             }
         }
     }
-    
 }
 
 

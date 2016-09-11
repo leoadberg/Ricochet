@@ -30,7 +30,7 @@ func CreateArrayFromPlist(plist: String, userDomain: Bool) -> NSMutableArray {
     return NSMutableArray(contentsOfFile: path)!
 }
 
-func CreateLevelWithProperties(levelNumber: Int, dict: NSDictionary) -> Level {
+/*func CreateLevelWithProperties(levelNumber: Int, dict: NSDictionary) -> Level {
     
     let tempLevel = Level(level: levelNumber)
     tempLevel.winConditions = dict["Win Conditions"] as! Int
@@ -103,7 +103,7 @@ func CreateCustomLevelWithProperties(levelNumber: Int, dict: NSDictionary) -> Cu
         }
     }
     return tempLevel
-}
+}*/
 
 func SaveCustomLevels() {
     

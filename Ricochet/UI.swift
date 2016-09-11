@@ -119,7 +119,7 @@ class Slider: SKNode {
         valueNode.verticalAlignmentMode = .Center
         valueNode.position.x = SCREEN_WIDTH / 2
         
-        sliderBar.position = CGPoint(x: SCREEN_WIDTH * 3 / 5, y: 0)
+        sliderBar.position = CGPoint(x: SCREEN_WIDTH * 0.6, y: 0)
         sliderBar.fillColor = SKColor.whiteColor()
         
         slider.lineWidth = 4
@@ -131,7 +131,7 @@ class Slider: SKNode {
         lowerBound = lBound
         increment = i
         
-        slider.position.x = min(max(SCREEN_WIDTH * 3 / 5, SCREEN_WIDTH * 3 / 5 + SCREEN_WIDTH / 3 *  ((startValue - lowerBound + 0.0001) / (upperBound - lowerBound))), SCREEN_WIDTH * 3 / 5 + SCREEN_WIDTH / 3)
+        slider.position.x = min(max(SCREEN_WIDTH * 0.6, SCREEN_WIDTH * 0.6 + SCREEN_WIDTH / 3 *  ((startValue - lowerBound + 0.0001) / (upperBound - lowerBound))), SCREEN_WIDTH * 0.9333) //0.9333 = 3/5 + 1/3
         updateValue()
         
         self.addChild(sliderBar)
@@ -166,6 +166,40 @@ class Slider: SKNode {
         slider.position.x = (sliderValue - lowerBound) / (upperBound - lowerBound) * SCREEN_WIDTH / 3 + SCREEN_WIDTH * 3 / 5
         valueNode.text = String(sliderValue)
     }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+class TextBox: SKNode {
+    init(text: String) {
+        super.init()
+        
+        textNode.fontSize = SCREEN_WIDTH / 16
+        textNode.text = text
+        textNode.horizontalAlignmentMode = .Left
+        textNode.verticalAlignmentMode = .Center
+        textNode.position.x = SCREEN_WIDTH / 20
+        
+        nameNode.fontSize = SCREEN_WIDTH / 16
+        nameNode.text = ""
+        nameNode.horizontalAlignmentMode = .Right
+        nameNode.verticalAlignmentMode = .Center
+        nameNode.position.x = SCREEN_WIDTH * 19 / 20
+        
+        nameBox.position.x = SCREEN_WIDTH * 3 / 5
+        nameBox.fillColor = SKColor(white: 1, alpha: 1)
+        
+        self.addChild(textNode)
+        self.addChild(nameNode)
+        self.addChild(nameBox)
+    }
+    
+    var selected = false
+    let textNode = SKLabelNode(fontNamed:"DINAlternate-Bold")
+    let nameNode = SKLabelNode(fontNamed:"DINAlternate-Bold")
+    let nameBox = SKShapeNode(rect: CGRect(x: 0, y: -SCREEN_WIDTH / 20, width: SCREEN_WIDTH / 3, height: SCREEN_WIDTH / 10))
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

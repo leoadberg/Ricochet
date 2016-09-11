@@ -11,10 +11,10 @@ import SpriteKit
 
 class LevelEditorScene: SKScene {
     
-    var currentLevel = CustomLevel(level: 1)
+    var currentLevel: CustomLevel = CustomLevel(level: 1)
     
-    var touching = false
-    var touchStart = CGPointZero
+    var touching: Bool = false
+    var touchStart: CGPoint = CGPointZero
     var scroll: CGFloat = 0
     var scrollSpeed: CGFloat = 0
 
@@ -28,8 +28,10 @@ class LevelEditorScene: SKScene {
         saveButton.fillColor = COLOR_FADED_GREEN
         playButton.fillColor = COLOR_FADED_YELLOW
         deleteButton.position = CGPoint(x: SCREEN_WIDTH / 16, y: SCREEN_HEIGHT - SCREEN_WIDTH / 16)
-        saveButton.position = CGPoint(x: SCREEN_WIDTH / 8 + SCREEN_WIDTH * 7 / 32, y: SCREEN_HEIGHT - SCREEN_WIDTH / 16)
-        playButton.position = CGPoint(x: SCREEN_WIDTH / 8 + SCREEN_WIDTH * 7 / 16 + SCREEN_WIDTH * 7 / 32, y: SCREEN_HEIGHT - SCREEN_WIDTH / 16)
+        //saveButton.position = CGPoint(x: SCREEN_WIDTH / 8 + SCREEN_WIDTH * 7 / 32, y: SCREEN_HEIGHT - SCREEN_WIDTH / 16)
+        saveButton.position = CGPoint(x: SCREEN_WIDTH * 0.34375, y: SCREEN_HEIGHT - SCREEN_WIDTH / 16)
+        //playButton.position = CGPoint(x: SCREEN_WIDTH / 8 + SCREEN_WIDTH * 7 / 16 + SCREEN_WIDTH * 7 / 32, y: SCREEN_HEIGHT - SCREEN_WIDTH / 16)
+        playButton.position = CGPoint(x: SCREEN_WIDTH * 0.78125, y: SCREEN_HEIGHT - SCREEN_WIDTH / 16)
         deleteText.text = "×"
         saveText.text = "Save"
         playText.text = "Play"
@@ -43,25 +45,24 @@ class LevelEditorScene: SKScene {
         saveText.position.y = saveButton.position.y - SCREEN_WIDTH / 28
         playText.position.y = playButton.position.y - SCREEN_WIDTH / 28
         
-        obstacleSlider.position = CGPoint(x: 0, y: SCREEN_HEIGHT * 17 / 20)
+        
         obstacleSlider.setValue(CGFloat(currentLevel.mode))
+        winSlider.setValue(CGFloat(currentLevel.winConditions))
+        
+        sliders.append(obstacleSlider)
+        sliders.append(winSlider)
+        
+        for (i, slider) in sliders.enumerate() {
+            slider.position = CGPoint(x: 0, y: SCREEN_HEIGHT * CGFloat(17 - 2 * i) / 20)
+        }
+        
         
         scrollNode.zPosition = -1
-        
-        testText.borderStyle = .RoundedRect
-        //testText.textColor = UIColor(;
-        testText.font = UIFont.systemFontOfSize(17.0)
-        testText.placeholder = "Enter your name here"
-        //testText.backgroundColor = .whiteColor
-        //testText.autocorrectionType = UITextAutocorrectionTypeYes
-        //testText.keyboardType = UIKeyboardTypeDefault;
-        //testText.clearButtonMode = UITextFieldViewModeWhileEditing;
-        //testText.delegate = self.delegate
-        testText.center = self.view!.center
         
         //self.view!.addSubview(testText)
         
         scrollNode.addChild(obstacleSlider)
+        scrollNode.addChild(winSlider)
         
         self.addChild(scrollNode)
         self.addChild(deleteButton)
@@ -83,7 +84,10 @@ class LevelEditorScene: SKScene {
     
     let scrollNode = SKNode()
     
+    var sliders: [Slider] = []
+    
     let obstacleSlider = Slider(text: "Obstacle:", 0, 2, 1, 0)
+    let winSlider = Slider(text: "Win Condition:", 0, 1, 1, 0)
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
@@ -102,8 +106,10 @@ class LevelEditorScene: SKScene {
             saveButton.fillColor = COLOR_FADED_GREEN_DARKER
         }
         
-        if (obstacleSlider.slider.containsPoint(AddPoints(touchStart, CGPoint(x: 0, y: -scroll - obstacleSlider.position.y)))) {
-            obstacleSlider.selected = true
+        for slider in sliders {
+            if (slider.slider.containsPoint(AddPoints(touchStart, CGPoint(x: 0, y: -scroll - slider.position.y)))) {
+                slider.selected = true
+            }
         }
     }
     
@@ -119,16 +125,21 @@ class LevelEditorScene: SKScene {
             self.scene!.view!.presentScene(menu_scene, transition: transition)
         }
         else if (playButton.containsPoint(location) && playButton.containsPoint(touchStart)) {
+            saveLevel()
+            let game_scene = GameScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
+            game_scene.scaleMode = .AspectFill
+            game_scene.currentLevel = currentLevel
+            game_scene.inCustomLevel = true
+            let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
+            self.scene!.view!.presentScene(game_scene, transition: transition)
         }
         else if (saveButton.containsPoint(location) && saveButton.containsPoint(touchStart)) {
-            currentLevel.mode = Int(obstacleSlider.sliderValue)
-            
-            CUSTOM_LEVELS[currentLevel.levelNumber] = currentLevel
-            
-            SaveCustomLevels()
+            saveLevel()
         }
         
-        obstacleSlider.selected = false
+        for slider in sliders {
+            slider.selected = false
+        }
         
         deleteButton.fillColor = COLOR_FADED_RED_DARKER
         saveButton.fillColor = COLOR_FADED_GREEN
@@ -146,9 +157,18 @@ class LevelEditorScene: SKScene {
             scroll += scrollSpeed
         }
         
-        if (obstacleSlider.selected) {
-            obstacleSlider.updateSlider(touch)
+        for slider in sliders {
+            if (slider.selected) {
+                slider.updateSlider(touch)
+            }
         }
+    }
+    
+    func saveLevel() {
+        currentLevel.mode = Int(obstacleSlider.sliderValue)
+        currentLevel.winConditions = Int(winSlider.sliderValue)
+        CUSTOM_LEVELS[currentLevel.levelNumber] = currentLevel
+        SaveCustomLevels()
     }
     
     override func update(currentTime: CFTimeInterval) {

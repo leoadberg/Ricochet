@@ -119,7 +119,7 @@ class Obstacle: SKShapeNode {
             
             if (abs(ball.position.y - super.position.y) < (self.length / 2 + ball.radius) && abs(ball.position.x - super.position.x) < (SCREEN_WIDTH / 2 + ball.radius)) {
                 if (!ball.colliding) {
-                    if (abs(ball.position.y - super.position.y) > abs(ball.position.x - super.position.x) * SCREEN_HEIGHT / SCREEN_WIDTH){
+                    if (abs(ball.position.y - super.position.y) > abs(ball.position.x - super.position.x) * SCREEN_RATIO){
                         ball.ySpeed = ball.position.y >= super.position.y ? abs(ball.ySpeed) : abs(ball.ySpeed) * -1
                     }
                     else {
@@ -144,11 +144,11 @@ class Obstacle: SKShapeNode {
             
         case 1:
             
-            let dist = distanceBetween([ball.position.x, ball.position.y], [self.position.x, self.position.y])
-            let angle = atan2(ball.position.y - self.position.y, ball.position.x - self.position.x)
+            let dist: CGFloat = distanceBetween([ball.position.x, ball.position.y], [self.position.x, self.position.y])
+            let angle: CGFloat = atan2(ball.position.y - self.position.y, ball.position.x - self.position.x)
             
-            let ballPseudoX = self.position.x + dist * cos(angle - self.zRotation)
-            let ballPseudoY = self.position.y + dist * sin(angle - self.zRotation)
+            let ballPseudoX: CGFloat = self.position.x + dist * cos(angle - self.zRotation)
+            let ballPseudoY: CGFloat = self.position.y + dist * sin(angle - self.zRotation)
             
             var closestX: CGFloat = 0.0
             if (ballPseudoX < (super.position.x - (self.length / 2))) {
@@ -209,15 +209,15 @@ class Obstacle: SKShapeNode {
             
             if (pow(Double(ball.position.y - super.position.y), 2.0) + pow(Double(ball.position.x - super.position.x),2.0) < pow(Double(self.length / 2 + ball.radius),2.0)){
                 if (!ball.colliding){
-                    let nx = Double(ball.position.x - super.position.x)
-                    let ny = Double(ball.position.y - super.position.y)
-                    let mxy = (Double(ball.xSpeed) * nx + Double(ball.ySpeed) * ny)
-                    let dxy = (nx * nx + ny * ny)
-                    let mdxy = mxy / dxy
-                    let ux = mdxy * nx
-                    let uy = mdxy * ny
-                    let wx = Double(ball.xSpeed) - ux
-                    let wy = Double(ball.ySpeed) - uy
+                    let nx: Double = Double(ball.position.x - super.position.x)
+                    let ny: Double = Double(ball.position.y - super.position.y)
+                    let mxy: Double = (Double(ball.xSpeed) * nx + Double(ball.ySpeed) * ny)
+                    let dxy: Double = (nx * nx + ny * ny)
+                    let mdxy: Double = mxy / dxy
+                    let ux: Double = mdxy * nx
+                    let uy: Double = mdxy * ny
+                    let wx: Double = Double(ball.xSpeed) - ux
+                    let wy: Double = Double(ball.ySpeed) - uy
                     ball.xSpeed = CGFloat(wx - ux)
                     ball.ySpeed = CGFloat(wy - uy)
                     

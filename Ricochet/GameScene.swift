@@ -22,9 +22,9 @@ var wallThickness: CGFloat = SCREEN_WIDTH / 10
 
 class GameScene: SKScene {
     
-    var currentLevel = Level(level: 0)
-    var inCustomLevel = false
-    var inEditor = false
+    var currentLevel: Level = Level(level: 0)
+    var inCustomLevel: Bool = false
+    var inEditor: Bool = false
     
     var effects: [LevelEffect] = []
     
@@ -34,7 +34,7 @@ class GameScene: SKScene {
     var lost: Bool = false
     var justLost: Bool = false
     
-    var score = 0
+    var score: Int = 0
     let scoreLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
     let requiredScoreLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
     var startTime: Double = 0
@@ -180,6 +180,7 @@ class GameScene: SKScene {
             let game_scene = GameScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
             game_scene.scaleMode = .AspectFill
             game_scene.currentLevel = currentLevel
+            game_scene.inCustomLevel = self.inCustomLevel
             let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
             self.scene!.view!.presentScene(game_scene, transition: transition)
         }
