@@ -113,7 +113,7 @@ class MenuScene: SKScene {
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        /* Called when a touch begins */
+        /* Called when a touch begins, this part takes like 10 seconds to compile so it needs some serious optimization */
         
         touching = true
         let location: CGPoint = touches.first!.locationInNode(self)
