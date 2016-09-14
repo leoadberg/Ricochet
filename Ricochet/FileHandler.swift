@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-func CreateArrayFromPlist(plist: String, userDomain: Bool) -> NSMutableArray {
+func CreateArrayFromPlist(_ plist: String, _ userDomain: Bool) -> NSMutableArray {
     
     var path: String = ""
     
@@ -17,10 +17,10 @@ func CreateArrayFromPlist(plist: String, userDomain: Bool) -> NSMutableArray {
         path = (NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String).stringByAppendingString("/\(plist).plist")
     }
     else {
-        path = NSBundle.mainBundle().pathForResource(plist, ofType: "plist")!
+        path = Bundle.main.path(forResource: plist, ofType: "plist")!
     }
     
-    if (!FILEMANAGER.fileExistsAtPath(path)) {
+    if (!FILEMANAGER.fileExists(atPath: path)) {
         //let emptyArray: [Level] = []
         let empty = NSMutableArray()
         return empty
@@ -152,9 +152,9 @@ func SaveCustomLevels() {
             }
         }
         
-        plistArray.addObject(levelDict)
+        plistArray.add(levelDict)
     }
-    plistArray.writeToFile(path, atomically: false)
+    plistArray.write(toFile: path, atomically: false)
     print("Custom levels saved")
     print(plistArray)
 }

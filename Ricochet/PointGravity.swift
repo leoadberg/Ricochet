@@ -23,7 +23,7 @@ class PointGravity: LevelEffect {
         self.strength = str
         
         let gravityLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
-        gravityLabel.verticalAlignmentMode = .Center
+        gravityLabel.verticalAlignmentMode = .center
         if (str > 0) {
             gravityLabel.text = "→◎←"
         }
@@ -40,7 +40,7 @@ class PointGravity: LevelEffect {
         visualEffect.zPosition = -2
     }
     
-    override func update(timeSinceLastUpdate: Double, inout _ ball: Ball, inout _ obstacle: Obstacle) {
+    override func update(_ timeSinceLastUpdate: Double, _ ball: inout Ball, _ obstacle: inout Obstacle) {
     
         let xDist = abs(self.xLocation * Double(SCREEN_WIDTH) - Double(ball.position.x)) * 1 + 10
         let yDist = abs(self.yLocation * Double(SCREEN_HEIGHT) - Double(ball.position.y)) * 1 + 10

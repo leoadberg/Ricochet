@@ -19,7 +19,7 @@ class RotatingObstacle: LevelEffect {
         
     }
     
-    override func update(timeSinceLastUpdate: Double, inout _ ball: Ball, inout _ obstacle: Obstacle) {
+    override func update(_ timeSinceLastUpdate: Double, _ ball: inout Ball, _ obstacle: inout Obstacle) {
         
         obstacle.zRotation += CGFloat(self.rate * timeSinceLastUpdate)
         

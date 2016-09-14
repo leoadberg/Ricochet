@@ -24,7 +24,7 @@ class GameViewController: UIViewController {
             skView.ignoresSiblingOrder = true
             
             /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .AspectFill
+            scene.scaleMode = .aspectFill
             
             skView.presentScene(scene)
         }
@@ -40,9 +40,9 @@ class GameViewController: UIViewController {
         
         skView.ignoresSiblingOrder = true
         
-        scene.scaleMode = .AspectFill
+        scene.scaleMode = .aspectFill
         
-        let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
+        let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
         
         skView.presentScene(scene, transition: transition)
     }

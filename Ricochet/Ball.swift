@@ -35,7 +35,7 @@ class Ball: SKShapeNode {
     }
     
     func draw() {
-        super.path = CGPathCreateWithEllipseInRect(CGRectMake(-radius, -radius, radius * 2, radius * 2), nil)
+        super.path = CGPath(ellipseIn: CGRectMake(-radius, -radius, radius * 2, radius * 2), transform: nil)
     }
     
     func update(timeSinceLastUpdate: Double) {

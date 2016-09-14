@@ -59,9 +59,9 @@ class ScoresScene: SKScene {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         /* Called when a touch begins */
         
-        let location = touches.first!.locationInNode(self)
+        let location = touches.first!.location(in: self)
         
-        if (backButton.containsPoint(location)) {
+        if (backButton.contains(location)) {
             backButton.fillColor = COLOR_FADED_RED
         }
         else {
@@ -70,12 +70,12 @@ class ScoresScene: SKScene {
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let location = touches.first!.locationInNode(self)
-        if (backButton.containsPoint(location)) {
+        let location = touches.first!.location(in: self)
+        if (backButton.contains(location)) {
             let menu_scene = MenuScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
             
-            menu_scene.scaleMode = .AspectFill
-            let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
+            menu_scene.scaleMode = .aspectFill
+            let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
             self.scene!.view!.presentScene(menu_scene, transition: transition)
         }
     }

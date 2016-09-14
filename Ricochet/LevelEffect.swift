@@ -13,9 +13,9 @@ class LevelEffect {
     
     init(){}
     
-    func initialize(inout ball: Ball, inout _ obstacle: Obstacle) {}
+    func initialize(_ ball: inout Ball, _ obstacle: inout Obstacle) {}
     
-    func update(timeSinceLastUpdate: Double, inout _ ball: Ball, inout _ obstacle: Obstacle) {}
+    func update(_ timeSinceLastUpdate: Double, _ ball: inout Ball, _ obstacle: inout Obstacle) {}
     
     func getID() -> Int {return 0}
     func getArg1() -> CGFloat {return 0}

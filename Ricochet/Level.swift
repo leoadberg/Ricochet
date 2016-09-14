@@ -13,13 +13,13 @@ class Level: SKShapeNode {
     
     init(level: Int) {
         super.init()
-        self.pre_init(level)
+        self.pre_init(level: level)
     }
     
     init(_ levelNumber: Int, _ dict: NSDictionary) {
         
         super.init()
-        self.pre_init(levelNumber)
+        self.pre_init(level: levelNumber)
         
         self.winConditions = dict["Win Conditions"] as! Int
         self.hint = dict["Hint"] as! String
@@ -55,7 +55,7 @@ class Level: SKShapeNode {
     }
     
     func pre_init(level: Int) {
-        super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -SCREEN_WIDTH / 9, y: -SCREEN_WIDTH / 9), size: CGSize(width: SCREEN_WIDTH * 2 / 9, height: SCREEN_WIDTH * 2 / 9)), nil)
+        super.path = CGPath(rect: CGRect(origin: CGPoint(x: -SCREEN_WIDTH / 9, y: -SCREEN_WIDTH / 9), size: CGSize(width: SCREEN_WIDTH * 2 / 9, height: SCREEN_WIDTH * 2 / 9)), transform: nil)
         super.fillColor = COLOR_FADED_RED
         super.lineWidth = 4
         label.fontSize = SCREEN_WIDTH / 6;
@@ -224,4 +224,21 @@ class CustomLevel: Level {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit {
+        for (i, tempLevel) in CUSTOM_LEVELS.enumerated() {
+            if tempLevel == self {
+                print("Level \(i) in CUSTOM_LEVELS was just released!")
+            }
+        }
+        print("A level was just released!")
+    }
+    
 }
+
+func NewCustomLevel() -> Int {
+    let newLevel = CustomLevel(level: CUSTOM_LEVELS.count)
+    CUSTOM_LEVELS.append(newLevel)
+    return CUSTOM_LEVELS.count - 1
+}
+

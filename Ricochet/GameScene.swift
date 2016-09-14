@@ -24,7 +24,6 @@ class GameScene: SKScene {
     
     var currentLevel: Level = Level(level: 0)
     var inCustomLevel: Bool = false
-    var inEditor: Bool = false
     
     var effects: [LevelEffect] = []
     
@@ -45,24 +44,24 @@ class GameScene: SKScene {
     
     let restartButton = MenuButton2("Restart")
     let menuButton = MenuButton2("Menu")
-    let returnToEditorButton = MenuButton2("Menu")
+    let returnToEditorButton = MenuButton2("Edit Level")
     let nextLevelButton = MenuButton2("Next Level")
     
     var touchStart = CGPoint(x: 0, y: 0)
     
     var hintLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
     
-    func updateHighscore(score: Int) {
+    func updateHighscore(_ score: Int) {
         if (getHighscore() < score){
-            DEFAULTS.setInteger(score, forKey: "Highscore\(currentLevel.levelNumber)")
+            DEFAULTS.set(score, forKey: "Highscore\(currentLevel.levelNumber)")
         }
     }
     var currentHighscore : Int = 0
     func getHighscore() -> Int {
-        return DEFAULTS.integerForKey("Highscore\(currentLevel.levelNumber)")
+        return DEFAULTS.integer(forKey: "Highscore\(currentLevel.levelNumber)")
     }
     
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         /* Setup your scene here */
         
         effects = currentLevel.effects
@@ -154,13 +153,13 @@ class GameScene: SKScene {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
        /* Called when a touch begins */
         
-        touchStart = (touches.first?.locationInNode(self))!
+        touchStart = (touches.first?.location(in: self))!
         
         if (first || lost) {
             first = false
-            startTime = NSDate.timeIntervalSinceReferenceDate()
-            let disappear = SKAction.fadeOutWithDuration(0.5)
-            hintLabel.runAction(disappear)
+            startTime = NSDate.timeIntervalSinceReferenceDate
+            let disappear = SKAction.fadeOut(withDuration: 0.5)
+            hintLabel.run(disappear)
             return
         }
         
@@ -173,38 +172,45 @@ class GameScene: SKScene {
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
-        let location = touches.first!.locationInNode(self)
+        let location = touches.first!.location(in: self)
         
-        if (restartButton.containsPoint(location) && restartButton.containsPoint(touchStart)) {
+        if (restartButton.contains(location) && restartButton.contains(touchStart)) {
             //self.removeAllChildren()
             let game_scene = GameScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
-            game_scene.scaleMode = .AspectFill
+            game_scene.scaleMode = .aspectFill
             game_scene.currentLevel = currentLevel
             game_scene.inCustomLevel = self.inCustomLevel
-            let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
+            let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
             self.scene!.view!.presentScene(game_scene, transition: transition)
         }
-        else if (menuButton.containsPoint(location) && menuButton.containsPoint(touchStart) && !inEditor) {
+        else if (menuButton.contains(location) && menuButton.contains(touchStart)) {
             //self.removeAllChildren()
             let menu_scene = MenuScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
-            menu_scene.scaleMode = .AspectFill
-            let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
+            menu_scene.scaleMode = .aspectFill
+            let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
             self.scene!.view!.presentScene(menu_scene, transition: transition)
         }
-        else if (returnToEditorButton.containsPoint(location) && returnToEditorButton.containsPoint(touchStart) && inEditor) {
+        else if (returnToEditorButton.contains(location) && returnToEditorButton.contains(touchStart) && inCustomLevel) {
             //self.removeAllChildren()
-            let editor_scene = MenuScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
-            editor_scene.scaleMode = .AspectFill
-            let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
+            //let editor_scene = MenuScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
+            //editor_scene.scaleMode = .aspectFill
+            //let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
+            //self.scene!.view!.presentScene(editor_scene, transition: transition)
+            
+            
+            let editor_scene = LevelEditorScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
+            editor_scene.scaleMode = .aspectFill
+            editor_scene.currentLevel = currentLevel as! CustomLevel
+            let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
             self.scene!.view!.presentScene(editor_scene, transition: transition)
         }
-        else if (!inCustomLevel && nextLevelButton.containsPoint(location) && nextLevelButton.containsPoint(touchStart)) {
+        else if (!inCustomLevel && nextLevelButton.contains(location) && nextLevelButton.contains(touchStart)) {
             
             //self.removeAllChildren()
             let game_scene = GameScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
-            game_scene.scaleMode = .AspectFill
+            game_scene.scaleMode = .aspectFill
             game_scene.currentLevel = GAME_LEVELS[currentLevel.levelNumber+1]
-            let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
+            let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
             self.scene!.view!.presentScene(game_scene, transition: transition)
         }
         
@@ -246,19 +252,17 @@ class GameScene: SKScene {
             
             restartButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 7 / 40)
             menuButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 2 / 40)
-            returnToEditorButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 2 / 40)
+            returnToEditorButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 12 / 40)
             nextLevelButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 12 / 40)
             self.addChild(restartButton)
-            if (inEditor) {
+            if (inCustomLevel) {
                 self.addChild(returnToEditorButton)
             }
-            else {
-                self.addChild(menuButton)
-            }
+            self.addChild(menuButton)
             
             if (!inCustomLevel && GAME_LEVELS.count > currentLevel.levelNumber + 1 && (score >= currentLevel.oneStar || UNLOCKED_LEVELS > currentLevel.levelNumber)) {
                 UNLOCKED_LEVELS = max(UNLOCKED_LEVELS, currentLevel.levelNumber + 1)
-                DEFAULTS.setInteger(UNLOCKED_LEVELS, forKey: "Unlocked Levels")
+                DEFAULTS.set(UNLOCKED_LEVELS, forKey: "Unlocked Levels")
                 self.addChild(nextLevelButton)
             }
             
@@ -271,7 +275,7 @@ class GameScene: SKScene {
         
         updateEffects(timeSinceLastUpdate)
         
-        ball.update(timeSinceLastUpdate)
+        ball.update(timeSinceLastUpdate: timeSinceLastUpdate)
         
         //let temp = obstacle.update(timeSinceLastUpdate, &ball)
         //obstacles += temp * currentLevel.obstaclesPerBounce
@@ -281,7 +285,7 @@ class GameScene: SKScene {
         
         if (currentLevel.winConditions == 1) {
             
-            score = Int(NSDate.timeIntervalSinceReferenceDate() - startTime)
+            score = Int(NSDate.timeIntervalSinceReferenceDate - startTime)
             obstacle.update(timeSinceLastUpdate, &ball)
             addScore(0)
             
@@ -322,7 +326,7 @@ class GameScene: SKScene {
         
     }
     
-    func addScore(n: Int) {
+    func addScore(_ n: Int) {
         score += n
         scoreLabel.text = String(score);
         if (score >= currentHighscore) {
@@ -348,7 +352,7 @@ class GameScene: SKScene {
         
     }
     
-    func updateEffects(timeSinceLastUpdate: Double) {
+    func updateEffects(_ timeSinceLastUpdate: Double) {
         
         for effect in effects {
             
@@ -381,6 +385,6 @@ func minimum(n0: CGFloat, _ nums: CGFloat...) -> Int {
     
 }
 
-func distanceBetween(loc1: [CGFloat], _ loc2: [CGFloat]) -> CGFloat {
+func distanceBetween(_ loc1: [CGFloat], _ loc2: [CGFloat]) -> CGFloat {
     return sqrt(pow(loc1[0] - loc2[0], 2) + pow(loc1[1] - loc2[1], 2))
 }

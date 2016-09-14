@@ -25,7 +25,7 @@ class LimitedObstacles: LevelEffect {
         
     }
     
-    override func update(timeSinceLastUpdate: Double, inout _ ball: Ball, inout _ obstacle: Obstacle) {
+    override func update(_ timeSinceLastUpdate: Double, _ ball: inout Ball, _ obstacle: inout Obstacle) {
         
         timeSinceLastAddition += timeSinceLastUpdate
         
@@ -38,7 +38,7 @@ class LimitedObstacles: LevelEffect {
         
     }
     
-    override func initialize(inout ball: Ball, inout _ obstacle: Obstacle) {
+    override func initialize( _ ball: inout Ball, _ obstacle: inout Obstacle) {
         
         obstacle.limited = true
         obstacle.numPerBounce = self.numPerBounce

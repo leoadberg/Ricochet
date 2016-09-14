@@ -15,7 +15,7 @@ class MenuButton2: SKShapeNode {
     init(_ buttonName: String) {
         
         super.init()
-        super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -SCREEN_WIDTH / 5, y: -SCREEN_WIDTH / 12), size: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6)), nil)
+        super.path = CGPath(rect: CGRect(origin: CGPoint(x: -SCREEN_WIDTH / 5, y: -SCREEN_WIDTH / 12), size: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6)), transform: nil)
         super.lineWidth = 0
         buttonLabel.text = buttonName
         self.addChild(buttonLabel)
@@ -33,7 +33,7 @@ class MenuButton2: SKShapeNode {
 class MenuButton: SKShapeNode {
     init(_ buttonName: String) {
         super.init()
-        super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -SCREEN_WIDTH / 5, y: -SCREEN_WIDTH / 12), size: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6)), nil)
+        super.path = CGPath(rect: CGRect(origin: CGPoint(x: -SCREEN_WIDTH / 5, y: -SCREEN_WIDTH / 12), size: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6)), transform: nil)
         super.lineWidth = 4
         super.fillColor = COLOR_FADED_GREEN
         buttonLabel.fontSize = SCREEN_WIDTH / 9
@@ -53,16 +53,16 @@ class MenuButton: SKShapeNode {
     }
     
     func moveOut() {
-        let buttonMove = SKAction.moveToX(-SCREEN_WIDTH, duration: 0.5)
-        buttonMove.timingMode = .EaseInEaseOut
-        runAction(buttonMove)
+        let buttonMove = SKAction.moveTo(x: -SCREEN_WIDTH, duration: 0.5)
+        buttonMove.timingMode = .easeInEaseOut
+        run(buttonMove)
     }
     
     func moveIn() {
         position.x = SCREEN_WIDTH * 2
-        let buttonMove = SKAction.moveToX(SCREEN_WIDTH / 2, duration: 0.5)
-        buttonMove.timingMode = .EaseInEaseOut
-        runAction(buttonMove)
+        let buttonMove = SKAction.moveTo(x: SCREEN_WIDTH / 2, duration: 0.5)
+        buttonMove.timingMode = .easeInEaseOut
+        run(buttonMove)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -73,7 +73,7 @@ class MenuButton: SKShapeNode {
 class LevelSelector: SKShapeNode {
     override init() {
         super.init()
-        super.path = CGPathCreateWithRect(CGRectMake(-SCREEN_WIDTH * 0.55, -SCREEN_WIDTH / 6, SCREEN_WIDTH * 1.1, SCREEN_WIDTH / 3), nil)
+        super.path = CGPath(rect: CGRectMake(-SCREEN_WIDTH * 0.55, -SCREEN_WIDTH / 6, SCREEN_WIDTH * 1.1, SCREEN_WIDTH / 3), transform: nil)
         super.lineWidth = 4
         super.fillColor = COLOR_FADED_GREEN
         super.zPosition = -1
@@ -86,16 +86,16 @@ class LevelSelector: SKShapeNode {
     func moveIn() {
         
         position.x = SCREEN_WIDTH * 2
-        let modeSelectorMove = SKAction.moveToX(SCREEN_WIDTH / 2, duration: 0.5)
-        modeSelectorMove.timingMode = .EaseInEaseOut
-        runAction(modeSelectorMove)
+        let modeSelectorMove = SKAction.moveTo(x: SCREEN_WIDTH / 2, duration: 0.5)
+        modeSelectorMove.timingMode = .easeInEaseOut
+        run(modeSelectorMove)
         
     }
     
     func moveOut() {
-        let modeSelectorMove = SKAction.moveToX(-SCREEN_WIDTH, duration: 0.5)
-        modeSelectorMove.timingMode = .EaseInEaseOut
-        runAction(modeSelectorMove)
+        let modeSelectorMove = SKAction.moveTo(x: -SCREEN_WIDTH, duration: 0.5)
+        modeSelectorMove.timingMode = .easeInEaseOut
+        run(modeSelectorMove)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -104,23 +104,29 @@ class LevelSelector: SKShapeNode {
 }
 
 class Slider: SKNode {
-    init(text: String, _ lBound: CGFloat, _ uBound: CGFloat, _ i: CGFloat, _ startValue: CGFloat) {
+    init(_ text: String, _ lBound: CGFloat, _ uBound: CGFloat, _ i: CGFloat, _ startValue: CGFloat, int: Bool = false) {
         super.init()
+        
+        intValue = int
         
         textNode.fontSize = SCREEN_WIDTH / 16
         textNode.text = text
-        textNode.horizontalAlignmentMode = .Left
-        textNode.verticalAlignmentMode = .Center
+        textNode.horizontalAlignmentMode = .left
+        textNode.verticalAlignmentMode = .center
         textNode.position.x = SCREEN_WIDTH / 20
         
         valueNode.fontSize = SCREEN_WIDTH / 16
-        valueNode.text = String(sliderValue)
-        //valueNode.horizontalAlignmentMode = .Left
-        valueNode.verticalAlignmentMode = .Center
+        if int {
+            valueNode.text = String(Int(sliderValue))
+        } else {
+            valueNode.text = String(describing: sliderValue)
+        }
+        //valueNode.horizontalAlignmentMode =.left
+        valueNode.verticalAlignmentMode = .center
         valueNode.position.x = SCREEN_WIDTH / 2
         
         sliderBar.position = CGPoint(x: SCREEN_WIDTH * 0.6, y: 0)
-        sliderBar.fillColor = SKColor.whiteColor()
+        sliderBar.fillColor = SKColor.white
         
         slider.lineWidth = 4
         slider.fillColor = COLOR_FADED_GREEN
@@ -140,6 +146,7 @@ class Slider: SKNode {
         self.addChild(slider)
     }
     
+    var intValue = false
     var selected = false
     var sliderValue: CGFloat = 0
     var lowerBound: CGFloat = 0
@@ -147,25 +154,60 @@ class Slider: SKNode {
     var increment: CGFloat = 0
     let textNode = SKLabelNode(fontNamed:"DINAlternate-Bold")
     let valueNode = SKLabelNode(fontNamed:"DINAlternate-Bold")
-    let sliderBar = SKShapeNode(path: CGPathCreateWithRoundedRect(CGRect(x: 0, y: -SCREEN_WIDTH / 80, width: SCREEN_WIDTH / 3, height: SCREEN_WIDTH / 40), SCREEN_WIDTH / 100, SCREEN_WIDTH / 100, nil))
+    let sliderBar = SKShapeNode(path: CGPath(roundedRect: CGRect(x: 0, y: -SCREEN_WIDTH / 80, width: SCREEN_WIDTH / 3, height: SCREEN_WIDTH / 40), cornerWidth: SCREEN_WIDTH / 100, cornerHeight: SCREEN_WIDTH / 100, transform: nil))
     let slider = SKShapeNode(circleOfRadius: SCREEN_WIDTH / 30)
     
-    func updateSlider(touch: UITouch) {
-        slider.position.x = min(max(SCREEN_WIDTH * 3 / 5, touch.locationInNode(self).x), SCREEN_WIDTH * 3 / 5 + SCREEN_WIDTH / 3)
+    func updateSlider(_ touch: UITouch) {
+        slider.position.x = min(max(SCREEN_WIDTH * 3 / 5, touch.location(in: self).x), SCREEN_WIDTH * 3 / 5 + SCREEN_WIDTH / 3)
         updateValue()
     }
     
     func updateValue() {
         sliderValue = (slider.position.x - SCREEN_WIDTH * 3 / 5) / (SCREEN_WIDTH / 3) * (upperBound - lowerBound) + lowerBound
         sliderValue = CGFloat(Int(sliderValue / increment)) * increment
-        valueNode.text = String(sliderValue)
+        if intValue {
+            valueNode.text = String(Int(sliderValue))
+        } else {
+            valueNode.text = String(describing: sliderValue)
+        }
     }
     
-    func setValue(value: CGFloat) {
+    func setValue(_ value: CGFloat) {
         sliderValue = value
         slider.position.x = (sliderValue - lowerBound) / (upperBound - lowerBound) * SCREEN_WIDTH / 3 + SCREEN_WIDTH * 3 / 5
-        valueNode.text = String(sliderValue)
+        if intValue {
+            valueNode.text = String(Int(sliderValue))
+        } else {
+            valueNode.text = String(describing: sliderValue)
+        }
     }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+class EffectHeader: Slider {
+    init(_ effectID: Int) {
+        super.init("Effect", 0, 0, 1, 0)
+        self.removeAllChildren()
+        self.addChild(textNode)
+        
+        deleteButton.lineWidth = 4
+        deleteButton.fillColor = COLOR_FADED_RED_DARKER
+        deleteText.text = "×"
+        deleteText.fontSize = SCREEN_WIDTH / 8
+        deleteButton.position = CGPoint(x: SCREEN_WIDTH * 7 / 8, y: 0)
+        deleteText.position.x = deleteButton.position.x
+        deleteText.position.y = deleteButton.position.y - SCREEN_WIDTH / 28
+        self.addChild(deleteButton)
+        self.addChild(deleteText)
+    }
+    
+    let deleteButton = SKShapeNode(rectOf: CGSize(width: SCREEN_WIDTH / 12, height: SCREEN_WIDTH / 12))
+    let deleteText = SKLabelNode(fontNamed:"DINAlternate-Bold")
+    
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -178,14 +220,14 @@ class TextBox: SKNode {
         
         textNode.fontSize = SCREEN_WIDTH / 16
         textNode.text = text
-        textNode.horizontalAlignmentMode = .Left
-        textNode.verticalAlignmentMode = .Center
+        textNode.horizontalAlignmentMode = .left
+        textNode.verticalAlignmentMode = .center
         textNode.position.x = SCREEN_WIDTH / 20
         
         nameNode.fontSize = SCREEN_WIDTH / 16
         nameNode.text = ""
-        nameNode.horizontalAlignmentMode = .Right
-        nameNode.verticalAlignmentMode = .Center
+        nameNode.horizontalAlignmentMode = .right
+        nameNode.verticalAlignmentMode = .center
         nameNode.position.x = SCREEN_WIDTH * 19 / 20
         
         nameBox.position.x = SCREEN_WIDTH * 3 / 5
@@ -206,7 +248,7 @@ class TextBox: SKNode {
     }
 }
 
-func MoveInLevels(inout levels: [Level], _ levelSelector: LevelSelector) {
+func MoveInLevels(_ levels: inout [Level], _ levelSelector: LevelSelector) {
     
     for tempLevel in levels {
         
@@ -217,22 +259,22 @@ func MoveInLevels(inout levels: [Level], _ levelSelector: LevelSelector) {
             tempLevel.position = CGPoint(x: 2 * SCREEN_WIDTH, y: levelSelector.position.y)
         }
         
-        let tempLevelMove = SKAction.moveToX(SCREEN_WIDTH * (CGFloat(tempLevel.levelNumber) + 0.5) / 3 + levelSelector.scroll, duration: 0.5)
-        tempLevel.runAction(tempLevelMove)
+        let tempLevelMove = SKAction.moveTo(x: SCREEN_WIDTH * (CGFloat(tempLevel.levelNumber) + 0.5) / 3 + levelSelector.scroll, duration: 0.5)
+        tempLevel.run(tempLevelMove)
     }
     
 }
 
-func MoveOutLevels(inout levels: [Level], _ levelSelector: LevelSelector) {
+func MoveOutLevels(_ levels: inout [Level], _ levelSelector: LevelSelector) {
     
     for tempLevel in levels {
-        let tempLevelMove = SKAction.moveToX(-SCREEN_WIDTH, duration: 0.5)
-        tempLevel.runAction(tempLevelMove)
+        let tempLevelMove = SKAction.moveTo(x: -SCREEN_WIDTH, duration: 0.5)
+        tempLevel.run(tempLevelMove)
     }
     
 }
 
-func AddPoints(firstPoint: CGPoint, _ secondPoint: CGPoint) -> CGPoint {
+func AddPoints(_ firstPoint: CGPoint, _ secondPoint: CGPoint) -> CGPoint {
     return CGPoint(x: firstPoint.x + secondPoint.x, y: firstPoint.y + secondPoint.y)
 }
 

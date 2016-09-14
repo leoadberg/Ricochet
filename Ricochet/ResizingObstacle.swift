@@ -24,7 +24,7 @@ class ResizingObstacle: LevelEffect {
         
     }
     
-    override func update(timeSinceLastUpdate: Double, inout _ ball: Ball, inout _ obstacle: Obstacle) {
+    override func update(_ timeSinceLastUpdate: Double, _ ball: inout Ball, _ obstacle: inout Obstacle) {
         
         scale += self.rate * timeSinceLastUpdate
         obstacle.setScale(CGFloat(self.scale))

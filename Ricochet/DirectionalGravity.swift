@@ -21,7 +21,7 @@ class DirectionalGravity: LevelEffect {
         
         let gravityLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
         gravityLabel.text = "→"
-        gravityLabel.verticalAlignmentMode = .Center
+        gravityLabel.verticalAlignmentMode = .center
         gravityLabel.fontColor = SKColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 0.5)
         gravityLabel.fontSize = SCREEN_WIDTH / 6
         gravityLabel.zRotation = atan2(-CGFloat(x),CGFloat(y)) + CGFloat(M_PI / 2)
@@ -31,7 +31,7 @@ class DirectionalGravity: LevelEffect {
         
     }
     
-    override func update(timeSinceLastUpdate: Double, inout _ ball: Ball, inout _ obstacle: Obstacle) {
+    override func update(_ timeSinceLastUpdate: Double, _ ball: inout Ball, _ obstacle: inout Obstacle) {
         
         ball.xSpeed += CGFloat(xMagnitude * timeSinceLastUpdate)
         ball.ySpeed += CGFloat(yMagnitude * timeSinceLastUpdate)

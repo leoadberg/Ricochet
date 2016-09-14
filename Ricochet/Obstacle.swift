@@ -38,21 +38,21 @@ class Obstacle: SKShapeNode {
         switch(shapeID) {
             
         case 0:
-            super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -SCREEN_WIDTH / 2, y: -length / 2), size: CGSize(width: SCREEN_WIDTH, height: length)), nil)
+            super.path = CGPath(rect: CGRect(origin: CGPoint(x: -SCREEN_WIDTH / 2, y: -length / 2), size: CGSize(width: SCREEN_WIDTH, height: length)), transform: nil)
             
         case 1:
-            super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -length / 2, y: -length / 2), size: CGSize(width: length, height: length)), nil)
+            super.path = CGPath(rect: CGRect(origin: CGPoint(x: -length / 2, y: -length / 2), size: CGSize(width: length, height: length)), transform: nil)
             
         case 2:
-            super.path = CGPathCreateWithEllipseInRect(CGRectMake(-length / 2, -length / 2, length, length), nil)
+            super.path = CGPath(ellipseIn: CGRectMake(-length / 2, -length / 2, length, length), transform: nil)
             
         default:
-            super.path = CGPathCreateWithRect(CGRect(origin: CGPoint(x: -length * 3, y: -length * 3), size: CGSize(width: length, height: length)), nil)
+            super.path = CGPath(rect: CGRect(origin: CGPoint(x: -length * 3, y: -length * 3), size: CGSize(width: length, height: length)), transform: nil)
             
         }
     }
     
-    func move(touch: CGPoint, inout _ currentLevel: Level) {
+    func move(_ touch: CGPoint, _ currentLevel: inout Level) {
         
         if (limited && self.numAvailable < 1) {
             return
@@ -103,13 +103,13 @@ class Obstacle: SKShapeNode {
         
     }
     
-    func update(timeSinceLastUpdate: Double, inout _ ball: Ball) -> Int {
+    func update(_ timeSinceLastUpdate: Double, _ ball: inout Ball) -> Int {
         
         return self.checkBallCollision(timeSinceLastUpdate, &ball)
         
     }
     
-    func checkBallCollision(timeSinceLastUpdate: Double, inout _ ball: Ball) -> Int {
+    func checkBallCollision(_ timeSinceLastUpdate: Double, _ ball: inout Ball) -> Int {
         
         var plus: Int = 0
         

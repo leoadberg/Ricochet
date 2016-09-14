@@ -9,7 +9,7 @@
 import SpriteKit
 import Darwin
 
-let SCREEN: CGRect = UIScreen.mainScreen().bounds
+let SCREEN: CGRect = UIScreen.main.bounds
 let SCREEN_WIDTH: CGFloat = SCREEN.width
 let SCREEN_HEIGHT: CGFloat = SCREEN.height
 let SCREEN_RATIO: CGFloat = SCREEN.height / SCREEN.width
@@ -52,11 +52,9 @@ class MenuScene: SKScene {
     var touching = false
     var touchStart = CGPoint(x: 0, y: 0)
     
-    let defaults = NSUserDefaults.standardUserDefaults()
-    
     var inTransition = false;
     
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         /* Setup your scene here */
         
         for tempLevel in GAME_LEVELS {
@@ -95,7 +93,7 @@ class MenuScene: SKScene {
         newCustomLevel.label.text = "+"
         newCustomLevel.unlock()
         newCustomLevel.label.position.y = 0
-        newCustomLevel.label.verticalAlignmentMode = .Center
+        newCustomLevel.label.verticalAlignmentMode = .center
         newCustomLevel.position = CGPoint(x: SCREEN_WIDTH * 2, y: SCREEN_HEIGHT / 3)
         self.addChild(newCustomLevel)
         
@@ -116,7 +114,7 @@ class MenuScene: SKScene {
         /* Called when a touch begins, this part takes like 10 seconds to compile so it needs some serious optimization */
         
         touching = true
-        let location: CGPoint = touches.first!.locationInNode(self)
+        let location: CGPoint = touches.first!.location(in: self)
         touchStart = location
         
         //let touchedNode = self.nodeAtPoint(location)
@@ -126,7 +124,7 @@ class MenuScene: SKScene {
                 tempLevel.position.x = SCREEN_WIDTH * 2
                 tempLevel.update()
             }
-            if (tempLevel.containsPoint(location)) {
+            if (tempLevel.contains(location)) {
                tempLevel.select()
             }
         }
@@ -135,30 +133,30 @@ class MenuScene: SKScene {
             if (!customLevelSelector.active) {
                 tempLevel.position.x = SCREEN_WIDTH * 2
             }
-            if (tempLevel.editButton.containsPoint(CGPoint(x: location.x - tempLevel.position.x, y: location.y - tempLevel.position.y))) {
+            if (tempLevel.editButton.contains(CGPoint(x: location.x - tempLevel.position.x, y: location.y - tempLevel.position.y))) {
                 tempLevel.selectEdit()
             }
-            else if (tempLevel.deleteButton.containsPoint(CGPoint(x: location.x - tempLevel.position.x, y: location.y - tempLevel.position.y))) {
+            else if (tempLevel.deleteButton.contains(CGPoint(x: location.x - tempLevel.position.x, y: location.y - tempLevel.position.y))) {
                 tempLevel.selectDelete()
             }
-            else if (tempLevel.containsPoint(location)) {
+            else if (tempLevel.contains(location)) {
                 tempLevel.select()
             }
         }
         
-        if (playButton.containsPoint(location)) {
+        if (playButton.contains(location)) {
             playButton.select()
         }
         
-        if (scoresButton.containsPoint(location)) {
+        if (scoresButton.contains(location)) {
             scoresButton.select()
         }
         
-        if (customButton.containsPoint(location)) {
+        if (customButton.contains(location)) {
             customButton.select()
         }
         
-        if (newCustomLevel.containsPoint(location)) {
+        if (newCustomLevel.contains(location)) {
             newCustomLevel.select()
         }
     }
@@ -166,75 +164,74 @@ class MenuScene: SKScene {
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
         touching = false
-        let location = touches.first!.locationInNode(self)
+        let location = touches.first!.location(in: self)
         
-        if (newCustomLevel.containsPoint(location) && newCustomLevel.containsPoint(touchStart)) {
+        if (newCustomLevel.contains(location) && newCustomLevel.contains(touchStart)) {
             let editor_scene = LevelEditorScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
-            editor_scene.scaleMode = .AspectFill
-            let newLevel = CustomLevel(level: CUSTOM_LEVELS.count)
-            CUSTOM_LEVELS.append(newLevel)
-            editor_scene.currentLevel = newLevel
-            let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
+            editor_scene.scaleMode = .aspectFill
+            
+            editor_scene.currentLevel = CUSTOM_LEVELS[NewCustomLevel()]
+            let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
             self.scene!.view!.presentScene(editor_scene, transition: transition)
             inTransition = true;
         }
         
         for tempLevel in GAME_LEVELS {
             tempLevel.deselect()
-            if (!tempLevel.locked && tempLevel.containsPoint(location) && tempLevel.containsPoint(touchStart)) {
+            if (!tempLevel.locked && tempLevel.contains(location) && tempLevel.contains(touchStart)) {
                 let game_scene = GameScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
-                game_scene.scaleMode = .AspectFill
+                game_scene.scaleMode = .aspectFill
                 game_scene.currentLevel = tempLevel
-                let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
+                let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
                 self.scene!.view!.presentScene(game_scene, transition: transition)
             }
         }
         
-        for (i, tempLevel) in CUSTOM_LEVELS.enumerate() {
+        for (i, tempLevel) in CUSTOM_LEVELS.enumerated() {
             tempLevel.deselect()
-            if (tempLevel.editButton.containsPoint(CGPoint(x: location.x - tempLevel.position.x, y: location.y - tempLevel.position.y)) && tempLevel.editButton.containsPoint(CGPoint(x: touchStart.x - tempLevel.position.x, y: touchStart.y - tempLevel.position.y))) {
+            if (tempLevel.editButton.contains(CGPoint(x: location.x - tempLevel.position.x, y: location.y - tempLevel.position.y)) && tempLevel.editButton.contains(CGPoint(x: touchStart.x - tempLevel.position.x, y: touchStart.y - tempLevel.position.y))) {
                 //Edit code
                 let editor_scene = LevelEditorScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
-                editor_scene.scaleMode = .AspectFill
-                editor_scene.currentLevel = tempLevel
-                let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
+                editor_scene.scaleMode = .aspectFill
+                //editor_scene.currentLevel = tempLevel
+                let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
                 self.scene!.view!.presentScene(editor_scene, transition: transition)
             }
-            else if (tempLevel.deleteButton.containsPoint(CGPoint(x: location.x - tempLevel.position.x, y: location.y - tempLevel.position.y)) && tempLevel.deleteButton.containsPoint(CGPoint(x: touchStart.x - tempLevel.position.x, y: touchStart.y - tempLevel.position.y))) {
+            else if (tempLevel.deleteButton.contains(CGPoint(x: location.x - tempLevel.position.x, y: location.y - tempLevel.position.y)) && tempLevel.deleteButton.contains(CGPoint(x: touchStart.x - tempLevel.position.x, y: touchStart.y - tempLevel.position.y))) {
                 
-                let alertController = UIAlertController(title: "Level Removal", message: "Are you sure you want to delete this level?", preferredStyle: .Alert)
-                let okAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+                let alertController = UIAlertController(title: "Level Removal", message: "Are you sure you want to delete this level?", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.default) {
                     UIAlertAction in
-                    CUSTOM_LEVELS.removeAtIndex(i)
+                    CUSTOM_LEVELS.remove(at: i)
                     tempLevel.removeFromParent()
                 }
-                let cancelAction = UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel) {
+                let cancelAction = UIAlertAction(title: "No", style: UIAlertActionStyle.cancel) {
                     UIAlertAction in
                 }
                 alertController.addAction(okAction)
                 alertController.addAction(cancelAction)
-                self.view!.window!.rootViewController!.presentViewController(alertController, animated: true, completion: nil)
+                self.view!.window!.rootViewController!.present(alertController, animated: true, completion: nil)
             }
-            else if (tempLevel.containsPoint(location) && tempLevel.containsPoint(touchStart)) {
+            else if (tempLevel.contains(location) && tempLevel.contains(touchStart)) {
                 let game_scene = GameScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
-                game_scene.scaleMode = .AspectFill
+                game_scene.scaleMode = .aspectFill
                 game_scene.currentLevel = tempLevel
                 game_scene.inCustomLevel = true
-                let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
+                let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
                 self.scene!.view!.presentScene(game_scene, transition: transition)
             }
         }
         
-        if (playButton.containsPoint(location) && playButton.containsPoint(touchStart)) {
+        if (playButton.contains(location) && playButton.contains(touchStart)) {
             if (customLevelSelector.active) {
                 //MoveOutLevels(&GAME_LEVELS, levelSelector)
                 customLevelSelector.moveOut()
                 customButton.moveIn()
                 customLevelSelector.active = false
-                let levelAction = SKAction.moveToX(-SCREEN_WIDTH, duration: 0.5)
-                newCustomLevel.runAction(levelAction)
+                let levelAction = SKAction.moveTo(x: -SCREEN_WIDTH, duration: 0.5)
+                newCustomLevel.run(levelAction)
                 for tempLevel in CUSTOM_LEVELS {
-                    tempLevel.runAction(levelAction)
+                    tempLevel.run(levelAction)
                 }
             }
             playButton.moveOut()
@@ -243,7 +240,7 @@ class MenuScene: SKScene {
             MoveInLevels(&GAME_LEVELS, levelSelector)
             levelSelector.active = true
         }
-        else if (customButton.containsPoint(location) && customButton.containsPoint(touchStart)) {
+        else if (customButton.contains(location) && customButton.contains(touchStart)) {
             if (levelSelector.active) {
                 MoveOutLevels(&GAME_LEVELS, levelSelector)
                 levelSelector.moveOut()
@@ -258,18 +255,18 @@ class MenuScene: SKScene {
                 let addLevelAction = SKAction.moveToX((CGFloat(CUSTOM_LEVELS.count) + 0.5) / 3 * SCREEN_WIDTH, duration: 0.5)
                 newCustomLevel.runAction(addLevelAction)
             }
-            for (i, tempLevel) in CUSTOM_LEVELS.enumerate() {
+            for (i, tempLevel) in CUSTOM_LEVELS.enumerated() {
                 tempLevel.position.x = SCREEN_WIDTH * 2
                 if i < 3 {
-                    let levelAction = SKAction.moveToX((CGFloat(i) + 0.5) / 3 * SCREEN_WIDTH, duration: 0.5)
-                    tempLevel.runAction(levelAction)
+                    let levelAction = SKAction.moveTo(x: (CGFloat(i) + 0.5) / 3 * SCREEN_WIDTH, duration: 0.5)
+                    tempLevel.run(levelAction)
                 }
             }
         }
-        else if (scoresButton.containsPoint(location) && scoresButton.containsPoint(touchStart)) {
+        else if (scoresButton.contains(location) && scoresButton.contains(touchStart)) {
             let scores_scene = ScoresScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
-            scores_scene.scaleMode = .AspectFill
-            let transition = SKTransition.crossFadeWithDuration(NSTimeInterval(0.5))
+            scores_scene.scaleMode = .aspectFill
+            let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
             self.scene!.view!.presentScene(scores_scene, transition: transition)
         }
         
@@ -282,8 +279,8 @@ class MenuScene: SKScene {
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         touching = true
         let touch = touches.first! as UITouch
-        let positionInScene = touch.locationInNode(self)
-        let previousPosition = touch.previousLocationInNode(self)
+        let positionInScene = touch.location(in: self)
+        let previousPosition = touch.previousLocation(in: self)
         let translation = CGPoint(x: positionInScene.x - previousPosition.x, y: positionInScene.y - previousPosition.y)
         if (levelSelector.active && touchStart.y < SCREEN_HEIGHT / 2 + SCREEN_WIDTH / 6 && touchStart.y > SCREEN_HEIGHT / 2 - SCREEN_WIDTH / 6) {
             levelSelector.scroll += translation.x
@@ -322,7 +319,7 @@ class MenuScene: SKScene {
             //if (customLevelSelector.scroll != 0) {
             if !inTransition && !customLevelSelector.hasActions() {
                 customLevelSelector.scroll = max(min(0,customLevelSelector.scroll), -SCREEN_WIDTH * (CGFloat(CUSTOM_LEVELS.count) - 0 /*2*/) / 3)
-                for (i, tempLevel) in CUSTOM_LEVELS.enumerate() {
+                for (i, tempLevel) in CUSTOM_LEVELS.enumerated() {
                     tempLevel.position.x = SCREEN_WIDTH * (CGFloat(i) + 0.5) / 3 + customLevelSelector.scroll
                 }
                 newCustomLevel.position.x = SCREEN_WIDTH * (CGFloat(CUSTOM_LEVELS.count) + 0.5) / 3 + customLevelSelector.scroll
