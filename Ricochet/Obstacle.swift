@@ -38,13 +38,13 @@ class Obstacle: SKShapeNode {
         switch(shapeID) {
             
         case 0:
-            super.path = CGPath(rect: CGRect(origin: CGPoint(x: -SCREEN_WIDTH / 2, y: -length / 2), size: CGSize(width: SCREEN_WIDTH, height: length)), transform: nil)
+            super.path = CGPath(rect: CGRect(origin: CGPoint(x: -SWOVER2, y: -length / 2), size: CGSize(width: SCREEN_WIDTH, height: length)), transform: nil)
             
         case 1:
             super.path = CGPath(rect: CGRect(origin: CGPoint(x: -length / 2, y: -length / 2), size: CGSize(width: length, height: length)), transform: nil)
             
         case 2:
-            super.path = CGPath(ellipseIn: CGRectMake(-length / 2, -length / 2, length, length), transform: nil)
+            super.path = CGPath(ellipseIn: CGRect(x: -length / 2, y: -length / 2, width: length, height: length), transform: nil)
             
         default:
             super.path = CGPath(rect: CGRect(origin: CGPoint(x: -length * 3, y: -length * 3), size: CGSize(width: length, height: length)), transform: nil)
@@ -76,13 +76,13 @@ class Obstacle: SKShapeNode {
             switch (newActiveWall) {
                 
             case Wall.Top.rawValue:
-                super.position = CGPoint(x: SCREEN_WIDTH / 2, y: self.length * 1.5 - wallThickness)
+                super.position = CGPoint(x: SWOVER2, y: self.length * 1.5 - wallThickness)
                 
             case Wall.Right.rawValue:
                 super.position = CGPoint(x: SCREEN_WIDTH * 3 / 2 - wallThickness, y: self.length / 2)
                 
             case Wall.Bottom.rawValue:
-                super.position = CGPoint(x: SCREEN_WIDTH / 2, y: self.length / -2 + wallThickness)
+                super.position = CGPoint(x: SWOVER2, y: self.length / -2 + wallThickness)
                 
             case Wall.Left.rawValue:
                 super.position = CGPoint(x: SCREEN_WIDTH / -2 + wallThickness, y: self.length / 2)

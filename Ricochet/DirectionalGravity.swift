@@ -26,7 +26,7 @@ class DirectionalGravity: LevelEffect {
         gravityLabel.fontSize = SCREEN_WIDTH / 6
         gravityLabel.zRotation = atan2(-CGFloat(x),CGFloat(y)) + CGFloat(M_PI / 2)
         visualEffect.addChild(gravityLabel)
-        visualEffect.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / 5)
+        visualEffect.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT / 5)
         visualEffect.zPosition = -2
         
     }

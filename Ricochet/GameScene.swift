@@ -13,9 +13,9 @@ let MIN_FRAMERATE: Double = 30.0
 
 var unitLength: Double = 0.0
 
-let TOP_CENTER: [CGFloat] = [SCREEN_WIDTH / 2, SCREEN_HEIGHT]
+let TOP_CENTER: [CGFloat] = [SWOVER2, SCREEN_HEIGHT]
 let RIGHT_CENTER: [CGFloat] = [SCREEN_WIDTH, SCREEN_HEIGHT / 2]
-let BOTTOM_CENTER: [CGFloat] = [SCREEN_WIDTH / 2, 0]
+let BOTTOM_CENTER: [CGFloat] = [SWOVER2, 0]
 let LEFT_CENTER: [CGFloat] = [0, SCREEN_HEIGHT / 2]
 
 var wallThickness: CGFloat = SCREEN_WIDTH / 10
@@ -73,7 +73,7 @@ class GameScene: SKScene {
         hintLabel.text = currentLevel.hint
         hintLabel.fontColor = SKColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 0.5)
         hintLabel.fontSize = SCREEN_WIDTH / 10
-        hintLabel.position.x = SCREEN_WIDTH / 2
+        hintLabel.position.x = SWOVER2
         hintLabel.position.y = SCREEN_HEIGHT / 10
         self.addChild(hintLabel)
         
@@ -91,14 +91,14 @@ class GameScene: SKScene {
         
         scoreLabel.text = String(score);
         scoreLabel.fontSize = SCREEN_WIDTH / 2;
-        scoreLabel.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / 2);
+        scoreLabel.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT / 2);
         scoreLabel.zPosition = -1
         
         self.addChild(scoreLabel)
         
         requiredScoreLabel.fontColor = SKColor(colorLiteralRed: 1, green: 1, blue: 1, alpha: 0.5)
         requiredScoreLabel.fontSize = SCREEN_WIDTH / 6;
-        requiredScoreLabel.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 9 / 10);
+        requiredScoreLabel.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT * 9 / 10);
         requiredScoreLabel.zPosition = -1
         
         if (currentHighscore < currentLevel.oneStar) {
@@ -115,7 +115,7 @@ class GameScene: SKScene {
         }
         self.addChild(requiredScoreLabel)
         
-        ball.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / 3)
+        ball.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT / 3)
         ball.zPosition = 0
         ball.fillColor = COLOR_FADED_GREEN
         ball.lineWidth = 4
@@ -150,7 +150,7 @@ class GameScene: SKScene {
         
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
        /* Called when a touch begins */
         
         touchStart = (touches.first?.location(in: self))!
@@ -170,13 +170,13 @@ class GameScene: SKScene {
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         let location = touches.first!.location(in: self)
         
         if (restartButton.contains(location) && restartButton.contains(touchStart)) {
             //self.removeAllChildren()
-            let game_scene = GameScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
+            let game_scene = GameScene(size: CGSize(width: self.scene!.view!.frame.width, height: self.scene!.view!.frame.height))
             game_scene.scaleMode = .aspectFill
             game_scene.currentLevel = currentLevel
             game_scene.inCustomLevel = self.inCustomLevel
@@ -185,7 +185,7 @@ class GameScene: SKScene {
         }
         else if (menuButton.contains(location) && menuButton.contains(touchStart)) {
             //self.removeAllChildren()
-            let menu_scene = MenuScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
+            let menu_scene = MenuScene(size: CGSize(width: self.scene!.view!.frame.width, height: self.scene!.view!.frame.height))
             menu_scene.scaleMode = .aspectFill
             let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
             self.scene!.view!.presentScene(menu_scene, transition: transition)
@@ -198,7 +198,7 @@ class GameScene: SKScene {
             //self.scene!.view!.presentScene(editor_scene, transition: transition)
             
             
-            let editor_scene = LevelEditorScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
+            let editor_scene = LevelEditorScene(size: CGSize(width: self.scene!.view!.frame.width, height: self.scene!.view!.frame.height))
             editor_scene.scaleMode = .aspectFill
             editor_scene.currentLevel = currentLevel as! CustomLevel
             let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
@@ -207,7 +207,7 @@ class GameScene: SKScene {
         else if (!inCustomLevel && nextLevelButton.contains(location) && nextLevelButton.contains(touchStart)) {
             
             //self.removeAllChildren()
-            let game_scene = GameScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
+            let game_scene = GameScene(size: CGSize(width: self.scene!.view!.frame.width, height: self.scene!.view!.frame.height))
             game_scene.scaleMode = .aspectFill
             game_scene.currentLevel = GAME_LEVELS[currentLevel.levelNumber+1]
             let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
@@ -218,7 +218,7 @@ class GameScene: SKScene {
     
     var lastUpdateTime: CFTimeInterval = 0
     
-    override func update(currentTime: CFTimeInterval) {
+    override func update(_ currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         
         if (first || lost) {
@@ -232,28 +232,28 @@ class GameScene: SKScene {
             let highscoreLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
             highscoreLabel.text = "Highscore: \(getHighscore())"
             highscoreLabel.fontSize = SCREEN_WIDTH / 9;
-            highscoreLabel.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 9 / 10)
+            highscoreLabel.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT * 9 / 10)
             highscoreLabel.zPosition = 4
             self.addChild(highscoreLabel)
             
             let finalScoreLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
             finalScoreLabel.text = "Final Score:"
             finalScoreLabel.fontSize = SCREEN_WIDTH / 9;
-            finalScoreLabel.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 3 / 4)
+            finalScoreLabel.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT * 3 / 4)
             finalScoreLabel.zPosition = 4
             self.addChild(finalScoreLabel)
             
             scoreLabel.zPosition = 4
             
             let fade = SKSpriteNode(color: COLOR_TRANSPARENT_BLACK, size: CGSize(width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
-            fade.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / 2)
+            fade.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT / 2)
             fade.zPosition = 2
             self.addChild(fade)
             
-            restartButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 7 / 40)
-            menuButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 2 / 40)
-            returnToEditorButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 12 / 40)
-            nextLevelButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 12 / 40)
+            restartButton.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT * 7 / 40)
+            menuButton.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT * 2 / 40)
+            returnToEditorButton.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT * 12 / 40)
+            nextLevelButton.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT * 12 / 40)
             self.addChild(restartButton)
             if (inCustomLevel) {
                 self.addChild(returnToEditorButton)
@@ -363,7 +363,7 @@ class GameScene: SKScene {
     }
 }
 
-func minimum(n0: CGFloat, _ nums: CGFloat...) -> Int {
+func minimum(_ n0: CGFloat, _ nums: CGFloat...) -> Int {
     
     var minValue: CGFloat = n0
     var minIndex: Int = 0

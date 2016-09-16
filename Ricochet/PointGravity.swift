@@ -42,8 +42,9 @@ class PointGravity: LevelEffect {
     
     override func update(_ timeSinceLastUpdate: Double, _ ball: inout Ball, _ obstacle: inout Obstacle) {
     
-        let xDist = abs(self.xLocation * Double(SCREEN_WIDTH) - Double(ball.position.x)) * 1 + 10
-        let yDist = abs(self.yLocation * Double(SCREEN_HEIGHT) - Double(ball.position.y)) * 1 + 10
+        let xDist: Double = abs(self.xLocation * Double(SCREEN_WIDTH) - Double(ball.position.x)) * 1 + 10
+        let yDist: Double = abs(self.yLocation * Double(SCREEN_HEIGHT) - Double(ball.position.y)) * 1 + 10
+        let xyDist: Double = xDist + yDist
         
         var gravityForce : Double = 0
         if (abs(xDist) + abs(yDist) > 30) {
@@ -52,9 +53,9 @@ class PointGravity: LevelEffect {
 
         var deltaXSpeed = CGFloat(gravityForce * (self.xLocation * Double(SCREEN_WIDTH) - Double(ball.position.x)))
         
-        deltaXSpeed = deltaXSpeed / CGFloat(xDist + yDist)
+        deltaXSpeed = deltaXSpeed / CGFloat(xyDist)
         ball.xSpeed += deltaXSpeed
-        let deltaYSpeed = CGFloat(gravityForce * (self.yLocation * Double(SCREEN_HEIGHT) - Double(ball.position.y)) / (xDist + yDist))
+        let deltaYSpeed = CGFloat(gravityForce * (self.yLocation * Double(SCREEN_HEIGHT) - Double(ball.position.y)) / (xyDist))
         ball.ySpeed += deltaYSpeed
         
     }

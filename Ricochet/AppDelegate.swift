@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SpriteKit
 
 var GAME_LEVELS: [Level] = []
 var CUSTOM_LEVELS: [CustomLevel] = []
@@ -65,4 +66,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
+
+//Globals because Swift can't do math
+
+let SCREEN: CGRect = UIScreen.main.bounds
+let SCREEN_WIDTH: CGFloat = SCREEN.width
+let SCREEN_HEIGHT: CGFloat = SCREEN.height
+let SCREEN_RATIO: CGFloat = SCREEN.height / SCREEN.width
+
+let SWOVER2: CGFloat = SCREEN_WIDTH / 2
+let SWOVER12: CGFloat = SCREEN_WIDTH / 12
 

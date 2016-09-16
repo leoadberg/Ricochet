@@ -34,7 +34,8 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         //let scene = GameScene(size: CGSizeMake(self.view.frame.width, self.view.frame.height))
-        let scene = MenuScene(size: CGSizeMake(self.view.frame.width, self.view.frame.height))
+        //let scene = MenuScene(size: CGSize(width: self.scene!.view!.frame.width, height: self.scene!.view!.frame.height))
+        let scene = MenuScene(size: CGSize(width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
         
         let skView = self.view as! SKView
         
@@ -47,16 +48,17 @@ class GameViewController: UIViewController {
         skView.presentScene(scene, transition: transition)
     }
     
-    override func shouldAutorotate() -> Bool {
+    override var shouldAutorotate: Bool {
         return true
     }
 
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return .AllButUpsideDown
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        /*if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+            return .allButUpsideDown
         } else {
-            return .All
-        }
+            return .all
+        }*/
+        return .portrait
     }
 
     override func didReceiveMemoryWarning() {
@@ -64,7 +66,7 @@ class GameViewController: UIViewController {
         // Release any cached data, images, etc that aren't in use.
     }
 
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden: Bool {
         return true
     }
     

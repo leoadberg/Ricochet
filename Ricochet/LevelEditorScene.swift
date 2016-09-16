@@ -47,7 +47,7 @@ class LevelEditorScene: SKScene {
         
         newEffectButton.lineWidth = 4
         newEffectButton.fillColor = COLOR_FADED_GREEN
-        newEffectButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / 2)
+        newEffectButton.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT / 2)
         newEffectText.position.x = newEffectButton.position.x
         newEffectText.text = "New Effect"
         newEffectText.fontSize = SCREEN_WIDTH / 10
@@ -85,7 +85,7 @@ class LevelEditorScene: SKScene {
             scrollNode.addChild(slider)
         }
         
-        newEffectButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * CGFloat(17 - 2 * sliders.count) / 20)
+        newEffectButton.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT * CGFloat(17 - 2 * sliders.count) / 20)
         newEffectText.position.y = newEffectButton.position.y - SCREEN_WIDTH / 28
         scrollNode.zPosition = -1
         
@@ -126,7 +126,7 @@ class LevelEditorScene: SKScene {
     
     let tempEffect = EffectHeader(1)
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         /* Called when a touch begins */
         
         touching = true
@@ -150,20 +150,20 @@ class LevelEditorScene: SKScene {
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         touching = false
         let location = touches.first!.location(in: self)
         
         if (exitButton.contains(location) && exitButton.contains(touchStart)) {
-            let menu_scene = MenuScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
+            let menu_scene = MenuScene(size: CGSize(width: self.scene!.view!.frame.width, height: self.scene!.view!.frame.height))
             menu_scene.scaleMode = .aspectFill
             let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
             self.scene!.view!.presentScene(menu_scene, transition: transition)
         }
         else if (playButton.contains(location) && playButton.contains(touchStart)) {
             saveLevel()
-            let game_scene = GameScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
+            let game_scene = GameScene(size: CGSize(width: self.scene!.view!.frame.width, height: self.scene!.view!.frame.height))
             game_scene.scaleMode = .aspectFill
             game_scene.currentLevel = currentLevel
             game_scene.inCustomLevel = true
@@ -177,7 +177,7 @@ class LevelEditorScene: SKScene {
         for slider in sliders {
             slider.selected = false
             if let effectHead = slider as? EffectHeader {
-                //if
+                print("Let go on EffectHeader: ", effectHead)
             }
         }
         
@@ -186,7 +186,7 @@ class LevelEditorScene: SKScene {
         playButton.fillColor = COLOR_FADED_YELLOW
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         touching = true
         let touch = touches.first! as UITouch
         let positionInScene = touch.location(in: self)

@@ -14,7 +14,7 @@ func CreateArrayFromPlist(_ plist: String, _ userDomain: Bool) -> NSMutableArray
     var path: String = ""
     
     if (userDomain) {
-        path = (NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String).stringByAppendingString("/\(plist).plist")
+        path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String) + "/" + plist + ".plist"
     }
     else {
         path = Bundle.main.path(forResource: plist, ofType: "plist")!
@@ -107,7 +107,7 @@ func CreateCustomLevelWithProperties(levelNumber: Int, dict: NSDictionary) -> Cu
 
 func SaveCustomLevels() {
     
-    let path: String = (NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String).stringByAppendingString("/CustomLevels.plist")
+    let path: String = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String) + "/CustomLevels.plist"
     
     let plistArray = NSMutableArray()
     for tempLevel in CUSTOM_LEVELS {

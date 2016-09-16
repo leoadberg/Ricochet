@@ -99,7 +99,7 @@ class Level: SKShapeNode {
     
     func update() {
         //self.position.x = SCREEN_WIDTH * 2
-        let highscore = DEFAULTS.integerForKey("Highscore"+String(levelNumber))
+        let highscore = DEFAULTS.integer(forKey: "Highscore"+String(levelNumber))
         if (highscore >= threeStar) {
             starText.text = "★★★"
             label.position.y = -SCREEN_WIDTH / 32
@@ -192,9 +192,9 @@ class CustomLevel: Level {
     
     }
     
-    let editButton = SKShapeNode(rect: CGRect(x: -SCREEN_WIDTH / 9, y: -SCREEN_WIDTH / 9, width: SCREEN_WIDTH * (2/9-1/12), height: SCREEN_WIDTH / 12))
+    let editButton = SKShapeNode(rect: CGRect(x: -SCREEN_WIDTH / 9, y: -SCREEN_WIDTH / 9, width: SCREEN_WIDTH * (2/9-1/12), height: SWOVER12))
     var editText = SKLabelNode(fontNamed: "DINAlternate-Bold")
-    let deleteButton = SKShapeNode(rect: CGRect(x: SCREEN_WIDTH * (1/9-1/12), y: -SCREEN_WIDTH / 9, width: SCREEN_WIDTH / 12, height: SCREEN_WIDTH / 12))
+    let deleteButton = SKShapeNode(rect: CGRect(x: SCREEN_WIDTH * (1/9-1/12), y: -SCREEN_WIDTH / 9, width: SWOVER12, height: SWOVER12))
     var deleteText = SKLabelNode(fontNamed: "DINAlternate-Bold")
 
     var levelName = "Custom"

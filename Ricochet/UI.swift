@@ -15,7 +15,7 @@ class MenuButton2: SKShapeNode {
     init(_ buttonName: String) {
         
         super.init()
-        super.path = CGPath(rect: CGRect(origin: CGPoint(x: -SCREEN_WIDTH / 5, y: -SCREEN_WIDTH / 12), size: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6)), transform: nil)
+        super.path = CGPath(rect: CGRect(origin: CGPoint(x: -SCREEN_WIDTH / 5, y: -SWOVER12), size: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6)), transform: nil)
         super.lineWidth = 0
         buttonLabel.text = buttonName
         self.addChild(buttonLabel)
@@ -33,7 +33,7 @@ class MenuButton2: SKShapeNode {
 class MenuButton: SKShapeNode {
     init(_ buttonName: String) {
         super.init()
-        super.path = CGPath(rect: CGRect(origin: CGPoint(x: -SCREEN_WIDTH / 5, y: -SCREEN_WIDTH / 12), size: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6)), transform: nil)
+        super.path = CGPath(rect: CGRect(origin: CGPoint(x: -SCREEN_WIDTH / 5, y: -SWOVER12), size: CGSize(width: SCREEN_WIDTH * 2 / 5, height: SCREEN_WIDTH / 6)), transform: nil)
         super.lineWidth = 4
         super.fillColor = COLOR_FADED_GREEN
         buttonLabel.fontSize = SCREEN_WIDTH / 9
@@ -60,7 +60,7 @@ class MenuButton: SKShapeNode {
     
     func moveIn() {
         position.x = SCREEN_WIDTH * 2
-        let buttonMove = SKAction.moveTo(x: SCREEN_WIDTH / 2, duration: 0.5)
+        let buttonMove = SKAction.moveTo(x: SWOVER2, duration: 0.5)
         buttonMove.timingMode = .easeInEaseOut
         run(buttonMove)
     }
@@ -73,7 +73,7 @@ class MenuButton: SKShapeNode {
 class LevelSelector: SKShapeNode {
     override init() {
         super.init()
-        super.path = CGPath(rect: CGRectMake(-SCREEN_WIDTH * 0.55, -SCREEN_WIDTH / 6, SCREEN_WIDTH * 1.1, SCREEN_WIDTH / 3), transform: nil)
+        super.path = CGPath(rect: CGRect(x: -SCREEN_WIDTH * 0.55, y: -SCREEN_WIDTH / 6, width: SCREEN_WIDTH * 1.1, height: SCREEN_WIDTH / 3), transform: nil)
         super.lineWidth = 4
         super.fillColor = COLOR_FADED_GREEN
         super.zPosition = -1
@@ -86,7 +86,7 @@ class LevelSelector: SKShapeNode {
     func moveIn() {
         
         position.x = SCREEN_WIDTH * 2
-        let modeSelectorMove = SKAction.moveTo(x: SCREEN_WIDTH / 2, duration: 0.5)
+        let modeSelectorMove = SKAction.moveTo(x: SWOVER2, duration: 0.5)
         modeSelectorMove.timingMode = .easeInEaseOut
         run(modeSelectorMove)
         
@@ -123,7 +123,7 @@ class Slider: SKNode {
         }
         //valueNode.horizontalAlignmentMode =.left
         valueNode.verticalAlignmentMode = .center
-        valueNode.position.x = SCREEN_WIDTH / 2
+        valueNode.position.x = SWOVER2
         
         sliderBar.position = CGPoint(x: SCREEN_WIDTH * 0.6, y: 0)
         sliderBar.fillColor = SKColor.white
@@ -137,7 +137,9 @@ class Slider: SKNode {
         lowerBound = lBound
         increment = i
         
-        slider.position.x = min(max(SCREEN_WIDTH * 0.6, SCREEN_WIDTH * 0.6 + SCREEN_WIDTH / 3 *  ((startValue - lowerBound + 0.0001) / (upperBound - lowerBound))), SCREEN_WIDTH * 0.9333) //0.9333 = 3/5 + 1/3
+        let SW06: CGFloat = SCREEN_WIDTH * 0.6
+        slider.position.x = max(SW06, SW06 + SCREEN_WIDTH / 3 *  ((startValue - lowerBound + 0.0001) / (upperBound - lowerBound)))
+        slider.position.x = min(slider.position.x, SCREEN_WIDTH * 0.9333) //0.9333 = 3/5 + 1/3
         updateValue()
         
         self.addChild(sliderBar)
@@ -204,7 +206,7 @@ class EffectHeader: Slider {
         self.addChild(deleteText)
     }
     
-    let deleteButton = SKShapeNode(rectOf: CGSize(width: SCREEN_WIDTH / 12, height: SCREEN_WIDTH / 12))
+    let deleteButton = SKShapeNode(rectOf: CGSize(width: SWOVER12, height: SWOVER12))
     let deleteText = SKLabelNode(fontNamed:"DINAlternate-Bold")
     
     

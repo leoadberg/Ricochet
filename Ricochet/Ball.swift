@@ -22,7 +22,7 @@ class Ball: SKShapeNode {
     
     var colliding: Bool = false
     
-    init(radius: CGFloat = SCREEN_WIDTH / 12, maxSpeed: CGFloat = SCREEN_WIDTH * 6, speedMult: CGFloat = 0.01, initialSpeed: CGFloat = 1, initialAngle: Double = M_PI / 4) {
+    init(radius: CGFloat = SWOVER12, maxSpeed: CGFloat = SCREEN_WIDTH * 6, speedMult: CGFloat = 0.01, initialSpeed: CGFloat = 1, initialAngle: Double = M_PI / 4) {
         
         super.init()
         
@@ -35,7 +35,7 @@ class Ball: SKShapeNode {
     }
     
     func draw() {
-        super.path = CGPath(ellipseIn: CGRectMake(-radius, -radius, radius * 2, radius * 2), transform: nil)
+        super.path = CGPath(ellipseIn: CGRect(x: -radius, y: -radius, width: radius * 2, height: radius * 2), transform: nil)
     }
     
     func update(timeSinceLastUpdate: Double) {

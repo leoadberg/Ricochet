@@ -9,10 +9,6 @@
 import SpriteKit
 import Darwin
 
-let SCREEN: CGRect = UIScreen.main.bounds
-let SCREEN_WIDTH: CGFloat = SCREEN.width
-let SCREEN_HEIGHT: CGFloat = SCREEN.height
-let SCREEN_RATIO: CGFloat = SCREEN.height / SCREEN.width
 
 let COLOR_FADED_GREEN: SKColor = SKColor(colorLiteralRed: 161 / 255, green: 212 / 255, blue: 144 / 255, alpha: 1)
 let COLOR_FADED_GREEN_DARKER: SKColor = SKColor(colorLiteralRed: 141 / 255, green: 191 / 255, blue: 124 / 255, alpha: 1)
@@ -70,17 +66,17 @@ class MenuScene: SKScene {
         
         nameLabel.text = "Ricochet";
         nameLabel.fontSize = SCREEN_WIDTH / 6;
-        nameLabel.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT * 7 / 10);
+        nameLabel.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT * 7 / 10);
         nameLabel.zPosition = 1
         self.addChild(nameLabel)
         
-        playButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / 2)
+        playButton.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT / 2)
         self.addChild(playButton)
         
-        customButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / 3)
+        customButton.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT / 3)
         self.addChild(customButton)
         
-        scoresButton.position = CGPoint(x: SCREEN_WIDTH / 2, y: SCREEN_HEIGHT / 6)
+        scoresButton.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT / 6)
         self.addChild(scoresButton)
         
         levelSelector.position = CGPoint(x: SCREEN_WIDTH * 2, y: SCREEN_HEIGHT / 2)
@@ -110,7 +106,7 @@ class MenuScene: SKScene {
         }
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         /* Called when a touch begins, this part takes like 10 seconds to compile so it needs some serious optimization */
         
         touching = true
@@ -161,13 +157,13 @@ class MenuScene: SKScene {
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         touching = false
         let location = touches.first!.location(in: self)
         
         if (newCustomLevel.contains(location) && newCustomLevel.contains(touchStart)) {
-            let editor_scene = LevelEditorScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
+            let editor_scene = LevelEditorScene(size: CGSize(width: self.scene!.view!.frame.width, height: self.scene!.view!.frame.height))
             editor_scene.scaleMode = .aspectFill
             
             editor_scene.currentLevel = CUSTOM_LEVELS[NewCustomLevel()]
@@ -179,7 +175,7 @@ class MenuScene: SKScene {
         for tempLevel in GAME_LEVELS {
             tempLevel.deselect()
             if (!tempLevel.locked && tempLevel.contains(location) && tempLevel.contains(touchStart)) {
-                let game_scene = GameScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
+                let game_scene = GameScene(size: CGSize(width: self.scene!.view!.frame.width, height: self.scene!.view!.frame.height))
                 game_scene.scaleMode = .aspectFill
                 game_scene.currentLevel = tempLevel
                 let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
@@ -191,7 +187,7 @@ class MenuScene: SKScene {
             tempLevel.deselect()
             if (tempLevel.editButton.contains(CGPoint(x: location.x - tempLevel.position.x, y: location.y - tempLevel.position.y)) && tempLevel.editButton.contains(CGPoint(x: touchStart.x - tempLevel.position.x, y: touchStart.y - tempLevel.position.y))) {
                 //Edit code
-                let editor_scene = LevelEditorScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
+                let editor_scene = LevelEditorScene(size: CGSize(width: self.scene!.view!.frame.width, height: self.scene!.view!.frame.height))
                 editor_scene.scaleMode = .aspectFill
                 //editor_scene.currentLevel = tempLevel
                 let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
@@ -213,7 +209,7 @@ class MenuScene: SKScene {
                 self.view!.window!.rootViewController!.present(alertController, animated: true, completion: nil)
             }
             else if (tempLevel.contains(location) && tempLevel.contains(touchStart)) {
-                let game_scene = GameScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
+                let game_scene = GameScene(size: CGSize(width: self.scene!.view!.frame.width, height: self.scene!.view!.frame.height))
                 game_scene.scaleMode = .aspectFill
                 game_scene.currentLevel = tempLevel
                 game_scene.inCustomLevel = true
@@ -252,8 +248,8 @@ class MenuScene: SKScene {
             customLevelSelector.active = true
             newCustomLevel.position.x = SCREEN_WIDTH * 2
             if (CUSTOM_LEVELS.count < 3) {
-                let addLevelAction = SKAction.moveToX((CGFloat(CUSTOM_LEVELS.count) + 0.5) / 3 * SCREEN_WIDTH, duration: 0.5)
-                newCustomLevel.runAction(addLevelAction)
+                let addLevelAction = SKAction.moveTo(x: (CGFloat(CUSTOM_LEVELS.count) + 0.5) / 3 * SCREEN_WIDTH, duration: 0.5)
+                newCustomLevel.run(addLevelAction)
             }
             for (i, tempLevel) in CUSTOM_LEVELS.enumerated() {
                 tempLevel.position.x = SCREEN_WIDTH * 2
@@ -264,7 +260,7 @@ class MenuScene: SKScene {
             }
         }
         else if (scoresButton.contains(location) && scoresButton.contains(touchStart)) {
-            let scores_scene = ScoresScene(size: CGSizeMake(self.scene!.view!.frame.width, self.scene!.view!.frame.height))
+            let scores_scene = ScoresScene(size: CGSize(width: self.scene!.view!.frame.width, height: self.scene!.view!.frame.height))
             scores_scene.scaleMode = .aspectFill
             let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
             self.scene!.view!.presentScene(scores_scene, transition: transition)
@@ -276,7 +272,7 @@ class MenuScene: SKScene {
         newCustomLevel.deselect()
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         touching = true
         let touch = touches.first! as UITouch
         let positionInScene = touch.location(in: self)
@@ -292,7 +288,7 @@ class MenuScene: SKScene {
         }
     }
     
-    override func update(currentTime: CFTimeInterval) {
+    override func update(_ currentTime: CFTimeInterval) {
         if (levelSelector.active && !(GAME_LEVELS.first?.hasActions())!) {
             if (!touching) {
                 levelSelector.scroll += levelSelector.scrollSpeed
