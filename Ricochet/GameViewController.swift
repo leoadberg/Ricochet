@@ -40,8 +40,12 @@ class GameViewController: UIViewController {
         let scene = MenuScene(size: CGSize(width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
         
         let skView = self.view as! SKView
-        
-        skView.ignoresSiblingOrder = true
+		
+		let maxFPS = UIScreen.main.maximumFramesPerSecond
+		skView.preferredFramesPerSecond = maxFPS
+		skView.showsFPS = true
+		
+		skView.ignoresSiblingOrder = true
         
         scene.scaleMode = .aspectFill
         

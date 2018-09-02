@@ -34,7 +34,7 @@ class MenuScene: SKScene {
     
     let playButton = MenuButton("Play")
     let customButton = MenuButton("Custom")
-    let scoresButton = MenuButton("Scores")
+//    let scoresButton = MenuButton("Scores")
     let newCustomLevel = Level(level: -1)
     let nameLabel = SKLabelNode(fontNamed:"DINAlternate-Bold")
     
@@ -49,6 +49,10 @@ class MenuScene: SKScene {
     var touchStart = CGPoint(x: 0, y: 0)
     
     var inTransition = false;
+	
+	let playY: CGFloat = SCREEN_HEIGHT / 2
+	let custY: CGFloat = SCREEN_HEIGHT / 4
+	let selectorRadius: CGFloat = SCREEN_WIDTH / 6
     
     override func didMove(to view: SKView) {
         /* Setup your scene here */
@@ -70,27 +74,27 @@ class MenuScene: SKScene {
         nameLabel.zPosition = 1
         self.addChild(nameLabel)
         
-        playButton.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT / 2)
+        playButton.position = CGPoint(x: SWOVER2, y: playY)
         self.addChild(playButton)
         
-        customButton.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT / 3)
+        customButton.position = CGPoint(x: SWOVER2, y: custY)
         self.addChild(customButton)
         
-        scoresButton.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT / 6)
-        self.addChild(scoresButton)
-        
-        levelSelector.position = CGPoint(x: SCREEN_WIDTH * 2, y: SCREEN_HEIGHT / 2)
+//        scoresButton.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT / 6)
+//        self.addChild(scoresButton)
+		
+        levelSelector.position = CGPoint(x: SCREEN_WIDTH * 2, y: playY)
         //levelSelector.fillColor = COLOR_FADED_GREEN
         //levelSelector.lineWidth = 4
         //levelSelector.zPosition = -1
         self.addChild(levelSelector)
-        customLevelSelector.position = CGPoint(x: SCREEN_WIDTH * 2, y: SCREEN_HEIGHT / 3)
+        customLevelSelector.position = CGPoint(x: SCREEN_WIDTH * 2, y: custY)
         self.addChild(customLevelSelector)
         newCustomLevel.label.text = "+"
         newCustomLevel.unlock()
         newCustomLevel.label.position.y = 0
         newCustomLevel.label.verticalAlignmentMode = .center
-        newCustomLevel.position = CGPoint(x: SCREEN_WIDTH * 2, y: SCREEN_HEIGHT / 3)
+        newCustomLevel.position = CGPoint(x: SCREEN_WIDTH * 2, y: custY)
         self.addChild(newCustomLevel)
         
         for tempLevel: Level in GAME_LEVELS {
@@ -101,7 +105,7 @@ class MenuScene: SKScene {
         }
         
         for tempLevel: CustomLevel in CUSTOM_LEVELS {
-            tempLevel.position = CGPoint(x: SCREEN_WIDTH * 2, y: SCREEN_HEIGHT / 3)
+            tempLevel.position = CGPoint(x: SCREEN_WIDTH * 2, y: custY)
             self.addChild(tempLevel)
         }
     }
@@ -144,10 +148,10 @@ class MenuScene: SKScene {
             playButton.select()
         }
         
-        if (scoresButton.contains(location)) {
-            scoresButton.select()
-        }
-        
+//        if (scoresButton.contains(location)) {
+//            scoresButton.select()
+//        }
+		
         if (customButton.contains(location)) {
             customButton.select()
         }
@@ -259,14 +263,14 @@ class MenuScene: SKScene {
                 }
             }
         }
-        else if (scoresButton.contains(location) && scoresButton.contains(touchStart)) {
-            let scores_scene = ScoresScene(size: CGSize(width: self.scene!.view!.frame.width, height: self.scene!.view!.frame.height))
-            scores_scene.scaleMode = .aspectFill
-            let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
-            self.scene!.view!.presentScene(scores_scene, transition: transition)
-        }
-        
-        scoresButton.deselect()
+//        else if (scoresButton.contains(location) && scoresButton.contains(touchStart)) {
+//            let scores_scene = ScoresScene(size: CGSize(width: self.scene!.view!.frame.width, height: self.scene!.view!.frame.height))
+//            scores_scene.scaleMode = .aspectFill
+//            let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
+//            self.scene!.view!.presentScene(scores_scene, transition: transition)
+//        }
+		
+//        scoresButton.deselect()
         playButton.deselect()
         customButton.deselect()
         newCustomLevel.deselect()
@@ -278,11 +282,11 @@ class MenuScene: SKScene {
         let positionInScene = touch.location(in: self)
         let previousPosition = touch.previousLocation(in: self)
         let translation = CGPoint(x: positionInScene.x - previousPosition.x, y: positionInScene.y - previousPosition.y)
-        if (levelSelector.active && touchStart.y < SCREEN_HEIGHT / 2 + SCREEN_WIDTH / 6 && touchStart.y > SCREEN_HEIGHT / 2 - SCREEN_WIDTH / 6) {
+        if (levelSelector.active && touchStart.y < playY + selectorRadius && touchStart.y > playY - selectorRadius) {
             levelSelector.scroll += translation.x
             levelSelector.scrollSpeed = translation.x
         }
-        if (customLevelSelector.active && touchStart.y < SCREEN_HEIGHT / 3 + SCREEN_WIDTH / 6 && touchStart.y > SCREEN_HEIGHT / 3 - SCREEN_WIDTH / 6) {
+        if (customLevelSelector.active && touchStart.y < custY + selectorRadius && touchStart.y > custY - selectorRadius) {
             customLevelSelector.scroll += translation.x
             customLevelSelector.scrollSpeed = translation.x
         }

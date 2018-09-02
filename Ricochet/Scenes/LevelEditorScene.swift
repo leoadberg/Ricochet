@@ -18,6 +18,8 @@ class LevelEditorScene: SKScene {
     var scroll: CGFloat = 0
     var scrollSpeed: CGFloat = 0
 	
+	var modified: Bool = false
+	
 	init(_ cl: CustomLevel, size: CGSize) {
 		currentLevel = cl
 		super.init(size: size)
@@ -165,10 +167,28 @@ class LevelEditorScene: SKScene {
         let location = touches.first!.location(in: self)
         
         if (exitButton.contains(location) && exitButton.contains(touchStart)) {
-            let menu_scene = MenuScene(size: CGSize(width: self.scene!.view!.frame.width, height: self.scene!.view!.frame.height))
-            menu_scene.scaleMode = .aspectFill
-            let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
-            self.scene!.view!.presentScene(menu_scene, transition: transition)
+			func exit() -> Void {
+				let menu_scene = MenuScene(size: CGSize(width: self.scene!.view!.frame.width, height: self.scene!.view!.frame.height))
+				menu_scene.scaleMode = .aspectFill
+				let transition = SKTransition.crossFade(withDuration: TimeInterval(0.5))
+				self.scene!.view!.presentScene(menu_scene, transition: transition)
+			}
+			
+			if modified {
+				let alertController = UIAlertController(title: "Exit", message: "Are you sure you want to exit without saving?", preferredStyle: .alert)
+				let okAction = UIAlertAction(title: "Yes", style: UIAlertActionStyle.default) {
+					UIAlertAction in
+					exit()
+				}
+				let cancelAction = UIAlertAction(title: "No", style: UIAlertActionStyle.cancel) {
+					UIAlertAction in
+				}
+				alertController.addAction(okAction)
+				alertController.addAction(cancelAction)
+				self.view!.window!.rootViewController!.present(alertController, animated: true, completion: nil)
+			} else {
+				exit()
+			}
         }
         else if (playButton.contains(location) && playButton.contains(touchStart)) {
             saveLevel()
@@ -185,9 +205,9 @@ class LevelEditorScene: SKScene {
         
         for slider in sliders {
             slider.selected = false
-            if let effectHead = slider as? EffectHeader {
-                print("Let go on EffectHeader: ", effectHead)
-            }
+//            if let effectHead = slider as? EffectHeader {
+//                print("Let go on EffectHeader: ", effectHead)
+//            }
         }
         
         exitButton.fillColor = COLOR_FADED_RED_DARKER
@@ -209,6 +229,7 @@ class LevelEditorScene: SKScene {
         for slider in sliders {
             if (slider.selected) {
                 slider.updateSlider(touch)
+				modified = true
             }
         }
     }
@@ -226,6 +247,7 @@ class LevelEditorScene: SKScene {
         currentLevel.threeStar = Int(threeStarSlider.sliderValue)
         CUSTOM_LEVELS[currentLevel.levelNumber] = currentLevel 
         SaveCustomLevels()
+		modified = false
     }
     
     func setCustomLevel(levelnumber: Int) {
