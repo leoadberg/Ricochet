@@ -22,7 +22,7 @@ class Ball: SKShapeNode {
     
     var colliding: Bool = false
     
-    init(radius: CGFloat = SWOVER12, maxSpeed: CGFloat = SCREEN_WIDTH * 6, speedMult: CGFloat = 0.01, initialSpeed: CGFloat = 1, initialAngle: Double = M_PI / 4) {
+    init(radius: CGFloat = SWOVER12, maxSpeed: CGFloat = SCREEN_WIDTH * 6, speedMult: CGFloat = 0.01, initialSpeed: CGFloat = 1, initialAngle: Double = Double.pi / 4) {
         
         super.init()
         

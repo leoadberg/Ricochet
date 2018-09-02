@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E2ABEA7213B5DFC00CD8D24 /* WallObstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2ABEA6213B5DFC00CD8D24 /* WallObstacle.swift */; };
+		0E2ABEA9213B60F200CD8D24 /* SquareObstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2ABEA8213B60F200CD8D24 /* SquareObstacle.swift */; };
+		0E2ABEAB213B619E00CD8D24 /* CircleObstacle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E2ABEAA213B619E00CD8D24 /* CircleObstacle.swift */; };
 		0E534F501CA8D15500E27223 /* Levels.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0E534F4F1CA8D15500E27223 /* Levels.plist */; };
 		0E602B231CB1002F00A029BA /* LevelEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E602B221CB1002F00A029BA /* LevelEffect.swift */; };
 		0E602B251CB102D400A029BA /* UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E602B241CB102D400A029BA /* UI.swift */; };
@@ -50,6 +53,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E2ABEA6213B5DFC00CD8D24 /* WallObstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallObstacle.swift; sourceTree = "<group>"; };
+		0E2ABEA8213B60F200CD8D24 /* SquareObstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareObstacle.swift; sourceTree = "<group>"; };
+		0E2ABEAA213B619E00CD8D24 /* CircleObstacle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleObstacle.swift; sourceTree = "<group>"; };
 		0E534F4F1CA8D15500E27223 /* Levels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Levels.plist; sourceTree = "<group>"; };
 		0E602B221CB1002F00A029BA /* LevelEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelEffect.swift; sourceTree = "<group>"; };
 		0E602B241CB102D400A029BA /* UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UI.swift; sourceTree = "<group>"; };
@@ -106,6 +112,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E2ABEA2213B5CDC00CD8D24 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				0E6CA8461CA86821008D0E9F /* ScoresScene.swift */,
+				0E63D7001CA75CA30072A37D /* GameScene.swift */,
+				0E6CA8421CA7B3D8008D0E9F /* MenuScene.swift */,
+				0E6A3CEF1CB3A9F700C36720 /* LevelEditorScene.swift */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		0E2ABEA3213B5D0C00CD8D24 /* Obstacles */ = {
+			isa = PBXGroup;
+			children = (
+				CAB2E2BE1CB1D02D003690E8 /* Obstacle.swift */,
+				0E2ABEA6213B5DFC00CD8D24 /* WallObstacle.swift */,
+				0E2ABEA8213B60F200CD8D24 /* SquareObstacle.swift */,
+				0E2ABEAA213B619E00CD8D24 /* CircleObstacle.swift */,
+			);
+			path = Obstacles;
+			sourceTree = "<group>";
+		};
+		0E2ABEA4213B5D3C00CD8D24 /* Effects */ = {
+			isa = PBXGroup;
+			children = (
+				0E602B221CB1002F00A029BA /* LevelEffect.swift */,
+				CA961A211CB22FAA00FEAD01 /* RotatingObstacle.swift */,
+				CA961A231CB2302300FEAD01 /* ResizingObstacle.swift */,
+				CA6B7DA01CB102C200C8C117 /* DirectionalGravity.swift */,
+				CAB2E2BC1CB1CE1D003690E8 /* PointGravity.swift */,
+				CA6ED3FB1CB34B6B002467CB /* LimitedObstacles.swift */,
+			);
+			path = Effects;
+			sourceTree = "<group>";
+		};
+		0E2ABEA5213B5D6600CD8D24 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				0EE51D7D1CB07C7B00D2AC9F /* FileHandler.swift */,
+				0E602B241CB102D400A029BA /* UI.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		0E63D6F01CA75CA30072A37D = {
 			isa = PBXGroup;
 			children = (
@@ -130,23 +180,14 @@
 			isa = PBXGroup;
 			children = (
 				0E63D6FC1CA75CA30072A37D /* AppDelegate.swift */,
-				0EE51D7D1CB07C7B00D2AC9F /* FileHandler.swift */,
-				0E63D7001CA75CA30072A37D /* GameScene.swift */,
-				CA6B7DA21CB116CF00C8C117 /* Ball.swift */,
-				0E6CA8461CA86821008D0E9F /* ScoresScene.swift */,
-				0EBEA56F1CA9C635008E1095 /* Level.swift */,
-				0E602B221CB1002F00A029BA /* LevelEffect.swift */,
-				CAB2E2BC1CB1CE1D003690E8 /* PointGravity.swift */,
-				CAB2E2BE1CB1D02D003690E8 /* Obstacle.swift */,
-				CA6ED3FB1CB34B6B002467CB /* LimitedObstacles.swift */,
-				CA961A211CB22FAA00FEAD01 /* RotatingObstacle.swift */,
-				CA961A231CB2302300FEAD01 /* ResizingObstacle.swift */,
-				CA6B7DA01CB102C200C8C117 /* DirectionalGravity.swift */,
-				0E6CA8421CA7B3D8008D0E9F /* MenuScene.swift */,
-				0E6A3CEF1CB3A9F700C36720 /* LevelEditorScene.swift */,
-				0E602B241CB102D400A029BA /* UI.swift */,
-				0E534F4F1CA8D15500E27223 /* Levels.plist */,
 				0E63D7021CA75CA30072A37D /* GameViewController.swift */,
+				0E2ABEA5213B5D6600CD8D24 /* Utils */,
+				0E2ABEA4213B5D3C00CD8D24 /* Effects */,
+				0E2ABEA3213B5D0C00CD8D24 /* Obstacles */,
+				0E2ABEA2213B5CDC00CD8D24 /* Scenes */,
+				CA6B7DA21CB116CF00C8C117 /* Ball.swift */,
+				0EBEA56F1CA9C635008E1095 /* Level.swift */,
+				0E534F4F1CA8D15500E27223 /* Levels.plist */,
 				0E63D7041CA75CA30072A37D /* Main.storyboard */,
 				0E63D7071CA75CA30072A37D /* Assets.xcassets */,
 				0E63D7091CA75CA30072A37D /* LaunchScreen.storyboard */,
@@ -235,13 +276,14 @@
 		0E63D6F11CA75CA30072A37D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Tigersushi;
 				TargetAttributes = {
 					0E63D6F81CA75CA30072A37D = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = 6Q3Q8VF4EU;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0910;
+						ProvisioningStyle = Automatic;
 					};
 					0E63D7101CA75CA40072A37D = {
 						CreatedOnToolsVersion = 7.0;
@@ -309,6 +351,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA961A221CB22FAA00FEAD01 /* RotatingObstacle.swift in Sources */,
+				0E2ABEA7213B5DFC00CD8D24 /* WallObstacle.swift in Sources */,
 				CA6B7DA31CB116CF00C8C117 /* Ball.swift in Sources */,
 				0EBEA5701CA9C635008E1095 /* Level.swift in Sources */,
 				CA6B7DA11CB102C200C8C117 /* DirectionalGravity.swift in Sources */,
@@ -325,6 +368,8 @@
 				0E63D7031CA75CA30072A37D /* GameViewController.swift in Sources */,
 				0E63D6FD1CA75CA30072A37D /* AppDelegate.swift in Sources */,
 				0E6CA8471CA86821008D0E9F /* ScoresScene.swift in Sources */,
+				0E2ABEAB213B619E00CD8D24 /* CircleObstacle.swift in Sources */,
+				0E2ABEA9213B60F200CD8D24 /* SquareObstacle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,14 +432,22 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -417,11 +470,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -434,14 +488,22 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -458,10 +520,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -473,16 +536,20 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: leo@adberg.com (GEYD3GJMAG)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: leo@adberg.com (GEYD3GJMAG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6Q3Q8VF4EU;
 				INFOPLIST_FILE = Ricochet/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
 				PRODUCT_BUNDLE_IDENTIFIER = tigersushi.Ricochet;
 				PRODUCT_NAME = Ricochet;
 				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 3.0;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -492,16 +559,20 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: leo@adberg.com (GEYD3GJMAG)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: leo@adberg.com (GEYD3GJMAG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6Q3Q8VF4EU;
 				INFOPLIST_FILE = Ricochet/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = tigersushi.Ricochet;
 				PRODUCT_NAME = Ricochet;
 				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 3.0;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

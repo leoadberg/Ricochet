@@ -35,6 +35,8 @@ class GameViewController: UIViewController {
         
         //let scene = GameScene(size: CGSizeMake(self.view.frame.width, self.view.frame.height))
         //let scene = MenuScene(size: CGSize(width: self.scene!.view!.frame.width, height: self.scene!.view!.frame.height))
+		
+		
         let scene = MenuScene(size: CGSize(width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
         
         let skView = self.view as! SKView

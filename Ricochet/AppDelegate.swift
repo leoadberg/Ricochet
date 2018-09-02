@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let tempCustomLevel = CustomLevel(i, item as! NSDictionary)
             CUSTOM_LEVELS.append(tempCustomLevel)
         }
-        
+		
         return true
     }
 
