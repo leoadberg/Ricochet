@@ -127,30 +127,13 @@ func SaveCustomLevels() {
         levelDict["Start Speed Multiplier"] = tempLevel.ballStartSpeedModifier
         
         let effectsArray = NSMutableArray()
-        
-        levelDict["Effects"] = effectsArray
         for tempEffect in tempLevel.effects {
-            let tempEffectDict = NSMutableDictionary()
-            switch (tempEffect.getID()) {
-            case 0:
-                tempEffectDict["Effect ID"] = 0
-                break
-            case 1:
-                tempEffectDict["Effect ID"] = 0
-                break
-            case 2:
-                tempEffectDict["Effect ID"] = 0
-                break
-            case 3:
-                tempEffectDict["Effect ID"] = 0
-                break
-            case 4:
-                tempEffectDict["Effect ID"] = 0
-                break
-            default:
-                break
-            }
+			effectsArray.add(tempEffect.getDict())
+			print(tempEffect)
+			print(tempEffect.getDict())
         }
+		levelDict["Effects"] = effectsArray
+		print(effectsArray)
         
         plistArray.add(levelDict)
     }

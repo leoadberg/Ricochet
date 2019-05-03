@@ -17,6 +17,7 @@ class LevelEditorScene: SKScene {
     var touchStart: CGPoint = CGPoint()
     var scroll: CGFloat = 0
     var scrollSpeed: CGFloat = 0
+	var maxScroll: CGFloat = 0
 	
 	var modified: Bool = false
 	
@@ -27,6 +28,17 @@ class LevelEditorScene: SKScene {
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+	func positionSliders() {
+		var sliderpos: CGFloat = SCREEN_HEIGHT * 17 / 20
+		for slider in sliders {
+			slider.position = CGPoint(x: 0, y: sliderpos)
+			sliderpos -= slider.getHeight()
+		}
+		newEffectButton.position = CGPoint(x: SWOVER2, y: sliderpos)
+		newEffectText.position.y = newEffectButton.position.y - SCREEN_WIDTH / 28
+		maxScroll = -sliderpos + SCREEN_HEIGHT / 10
 	}
 	
     override func didMove(to view: SKView) {
@@ -88,16 +100,20 @@ class LevelEditorScene: SKScene {
         sliders.append(oneStarSlider)
         sliders.append(twoStarSlider)
         sliders.append(threeStarSlider)
-        
-        sliders.append(tempEffect)
-        
-        for (i, slider) in sliders.enumerated() {
-            slider.position = CGPoint(x: 0, y: SCREEN_HEIGHT * CGFloat(17 - 2 * i) / 20)
+		
+		for effect in currentLevel.effects {
+			customEffects.append(EffectHeader(effect))
+		}
+		
+		for customEffect in customEffects {
+			sliders.append(customEffect)
+		}
+		
+		positionSliders()
+        for slider in sliders {
             scrollNode.addChild(slider)
         }
-        
-        newEffectButton.position = CGPoint(x: SWOVER2, y: SCREEN_HEIGHT * CGFloat(17 - 2 * sliders.count) / 20)
-        newEffectText.position.y = newEffectButton.position.y - SCREEN_WIDTH / 28
+		
         scrollNode.zPosition = -1
         
         self.addChild(scrollNode)
@@ -121,7 +137,7 @@ class LevelEditorScene: SKScene {
     let newEffectButton = SKShapeNode(rectOf: CGSize(width: SCREEN_WIDTH * 7 / 8, height: SCREEN_WIDTH / 8))
     let newEffectText = SKLabelNode(fontNamed:"DINAlternate-Bold")
     
-    
+	var customEffects: [EffectHeader] = []
     var sliders: [Slider] = []
     
     let obstacleSlider = Slider("Obstacle:", 0, 2, 1, 0, int: true)
@@ -134,8 +150,6 @@ class LevelEditorScene: SKScene {
     let oneStarSlider = Slider("1 Star:", 1, 50, 1, 1, int: true)
     let twoStarSlider = Slider("2 Stars:", 1, 50, 1, 5, int: true)
     let threeStarSlider = Slider("3 Stars:", 1, 50, 1, 10, int: true)
-    
-    let tempEffect = EffectHeader(1)
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         /* Called when a touch begins */
@@ -153,13 +167,27 @@ class LevelEditorScene: SKScene {
         else if (saveButton.contains(location)) {
             saveButton.fillColor = COLOR_FADED_GREEN_DARKER
         }
-        
-        for slider in sliders {
-            if (slider.slider.contains(AddPoints(touchStart, CGPoint(x: 0, y: -scroll - slider.position.y)))) {
-                slider.selected = true
-            }
-        }
+		else if (newEffectButton.contains(AddPoints(location, CGPoint(x: 0, y: -scroll)))) {
+			newEffectButton.fillColor = COLOR_FADED_GREEN_DARKER
+		} else {
+			for slider in sliders {
+				let point = AddPoints(touchStart, CGPoint(x: 0, y: -scroll - slider.position.y))
+				if (slider.contains(point)) {
+					slider.select(point)
+				}
+			}
+		}
+		
     }
+	
+	func addEffect(_ effect: LevelEffect) {
+		let eh = EffectHeader(effect)
+		currentLevel.effects.append(effect)
+		customEffects.append(eh)
+		sliders.append(eh)
+		positionSliders()
+		scrollNode.addChild(eh)
+	}
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
@@ -202,17 +230,60 @@ class LevelEditorScene: SKScene {
         else if (saveButton.contains(location) && saveButton.contains(touchStart)) {
             saveLevel()
         }
+		else if (newEffectButton.contains(AddPoints(location, CGPoint(x: 0, y: -scroll))) && newEffectButton.contains(AddPoints(touchStart, CGPoint(x: 0, y: -scroll)))) {
+			let alertController = UIAlertController(title: "Choose Effect", message: "", preferredStyle: .alert)
+			let rot = UIAlertAction(title: "Rotating Obstacle", style: UIAlertActionStyle.default) {
+				UIAlertAction in
+				self.addEffect(RotatingObstacle())
+			}
+			alertController.addAction(rot)
+			let rsz = UIAlertAction(title: "Resizing Obstacle", style: UIAlertActionStyle.default) {
+				UIAlertAction in
+				self.addEffect(ResizingObstacle())
+			}
+			alertController.addAction(rsz)
+			let dir = UIAlertAction(title: "Directional Gravity", style: UIAlertActionStyle.default) {
+				UIAlertAction in
+				self.addEffect(DirectionalGravity())
+			}
+			alertController.addAction(dir)
+			let pnt = UIAlertAction(title: "Point Gravity", style: UIAlertActionStyle.default) {
+				UIAlertAction in
+				self.addEffect(PointGravity())
+			}
+			alertController.addAction(pnt)
+			let ltd = UIAlertAction(title: "Limited Obstacles", style: UIAlertActionStyle.default) {
+				UIAlertAction in
+				self.addEffect(LimitedObstacles())
+			}
+			alertController.addAction(ltd)
+			let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
+				UIAlertAction in
+			}
+			alertController.addAction(cancelAction)
+			self.view!.window!.rootViewController!.present(alertController, animated: true, completion: nil)
+		} else {
+			for slider in sliders {
+				slider.endTouch(scroll, touchStart, location)
+			}
+		}
+		
+		for (i, e) in customEffects.enumerated() {
+			if e.toDelete {
+				scrollNode.removeChildren(in: [e])
+				sliders.remove(at: sliders.count - customEffects.count + i)
+				customEffects.remove(at: i)
+				currentLevel.effects.remove(at: i)
+				positionSliders()
+			}
+		}
         
-        for slider in sliders {
-            slider.selected = false
-//            if let effectHead = slider as? EffectHeader {
-//                print("Let go on EffectHeader: ", effectHead)
-//            }
-        }
+		
         
         exitButton.fillColor = COLOR_FADED_RED_DARKER
         saveButton.fillColor = COLOR_FADED_GREEN
         playButton.fillColor = COLOR_FADED_YELLOW
+		newEffectButton.fillColor = COLOR_FADED_GREEN
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -245,6 +316,9 @@ class LevelEditorScene: SKScene {
         currentLevel.oneStar = Int(oneStarSlider.sliderValue)
         currentLevel.twoStar = Int(twoStarSlider.sliderValue)
         currentLevel.threeStar = Int(threeStarSlider.sliderValue)
+		for eh in customEffects {
+			eh.effect.updateWithSliders(eh.sliders)
+		}
         CUSTOM_LEVELS[currentLevel.levelNumber] = currentLevel 
         SaveCustomLevels()
 		modified = false
@@ -262,7 +336,7 @@ class LevelEditorScene: SKScene {
                 scrollSpeed = 0
             }
         }
-        scroll = min(max(0,scroll), 500)
+        scroll = min(max(0, scroll), maxScroll)
         scrollNode.position.y = scroll
     }
 }

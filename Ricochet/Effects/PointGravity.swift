@@ -14,9 +14,17 @@ class PointGravity: LevelEffect {
     var xLocation: Double = 0.0
     var yLocation: Double = 0.0
     var strength : Double = 0.0
+	
+	convenience override init() {
+		self.init(["EffectID": 1 as AnyObject, "Gravity X": 0.5 as AnyObject, "Gravity Y": 0.5 as AnyObject, "Gravity Strength": 1.0 as AnyObject])
+	}
     
-    init(x: Double, y: Double, str: Double) {
+    init(_ dict: NSDictionary) {
         super.init()
+		
+		let x = dict["Gravity X"] as! Double
+		let y = dict["Gravity Y"] as! Double
+		let str = dict["Gravity Strength"] as! Double
         
         self.xLocation = x
         self.yLocation = y
@@ -39,6 +47,15 @@ class PointGravity: LevelEffect {
         visualEffect.position = CGPoint(x: CGFloat(x) * SCREEN_WIDTH, y: CGFloat(y) * SCREEN_HEIGHT)
         visualEffect.zPosition = -2
     }
+	
+	override func getDict() -> NSMutableDictionary {
+		let ret = NSMutableDictionary()
+		ret.setValue(self.getID(), forKey: "EffectID")
+		ret.setValue(getArg1(), forKey: "Gravity X")
+		ret.setValue(getArg2(), forKey: "Gravity Y")
+		ret.setValue(getArg3(), forKey: "Gravity Strength")
+		return ret
+	}
     
     override func update(_ timeSinceLastUpdate: Double, _ ball: inout Ball, _ obstacle: inout Obstacle) {
     
@@ -70,5 +87,24 @@ class PointGravity: LevelEffect {
     override func getArg2() -> CGFloat {
         return CGFloat(yLocation)
     }
+	override func getArg3() -> CGFloat {
+		return CGFloat(strength)
+	}
+	
+	override func getSliders() -> [Slider] {
+		return [Slider("X pos", 0, 1, 0.01, getArg1()),
+				Slider("Y pos", 0, 1, 0.01, getArg2()),
+				Slider("Strength", 0, 1, 0.01, getArg3())]
+	}
+	
+	override func updateWithSliders(_ sliders: [Slider]) {
+		xLocation = Double(sliders[0].sliderValue)
+		yLocation = Double(sliders[1].sliderValue)
+		strength = Double(sliders[2].sliderValue)
+	}
+	
+	override func name() -> String {
+		return "Point Gravity"
+	}
     
 }

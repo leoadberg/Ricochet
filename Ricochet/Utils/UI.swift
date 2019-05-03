@@ -104,6 +104,21 @@ class LevelSelector: SKShapeNode {
 }
 
 class Slider: SKNode {
+	
+	var intValue = false
+	var selected = false
+	var sliderValue: CGFloat = 0
+	var lowerBound: CGFloat = 0
+	var upperBound: CGFloat = 0
+	var increment: CGFloat = 0
+	let textNode = SKLabelNode(fontNamed:"DINAlternate-Bold")
+	let valueNode = SKLabelNode(fontNamed:"DINAlternate-Bold")
+	let sliderBar = SKShapeNode(path:
+		CGPath(roundedRect:
+			CGRect(x: 0, y: -SCREEN_WIDTH / 80, width: SCREEN_WIDTH / 3, height: SCREEN_WIDTH / 40),
+			   cornerWidth: SCREEN_WIDTH / 100, cornerHeight: SCREEN_WIDTH / 100, transform: nil))
+	let slider = SKShapeNode(circleOfRadius: SCREEN_WIDTH / 30)
+	
     init(_ text: String, _ lBound: CGFloat, _ uBound: CGFloat, _ i: CGFloat, _ startValue: CGFloat, int: Bool = false) {
         super.init()
         
@@ -148,20 +163,6 @@ class Slider: SKNode {
         self.addChild(slider)
     }
     
-    var intValue = false
-    var selected = false
-    var sliderValue: CGFloat = 0
-    var lowerBound: CGFloat = 0
-    var upperBound: CGFloat = 0
-    var increment: CGFloat = 0
-    let textNode = SKLabelNode(fontNamed:"DINAlternate-Bold")
-    let valueNode = SKLabelNode(fontNamed:"DINAlternate-Bold")
-    let sliderBar = SKShapeNode(path:
-        CGPath(roundedRect:
-            CGRect(x: 0, y: -SCREEN_WIDTH / 80, width: SCREEN_WIDTH / 3, height: SCREEN_WIDTH / 40),
-            cornerWidth: SCREEN_WIDTH / 100, cornerHeight: SCREEN_WIDTH / 100, transform: nil))
-    let slider = SKShapeNode(circleOfRadius: SCREEN_WIDTH / 30)
-    
     func updateSlider(_ touch: UITouch) {
         slider.position.x = min(max(SCREEN_WIDTH * 3 / 5, touch.location(in: self).x), SCREEN_WIDTH * 3 / 5 + SCREEN_WIDTH / 3)
         updateValue()
@@ -173,7 +174,7 @@ class Slider: SKNode {
         if intValue {
             valueNode.text = String(Int(sliderValue))
         } else {
-            valueNode.text = String(describing: sliderValue)
+            valueNode.text = String(format: "%.2f", sliderValue)
         }
     }
     
@@ -186,6 +187,22 @@ class Slider: SKNode {
             valueNode.text = String(describing: sliderValue)
         }
     }
+	
+	override func contains(_ p: CGPoint) -> Bool {
+		return slider.contains(p)
+	}
+	
+	func select(_ touch: CGPoint) {
+		selected = true
+	}
+	
+	func endTouch(_ scroll: CGFloat, _ touchStart: CGPoint, _ touchEnd: CGPoint) {
+		selected = false
+	}
+	
+	func getHeight() -> CGFloat {
+		return SCREEN_HEIGHT / 10
+	}
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -193,8 +210,21 @@ class Slider: SKNode {
 }
 
 class EffectHeader: Slider {
-    init(_ effectID: Int) {
-        super.init("Effect", 0, 0, 1, 0)
+	var sliders: [Slider]
+	
+	let deleteButton = SKShapeNode(rectOf: CGSize(width: SWOVER12, height: SWOVER12))
+	let deleteText = SKLabelNode(fontNamed:"DINAlternate-Bold")
+	
+	var toDelete = false
+	
+	var effect: LevelEffect
+	
+    init(_ effect: LevelEffect) {
+		self.effect = effect
+		
+		sliders = effect.getSliders()
+		
+        super.init(effect.name(), 0, 0, 1, 0)
         self.removeAllChildren()
         self.addChild(textNode)
         
@@ -207,12 +237,67 @@ class EffectHeader: Slider {
         deleteText.position.y = deleteButton.position.y - SCREEN_WIDTH / 28
         self.addChild(deleteButton)
         self.addChild(deleteText)
+		
+		var height: CGFloat = SCREEN_HEIGHT / 10
+		for s in sliders {
+			s.position.y = -height
+			height += s.getHeight()
+			self.addChild(s)
+		}
     }
     
-    let deleteButton = SKShapeNode(rectOf: CGSize(width: SWOVER12, height: SWOVER12))
-    let deleteText = SKLabelNode(fontNamed:"DINAlternate-Bold")
-    
-    
+	override func updateSlider(_ touch: UITouch) {
+		for s in sliders {
+			if s.selected {
+				s.updateSlider(touch)
+			}
+		}
+	}
+	
+	override func contains(_ p: CGPoint) -> Bool {
+		var ret = false
+		let ref = CGPoint(x: 0, y: -deleteButton.position.y)
+		ret = ret || deleteButton.contains(AddPoints(p, ref))
+		for s in sliders {
+			let ref2 = CGPoint(x: 0, y: -s.position.y)
+			ret = ret || s.contains(AddPoints(p, ref2))
+		}
+		return ret
+	}
+	
+	override func select(_ touch: CGPoint) {
+		for s in sliders {
+			let ref = CGPoint(x: 0, y: -s.position.y)
+			if (s.contains(AddPoints(touch, ref))) {
+				s.select(touch)
+			}
+		}
+		let ref = CGPoint(x: 0, y: -deleteButton.position.y - self.position.y)
+		if deleteButton.contains(AddPoints(touch, ref)) {
+			deleteButton.fillColor = COLOR_FADED_RED_EVEN_DARKER
+		}
+		self.selected = true
+	}
+	
+	override func endTouch(_ scroll: CGFloat, _ touchStart: CGPoint, _ touchEnd: CGPoint) {
+		for s in sliders {
+			s.endTouch(scroll, touchStart, touchEnd)
+		}
+		let ref = CGPoint(x: 0, y: -scroll - deleteButton.position.y - self.position.y)
+		deleteButton.fillColor = COLOR_FADED_RED_DARKER
+		if deleteButton.contains(AddPoints(touchEnd, ref)) && deleteButton.contains(AddPoints(touchStart, ref)) {
+			toDelete = true
+		}
+		self.selected = false
+	}
+	
+	override func getHeight() -> CGFloat {
+		var sum: CGFloat = SCREEN_HEIGHT / 10
+		for s in sliders {
+			sum += s.getHeight()
+		}
+		return sum
+	}
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

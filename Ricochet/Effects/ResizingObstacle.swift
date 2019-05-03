@@ -15,14 +15,25 @@ class ResizingObstacle: LevelEffect {
     var maxScale: Double = -1.0
     var minScale: Double = -1.0
     var scale: Double = 1.0
+	
+	convenience override init() {
+		self.init(["EffectID": 3 as AnyObject, "Resize Rate": 1.0 as AnyObject, "Max Scale": 1.0 as AnyObject, "Min Scale": 1.0 as AnyObject])
+	}
     
-    init(rate: Double, maxScale: Double, minScale: Double) {
-        
-        self.rate = rate
-        self.maxScale = maxScale
-        self.minScale = minScale
-        
+    init(_ dict: NSDictionary) {
+        self.rate = dict["Resize Rate"] as! Double
+        self.maxScale = dict["Max Scale"] as! Double
+        self.minScale = dict["Min Scale"] as! Double
     }
+	
+	override func getDict() -> NSMutableDictionary {
+		let ret = NSMutableDictionary()
+		ret.setValue(self.getID(), forKey: "EffectID")
+		ret.setValue(getArg1(), forKey: "Resize Rate")
+		ret.setValue(getArg2(), forKey: "Max Scale")
+		ret.setValue(getArg3(), forKey: "Min Scale")
+		return ret
+	}
     
     override func update(_ timeSinceLastUpdate: Double, _ ball: inout Ball, _ obstacle: inout Obstacle) {
         
@@ -49,5 +60,21 @@ class ResizingObstacle: LevelEffect {
     override func getArg3() -> CGFloat {
         return CGFloat(minScale)
     }
+	
+	override func getSliders() -> [Slider] {
+		return [Slider("Speed", 0.1, 5, 0.01, getArg1()),
+				Slider("Min size", 0.1, 5, 0.01, getArg2()),
+				Slider("Max size", 0.1, 5, 0.01, getArg3())]
+	}
+	
+	override func updateWithSliders(_ sliders: [Slider]) {
+		rate = Double(sliders[0].sliderValue)
+		maxScale = Double(sliders[1].sliderValue)
+		minScale = Double(sliders[2].sliderValue)
+	}
+	
+	override func name() -> String {
+		return "Resizing Obstacle"
+	}
     
 }

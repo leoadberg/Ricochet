@@ -37,17 +37,15 @@ class Level: SKShapeNode {
         for effect in tempEffects {
             switch (effect["EffectID"] as! Int) {
             case 0:
-                self.effects.append(DirectionalGravity(x: effect["Gravity X"] as! Double, y: effect["Gravity Y"] as! Double))
+                self.effects.append(DirectionalGravity(effect))
             case 1:
-                self.effects.append(PointGravity(x: effect["Gravity X"] as! Double, y: effect["Gravity Y"] as! Double, str: effect["Gravity Strength"] as! Double))
-                
+                self.effects.append(PointGravity(effect))
             case 2:
-                self.effects.append(RotatingObstacle(rate: effect["Rotation Rate"] as! Double))
-                
+                self.effects.append(RotatingObstacle(effect))
             case 3:
-                self.effects.append(ResizingObstacle(rate: effect["Resize Rate"] as! Double, maxScale: effect["Max Scale"] as! Double, minScale: effect["Min Scale"] as! Double))
+                self.effects.append(ResizingObstacle(effect))
             case 4:
-                self.effects.append(LimitedObstacles(numPerSecond: effect["Obstacles per second"] as! Double, numPerBounce: effect["Obstacles per bounce"] as! Int, startingNum: effect["Starting Obstacles"] as! Int))
+                self.effects.append(LimitedObstacles(effect))
             default:
                 break
             }
